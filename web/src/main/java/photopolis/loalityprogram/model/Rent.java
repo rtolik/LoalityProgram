@@ -33,7 +33,8 @@ public class Rent {
 
     public Rent() {}
 
-    public Rent(String date, String timeOfStart, String timeOfEnd, Double price, String comment, RentStatus rentStatus, User user) {
+    public Rent(String date, String timeOfStart, String timeOfEnd, Double price, String comment,
+                       RentStatus rentStatus, User user) {
         this.date = date;
         this.timeOfStart = timeOfStart;
         this.timeOfEnd = timeOfEnd;
