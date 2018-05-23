@@ -1,0 +1,42 @@
+<div class="scroll-button">
+  <div class="border-scrolls">
+  <a href="">Календар зайнятості</a>
+  <span>|</span>
+  <a href="">Підрахунок статистики</a>
+  </div>
+</div>
+<div class="content">
+  <input (change)="getDate(date.value)" #date  class="input-date" type="date" [value]="dateStr">
+  <div class="table-form row m-0">
+  <div class="table col-md-8   pl-md-0 m-0"></div>
+  <div class="form col-md-4  pr-md-0 m-0">
+    <form action="">
+      <h2 class="text-center">Бронювання</h2>
+      <div class="wrapper">
+        <label>
+          Клієнт
+          <input type="text">
+        </label>
+        <label >
+          Дата
+          <input type="text">
+        </label>
+        <label>
+          Час початку орендт
+        <input type="text">
+        </label>
+        <label>
+          Тривалість оренди
+          <input type="text">
+        </label>
+        <label >
+          Коментар
+          <textarea name="" id="" ></textarea>
+        </label>
+        <button type="submit">Додати</button>
+        <p>-Успішно додано</p>
+      </div>
+    </form>
+  </div>
+  </div>
+</div>
