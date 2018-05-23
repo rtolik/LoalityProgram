@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+body{
+  margin: 0;
+  background-color: #f1e4da;
+}
+html{
+  padding: 0;
+}
+@font-face {
+  font-family: Monserrat-Regular;
+  src: url("./assets/fonts/Montserrat-Regular.ttf") format('embedded-opentype'),
+  url("./assets/fonts/Montserrat-Regular.ttf") format('woff'),
+  url("./assets/fonts/Montserrat-Regular.ttf") format('truetype'),
+  url("./assets/fonts/Montserrat-Regular.ttf") format('svg'),
+  url("./assets/fonts/Montserrat-Regular.ttf") format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: Monserrat-Light;
+  src: url("./assets/fonts/Montserrat-Light.ttf") format('embedded-opentype'),
+  url("./assets/fonts/Montserrat-Light.ttf") format('woff'),
+  url("./assets/fonts/Montserrat-Light.ttf") format('truetype'),
+  url("./assets/fonts/Montserrat-Light.ttf") format('svg'),
+  url("./assets/fonts/Montserrat-Light.ttf") format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}

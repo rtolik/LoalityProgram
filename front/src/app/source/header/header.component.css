@@ -1,0 +1,51 @@
+.container-header{
+  margin: 0 0 30px;
+  height: 110px;
+  padding: 0 85px;
+  box-sizing: border-box;
+  background-color: #ffb014;
+  border-top: 1px solid black;
+  box-shadow: 0 5px 8px black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo{
+  cursor: pointer;
+  margin-right: 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-self: flex-start;
+}
+.logo img{
+  height: 95%;
+  width: auto;
+}
+.logo-text{
+  margin-left: 10px;
+}
+.container-header > h1{
+  width: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.container >h1:hover{
+  background-color: #e19613;
+  cursor: pointer;
+
+}
+h1{
+
+  font-size: 24px;
+}
+h3 {
+  font-size: 12px;
+}
+h1,h2,h3{
+  font-family: Monserrat-Light;
+  margin: 0;
+}

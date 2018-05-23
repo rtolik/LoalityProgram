@@ -1,0 +1,108 @@
+.scroll-button{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 35px;
+}
+a{
+  height: 24px;
+  line-height: 24px;
+  text-decoration: none;
+  color: black;
+  font-family: Monserrat-Light;
+  font-size: 14px;
+}
+a:hover{
+  text-decoration: underline;
+  color: black;
+  outline-color: black;
+}
+.border-scrolls{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.border-scrolls span{
+  font-family: Monserrat-Light;
+  margin: 0 10px;
+  font-size: 20px;
+}
+.border-scrolls{
+  box-sizing: border-box;
+  border-bottom: 1px solid black;
+  padding: 0 20px 5px;
+}
+.content{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 42.5px;
+}
+.input-date{
+  outline: none;
+  background-color: transparent;
+  font-family: Monserrat-Light;
+  font-size: 14px;
+  line-height: 24px;
+  border: 2px solid black;
+  text-align: center;
+}
+h2{
+  margin: 0;
+  font-family: Monserrat-Light;
+  font-size: 18px;
+  line-height: 24px;
+}
+.input-date::-webkit-inner-spin-button { display: none; }
+input[type="date"]::-webkit-clear-button{display: none;}
+.form form{
+
+border: 2px solid black;
+}
+form .wrapper{
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  padding: 0 20px 20px;
+  box-sizing: border-box;
+}
+form h2{
+  border-bottom: 0.5px solid black;
+}
+form label{
+  font-family: Monserrat-Light;
+  font-size: 12px;
+  line-height: 18px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+form label textarea{
+  resize: none;
+  height: 75px;
+}
+form label input{
+  padding-left: 5px;
+  line-height: 25px;
+  font-family: Monserrat-Light;
+  font-size: 18px;
+  margin-top: 10px;
+  width: 100%;
+}
+form p{
+  font-size: 14px;
+  line-height: 24px;
+  font-family: Monserrat-Light;
+  color: green;
+  margin: 0;
+}
+form button{
+  cursor: pointer;
+  align-self: flex-end;
+  margin-top: 20px;
+  font-family: Monserrat-Light;
+  line-height: 24px;
+  font-size: 20px;
+  background-color: #ffb014;
+  padding: 5px 10px;
+  border: 1px solid black;
+}
