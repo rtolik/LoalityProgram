@@ -5,10 +5,47 @@
   <a href="">Підрахунок статистики</a>
   </div>
 </div>
-<div class="content">
-  <input (change)="getDate(date.value)" #date  class="input-date" type="date" [value]="dateStr">
+<div class="content pb-5 mt-5">
+  <input (change)="getDate(date.value)" #date class="input-date mb-5" type="date" [value]="dateStr">
   <div class="table-form row m-0">
-  <div class="table col-md-8   pl-md-0 m-0"></div>
+    <div class="table col-md-8   pl-md-0 m-0">
+      <div class="cell d-flex heading">
+        <div class="hour-label d-flex justify-content-center align-items-center text-center ">ГОДИНА</div>
+        <div style="width: 80% " class="d-flex">
+          <div class="reserve-label d-flex justify-content-center align-items-center text-center">БРОНЬ</div>
+          <div style="width: 90%" class="d-flex">
+            <div class="name-label d-flex justify-content-center align-items-center text-center">ІМ'Я ТА ПРІЗВИЩЕ</div>
+            <div class="phone-label d-flex justify-content-center align-items-center text-center">НОМЕР ТЕЛЕФОНУ</div>
+            <div class="status-label d-flex justify-content-center align-items-center text-center">СТАТУС</div>
+          </div>
+        </div>
+      </div>
+      <div *ngFor="let one of arr;let i = index" class="d-flex   cell">
+        <div class="h-100 hour-cell  d-flex align-items-center justify-content-center">{{one}}</div>
+        <div class="h-100  info-cell d-flex ">
+          <div class="pluses-cell">
+            <div
+              #plusOne
+              (click)="addHalfAndHour(one,plusOne)"
+              class="h-50 one-plus-cell  border-bottom border-dark border-right d-flex justify-content-center align-items-center">
+              +
+            </div>
+            <div
+              #plusTwo
+              (click)="addHalfAndHour(one,plusTwo)"
+              class="h-50  one-plus-cell border-dark border-right d-flex justify-content-center align-items-center">+</div>
+          </div>
+          <div class="user-info d-flex">
+            <div class="name border-dark border-right d-flex justify-content-center align-items-center text-center">
+
+            </div>
+            <div class="phone border-dark border-right d-flex justify-content-center align-items-center">
+            </div>
+            <div class="status d-flex justify-content-center align-items-center"> </div>
+          </div>
+        </div>
+      </div>
+    </div>
   <div class="form col-md-4  pr-md-0 m-0">
     <form action="">
       <h2 class="text-center">Бронювання</h2>
@@ -19,15 +56,15 @@
         </label>
         <label >
           Дата
-          <input type="text">
+          <input class="border" [value]="dateStr"  type="date">
         </label>
         <label>
-          Час початку орендт
-        <input type="text">
+          Час початку оренди
+          <input type="text" #inptval [value]="selectedTime" [textMask]='{mask: this.mask}' placeholder="00:00">
         </label>
         <label>
           Тривалість оренди
-          <input type="text">
+          <input type="number" [value]="selectedHours" placeholder="0">
         </label>
         <label >
           Коментар

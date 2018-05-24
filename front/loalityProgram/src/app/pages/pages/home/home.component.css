@@ -106,3 +106,73 @@ form button{
   padding: 5px 10px;
   border: 1px solid black;
 }
+.cell{
+  border-top: 1px solid black;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  border-bottom: 1px solid black;
+  height: 50px;
+}
+.table .cell:last-child{
+  border-bottom: 2px solid black;
+}
+.table .cell:first-child{
+  border-top: 2px solid black;
+}
+.hour-label{
+  border-right: 1px solid black;
+  width: 20%;
+}
+.reserve-label{
+  width: 10%;
+  border-right: 1px solid black;
+}
+.name-label{
+  width: 20%;
+}
+.name-label,.phone-label{
+  border-right: 1px solid black;
+  width: 40%;
+}
+.heading *{
+  font-family: Monserrat-Light;
+}
+.status-label{
+  width: 20%;
+}
+.cell .hour-cell{
+  font-family: Monserrat-Light;
+  border-right: 1px solid black;
+  width: 20%;
+}
+.cell .info-cell{
+  width: 80%;
+}
+.pluses-cell{
+  width: 10%;
+}
+.user-info{
+  width: 90%;
+}
+.user-info * {
+  font-family: Monserrat-Light;
+}
+
+.user-info .name{
+  width: 40%;
+}
+.user-info .phone{
+  width: 40%;
+}
+.user-info .status{
+  width: 20%;
+}
+.one-plus-cell{
+  background-color: #ffff;
+}
+.table .one-plus-cell:hover{
+  cursor: pointer;
+}
+.background-orange{
+  background-color: #ffb014;
+}
