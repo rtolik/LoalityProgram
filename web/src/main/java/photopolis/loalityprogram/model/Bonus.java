@@ -32,8 +32,7 @@ public class Bonus {
 
     public Bonus() {}
 
-    public Bonus(Integer id, Integer value, BonusType bonusType, String dateOfStart, String dateOfEnd, User user) {
-        this.id = id;
+    public Bonus(Integer value, BonusType bonusType, String dateOfStart, String dateOfEnd, User user) {
         this.value = value;
         this.bonusType = bonusType;
         this.dateOfStart = dateOfStart;

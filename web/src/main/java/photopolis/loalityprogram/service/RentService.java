@@ -2,8 +2,7 @@ package photopolis.loalityprogram.service;
 
 
 import photopolis.loalityprogram.model.Rent;
-import photopolis.loalityprogram.model.User;
-import photopolis.loalityprogram.model.enums.RentStatus;
+
 
 import java.util.List;
 
@@ -13,11 +12,38 @@ import java.util.List;
 public interface RentService {
 
     void save(String date, String timeOfStart, String timeOfEnd, Double price, String comment,
-                     RentStatus rentStatus, User user);
+                    Integer rentStatus, Integer userId);
+
+    void delete(Integer id);
+
+    void update(Integer id, String timeOfStart, String timeOfEnd, Double price, String comment,
+                Integer rentStatus, Integer userId);
 
     void submitRent(Integer id);
 
-    List<Rent> getAllByDate(String date);
+    void submitRentLeave(Integer Id);
 
-    List<Rent> getAllByUserId(Integer id);
+    void updateDate(Integer id, String date);
+
+    void updateTimeOfStart(Integer id, String time);
+
+    void updateTimeOfEnd(Integer id, String time);
+
+    Rent findOne(Integer id);
+
+    List<Rent> findAll();
+
+    List<Rent> findAllByDate(String date);
+
+    List<Rent> findAllByUserId(Integer id);
+
+    List<Rent> findAllAwait();
+
+    List<Rent> findAllPaid();
+
+    List<Rent> findAllBonusPaid();
+
+    List<Rent> findAllLeaved();
+
+    List<Rent> findAllActing();
 }
