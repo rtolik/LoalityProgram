@@ -1,7 +1,7 @@
 package photopolis.loalityprogram.config;
 
 /**
- * Created by danul on 07.10.2017.
+ * Created by Anatoliy on 23.05.2018.
  */
 public class Constants {
     public static final String YYYY_MM_DD = "yyyy-MM-dd";

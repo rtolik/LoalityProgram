@@ -97,8 +97,8 @@ dist/
 nbdist/
 .nb-gradle/
 
-/public/hackathon/node_modules/
-/public/hackathon/node/
+/front/loalityProgram/node_modules/
+/front/loalityProgram/node/
 
 
 

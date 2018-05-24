@@ -30,7 +30,7 @@ public class ApplicationWebMvcConfig extends WebMvcConfigurerAdapter {
 
     String rootPath = System.getProperty("catalina.home");
     String[] PATH = {
-            "file:/" + rootPath + "/public/mplus.hackathon/dist",
+            "file:/" + rootPath + "/front/loalityProgram/dist",
             "file:/" + rootPath + "/resources/"
 
     };
