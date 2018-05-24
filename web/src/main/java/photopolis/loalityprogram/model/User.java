@@ -47,8 +47,7 @@ public class User {
     public User() {}
 
     public User(String name, String secondName, String surname, String phone, String dateOfBirth, String[] socialMedia,
-                       Integer cardId, String lastVisit, Integer numberOfVisits, Boolean isActive, List<Bonus> bonuses,
-                       List<Rent> rents) {
+                       Integer cardId, String lastVisit, Integer numberOfVisits, Boolean isActive) {
         this.name = name;
         this.secondName = secondName;
         this.surname = surname;

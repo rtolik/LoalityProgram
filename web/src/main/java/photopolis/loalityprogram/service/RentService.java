@@ -13,6 +13,7 @@ public interface RentService {
 
     void save(String date, String timeOfStart, String timeOfEnd, Double price, String comment,
                     Integer rentStatus, Integer userId);
+    void save(Rent rent);
 
     void delete(Integer id);
 
@@ -21,7 +22,7 @@ public interface RentService {
 
     void submitRent(Integer id);
 
-    void submitRentLeave(Integer Id);
+    void submitRentLeave(Integer id);
 
     void updateDate(Integer id, String date);
 
@@ -46,4 +47,5 @@ public interface RentService {
     List<Rent> findAllLeaved();
 
     List<Rent> findAllActing();
+    //TODO написати парсер для фронту h:i i DTO для оренди
 }
