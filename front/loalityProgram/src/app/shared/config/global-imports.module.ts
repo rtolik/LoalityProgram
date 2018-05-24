@@ -6,6 +6,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {RouterModule, Routes} from '@angular/router';
 import {mainRoutes} from "../../main.routes";
 import {BrowserModule} from "@angular/platform-browser";
+import {TextMaskModule} from "angular2-text-mask";
 
 
 const _routes: Routes = [
@@ -26,7 +27,8 @@ const _routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    ScrollToModule
+    ScrollToModule,
+    TextMaskModule
   ],
   declarations: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

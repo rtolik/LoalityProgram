@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Rent} from "../model/rent";
 import "rxjs/add/operator/catch";
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class RentService {
