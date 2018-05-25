@@ -2,6 +2,7 @@ package photopolis.loalityprogram.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import photopolis.loalityprogram.DTO.UserFIndClientDTO;
 import photopolis.loalityprogram.DTO.UserFindDTO;
 import photopolis.loalityprogram.model.User;
 import photopolis.loalityprogram.repository.UserRepository;
@@ -83,7 +84,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> findAllActive() {
-        return findAll().stream().filter(user -> user.getActive()==true).collect(toList());
+        return findAll().stream().filter(user -> user.getActive().equals(true)).collect(toList());
     }
 
     @Override
@@ -115,8 +116,16 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<UserFindDTO> findAllShort() {
         List<UserFindDTO> dtos = new ArrayList<>();
-        List<User> users = findAll();
+        List<User> users = findAllActive();
         users.forEach(user -> dtos.add(new UserFindDTO(user)));
+        return dtos;
+    }
+
+    @Override
+    public List<UserFIndClientDTO> findAllClieants() {
+        List<UserFIndClientDTO> dtos = new ArrayList<>();
+        List<User> users = findAllActive();
+        users.forEach(user -> dtos.add(new UserFIndClientDTO(user)));
         return dtos;
     }
 }

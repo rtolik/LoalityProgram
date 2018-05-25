@@ -1,5 +1,6 @@
 package photopolis.loalityprogram.service;
 
+import photopolis.loalityprogram.DTO.UserFIndClientDTO;
 import photopolis.loalityprogram.DTO.UserFindDTO;
 import photopolis.loalityprogram.model.User;
 
@@ -41,4 +42,6 @@ public interface UserService {
     User findByCardId(Integer cardId);
 
     List<UserFindDTO> findAllShort();
+
+    List<UserFIndClientDTO> findAllClieants();
 }
