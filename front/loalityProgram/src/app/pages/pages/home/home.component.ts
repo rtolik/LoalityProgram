@@ -23,13 +23,63 @@ export class HomeComponent implements OnInit {
   }
 
   addHalfAndHour(time: string, el: HTMLDivElement) {
+
     if (el.classList.contains('background-orange')) {
-      el.classList.toggle('background-orange');
-      this.selectedHours -= 0.5;
-      if(this.selectedHours==0){
-        this.selectedTime='';
+      if (
+        el.classList.contains('border-bottom')
+        &&
+        !el.nextElementSibling.classList.contains('background-orange')
+        ||
+        el.classList.contains('border-bottom')
+        &&
+        !el.parentElement.parentElement.parentElement.previousElementSibling.lastElementChild.firstElementChild.lastElementChild.classList.contains('background-orange')
+        ||
+        !el.classList.contains('border-bottom')
+        &&
+        !el.previousElementSibling.classList.contains('background-orange')
+        ||
+        !el.classList.contains('border-bottom')
+        &&
+        !el.parentElement.parentElement.parentElement.nextElementSibling.lastElementChild.firstElementChild.firstElementChild.classList.contains('background-orange')
+
+      ) {
+        el.classList.toggle('background-orange');
+        this.selectedHours -= 0.5;
+        if (this.selectedHours == 0) {
+          this.selectedTime = '';
+        }
       }
-    } else {
+    } else if (document.getElementsByClassName('background-orange').length == 0) {
+      el.classList.toggle('background-orange');
+      if (this.selectedHours < 0.5) {
+        this.selectedTime = time.substring(0, 5);
+        this.selectedHours = 0.5
+      } else {
+        this.selectedHours += 0.5
+      }
+    } else if (
+      document.getElementsByClassName('background-orange').length >= 1
+      &&
+      el.parentElement.parentElement.parentElement.previousElementSibling.lastElementChild.firstElementChild.lastElementChild.classList.contains('background-orange')
+      &&
+      el.classList.contains('border-bottom')
+      ||
+      document.getElementsByClassName('background-orange').length >= 1
+      &&
+      !el.classList.contains('border-bottom')
+      &&
+      el.previousElementSibling.classList.contains('background-orange')
+      ||
+      document.getElementsByClassName('background-orange').length >= 1
+      &&
+      el.parentElement.parentElement.parentElement.nextElementSibling.lastElementChild.firstElementChild.firstElementChild.classList.contains('background-orange')
+      &&
+      !el.classList.contains('border-bottom')
+      ||
+      el.classList.contains('border-bottom')
+      &&
+      el.nextElementSibling.classList.contains('background-orange')
+    ) {
       el.classList.toggle('background-orange');
       if (this.selectedHours < 0.5) {
         this.selectedTime = time.substring(0, 5);
@@ -38,11 +88,22 @@ export class HomeComponent implements OnInit {
         this.selectedHours += 0.5
       }
     }
+    for (let i = 0; i < document.getElementsByClassName('one-plus-cell').length; i++) {
+      if (document.getElementsByClassName('one-plus-cell')[i].classList.contains('background-orange')) {
+        if (!document.getElementsByClassName('one-plus-cell')[i].classList.contains('border-bottom'))
+          this.selectedTime = document.getElementsByClassName('one-plus-cell')[i].parentElement.parentElement.previousElementSibling.innerHTML.substring(0, 3) + '30';
+        else
+          this.selectedTime = document.getElementsByClassName('one-plus-cell')[i].parentElement.parentElement.previousElementSibling.innerHTML.substring(0, 5);
+        break;
+      }
+    }
+
+
   }
 
 
   getDate(date :string){
-    console.log(date);
+
   }
 
   ngOnInit() {
