@@ -20,28 +20,47 @@
           </div>
         </div>
       </div>
-      <div *ngFor="let one of arr;let i = index" class="d-flex   cell">
+      <div *ngFor="let one of arr;let i = index" class="d-flex   cell" #cell  >
         <div class="h-100 hour-cell  d-flex align-items-center justify-content-center">{{one}}</div>
         <div class="h-100  info-cell d-flex ">
           <div class="pluses-cell">
             <div
+              [ngClass]='findRentClass(one.substring(0,5),plusOne)'
               #plusOne
               (click)="addHalfAndHour(one,plusOne)"
               class="h-50 one-plus-cell  border-bottom border-dark border-right d-flex justify-content-center align-items-center">
               +
             </div>
             <div
+              [ngClass]='findRentClass(one.substring(0,5),plusTwo)'
               #plusTwo
               (click)="addHalfAndHour(one,plusTwo)"
               class="h-50  one-plus-cell border-dark border-right d-flex justify-content-center align-items-center">+</div>
           </div>
           <div class="user-info d-flex">
-            <div class="name border-dark border-right d-flex justify-content-center align-items-center text-center">
-
+            <div class="name border-dark border-right d-flex flex-column">
+              <div  class="h-50 w-100 border-bottom border-dark">
+               <p #upName class="m-0 text-center"> {{getName(one.substring(0,5),plusOne)}}</p>
+              </div>
+              <div class="h-50 w-100" #currentName >
+               <p class="m-0 text-center"> {{getName(one.substring(0,5),plusTwo,upName,currentName)}}</p>
+              </div>
             </div>
-            <div class="phone border-dark border-right d-flex justify-content-center align-items-center">
+            <div class="phone border-dark border-right d-flex flex-column">
+              <div class="h-50 w-100 border-bottom border-dark">
+                <p #upPhone class="m-0 text-center"> {{getPhone(one.substring(0,5),plusOne)}}</p>
+              </div>
+              <div class="h-50 w-100" #currentPhone>
+                <p class="m-0 text-center"> {{getPhone(one.substring(0,5),plusTwo,upPhone,currentPhone)}}</p>
+              </div>
             </div>
-            <div class="status d-flex justify-content-center align-items-center"> </div>
+            <div class="status d-flex flex-column">
+              <div class="h-50 w-100 border-bottom border-dark">
+                <p #upStatus class="m-0 text-center"> {{getRentStatus(one.substring(0,5),plusOne)}}</p>
+              </div>
+              <div class="h-50 w-100" #currentStatus>
+                <p class="m-0 text-center"> {{getRentStatus(one.substring(0,5),plusTwo,upStatus,currentStatus)}}</p>
+              </div></div>
           </div>
         </div>
       </div>
@@ -52,7 +71,10 @@
       <div class="wrapper">
         <label>
           Клієнт
-          <input type="text">
+          <input  type="text" list="userList">
+          <datalist id="userList">
+            <option *ngFor="let one of user" [value]="one.name+' '+one.surname "></option>
+          </datalist>
         </label>
         <label >
           Дата

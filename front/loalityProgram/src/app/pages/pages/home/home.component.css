@@ -176,3 +176,9 @@ form button{
 .background-orange{
   background-color: #ffb014;
 }
+.reserved{
+  background-color: #00b200;
+}
+.closed{
+  background-color: grey;
+}
