@@ -16,6 +16,8 @@ public class User {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String iamgePath;
+
     private String name;
 
     private String secondName;
@@ -36,6 +38,8 @@ public class User {
 
     private Boolean isActive;
 
+    private Boolean isMember;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Bonus> bonuses;
@@ -46,8 +50,9 @@ public class User {
 
     public User() {}
 
-    public User(String name, String secondName, String surname, String phone, String dateOfBirth, String[] socialMedia,
-                       Integer cardId, String lastVisit, Integer numberOfVisits, Boolean isActive) {
+    public User(String imagePath, String name, String secondName, String surname, String phone, String dateOfBirth, String[] socialMedia,
+                       Integer cardId, String lastVisit, Integer numberOfVisits, Boolean isActive, Boolean isMember) {
+        this.iamgePath=imagePath;
         this.name = name;
         this.secondName = secondName;
         this.surname = surname;
@@ -60,6 +65,7 @@ public class User {
         this.isActive = isActive;
         this.bonuses = bonuses;
         this.rents = rents;
+        this.isMember=isMember;
     }
 
     public Integer getId() {
@@ -176,6 +182,24 @@ public class User {
 
     public User setRents(List<Rent> rents) {
         this.rents = rents;
+        return this;
+    }
+
+    public Boolean getMember() {
+        return isMember;
+    }
+
+    public User setMember(Boolean member) {
+        isMember = member;
+        return this;
+    }
+
+    public String getIamgePath() {
+        return iamgePath;
+    }
+
+    public User setIamgePath(String iamgePath) {
+        this.iamgePath = iamgePath;
         return this;
     }
 }
