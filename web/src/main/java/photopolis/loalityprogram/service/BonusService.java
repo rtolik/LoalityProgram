@@ -11,6 +11,8 @@ public interface BonusService {
 
     void save(Integer value, Integer bonusType, String dateOfStart, String dateOfEnd, Integer userId);
 
+    void save(Bonus bonus);
+
     void delete(Integer id);
 
     void updade(Integer id,Integer value, Integer bonusType, String dateOfStart, String dateOfEnd, Integer userId);
@@ -18,6 +20,8 @@ public interface BonusService {
     Bonus findOne(Integer id);
 
     List<Bonus> findAll();
+
+    List<Bonus> findAllByBonusesId(List<Integer> id);
 
     void updateValue(Integer id, Integer value);
 

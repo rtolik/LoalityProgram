@@ -10,7 +10,9 @@ import java.util.List;
 public interface UserService {
 
     void save(String name, String secondName, String surname, String phone, String dateOfBirth, String[] socialMedia,
-              Integer cardId, String lastVisit, Integer numberOfVisits, Boolean isActive, List<Integer> bonusId);
+              Integer cardId, String lastVisit, Integer numberOfVisits);
+
+    void save(User user);
 
     void delete(Integer id);
 
@@ -29,9 +31,9 @@ public interface UserService {
 
     User findByRentId(Integer rentId);
 
-    User findByName(String name);
+    List<User> findByName(String name);
 
-    User findBySurname(String surname);
+    List<User> findBySurname(String surname);
 
-    User findByPhone(String phone);
+    List<User> findByPhone(String phone);
 }
