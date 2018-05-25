@@ -4,6 +4,8 @@ package photopolis.loalityprogram.config;
  * Created by Anatoliy on 23.05.2018.
  */
 public class Constants {
+
+    public static final Double BONUS_MULTIPLUER = 0.1;
     public static final String YYYY_MM_DD = "yyyy-MM-dd";
     public static final String YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
     public static final String EMAIL_LOGIN="anazariks@gmail.com";

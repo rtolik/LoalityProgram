@@ -17,7 +17,7 @@ public class Bonus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer value;
+    private Double value;
 
     private BonusType bonusType;
 
@@ -32,7 +32,7 @@ public class Bonus {
 
     public Bonus() {}
 
-    public Bonus(Integer value, Integer bonusType, String dateOfStart, String dateOfEnd, User user) {
+    public Bonus(Double value, Integer bonusType, String dateOfStart, String dateOfEnd, User user) {
         this.value = value;
         this.bonusType = BonusType.values()[bonusType];
         this.dateOfStart = dateOfStart;
@@ -49,11 +49,11 @@ public class Bonus {
         return this;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public Bonus setValue(Integer value) {
+    public Bonus setValue(Double value) {
         this.value = value;
         return this;
     }
@@ -91,6 +91,11 @@ public class Bonus {
 
     public Bonus setUser(User user) {
         this.user = user;
+        return this;
+    }
+
+    public Bonus addToValue(Double value) {
+        this.value += value;
         return this;
     }
 }

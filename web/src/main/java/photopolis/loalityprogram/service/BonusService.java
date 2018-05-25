@@ -9,13 +9,13 @@ import java.util.List;
  */
 public interface BonusService {
 
-    void save(Integer value, Integer bonusType, String dateOfStart, String dateOfEnd, Integer userId);
+    void save(Double value, Integer bonusType, String dateOfStart, String dateOfEnd, Integer userId);
 
     void save(Bonus bonus);
 
     void delete(Integer id);
 
-    void updade(Integer id,Integer value, Integer bonusType, String dateOfStart, String dateOfEnd, Integer userId);
+    void updade(Integer id,Double value, Integer bonusType, String dateOfStart, String dateOfEnd, Integer userId);
 
     Bonus findOne(Integer id);
 
@@ -23,7 +23,7 @@ public interface BonusService {
 
     List<Bonus> findAllByBonusesId(List<Integer> id);
 
-    void updateValue(Integer id, Integer value);
+    void updateValue(Integer id, Double value);
 
     void updateDateOfStart(Integer id, String date);
 

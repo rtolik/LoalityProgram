@@ -2,16 +2,19 @@ package photopolis.loalityprogram.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import photopolis.loalityprogram.DTO.UserFindDTO;
 import photopolis.loalityprogram.model.User;
 import photopolis.loalityprogram.repository.UserRepository;
 import photopolis.loalityprogram.service.BonusService;
 import photopolis.loalityprogram.service.RentService;
 import photopolis.loalityprogram.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
+import static photopolis.loalityprogram.service.utils.Utility.dataParser;
 
 /**
  * Created by Anatoliy on 24.05.2018.
@@ -29,11 +32,11 @@ public class UserServiceImpl implements UserService{
     private RentService rentService;
 
     @Override
-    public void save(String name, String secondName, String surname, String phone, String dateOfBirth,
-                     String[] socialMedia, Integer cardId, String lastVisit, Integer numberOfVisits) {
+    public void save(String imagePath, String name, String secondName, String surname, String phone, String dateOfBirth,
+                     String[] socialMedia, Integer cardId, String lastVisit, Integer numberOfVisits, Boolean isMember) {
         userRepository.save(
-                new User(name, secondName, surname, phone, dateOfBirth, socialMedia, cardId, lastVisit, numberOfVisits,
-                        true));
+                new User(imagePath, name, secondName, surname, phone,dataParser(dateOfBirth), socialMedia, cardId, lastVisit, numberOfVisits,
+                        true,isMember));
     }
 
     @Override
@@ -47,13 +50,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void update(Integer id, String name, String secondName, String surname, String phone, String dateOfBirth,
+    public void update(Integer id, String imagePath, String name, String secondName, String surname, String phone, String dateOfBirth,
                        String[] socialMedia, Integer cardId, String lastVisit, Integer numberOfVisits,
-                       Boolean isActive, List<Integer> bonusId) {
+                       Boolean isActive,Boolean isMember, List<Integer> bonusId) {
         User tmp= findOne(id);
         tmp.setName(name).setSecondName(secondName).setSurname(surname).setPhone(phone).setDateOfBirth(dateOfBirth)
                 .setSocialMedia(socialMedia).setCardId(cardId).setLastVisit(lastVisit).setNumberOfVisits(numberOfVisits)
-                .setActive(isActive).setBonuses(bonusService.findAllByBonusesId(bonusId));
+                .setActive(isActive).setBonuses(bonusService.findAllByBonusesId(bonusId)).setMember(isMember)
+                .setIamgePath(imagePath);
         save(tmp);
     }
 
@@ -87,6 +91,7 @@ public class UserServiceImpl implements UserService{
         return rentService.findOne(rentId).getUser();
     }
 
+
     @Override
     public List<User> findByName(String name) {
         return findAll().stream().filter(user -> user.getName().contains(name)).collect(toList());
@@ -100,5 +105,18 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> findByPhone(String phone) {
         return findAll().stream().filter(user -> user.getPhone().contains(phone)).collect(toList());
+    }
+
+    @Override
+    public User findByCardId(Integer cardId) {
+        return findAll().stream().filter(user -> user.getCardId().equals(cardId)).findFirst().get();
+    }
+
+    @Override
+    public List<UserFindDTO> findAllShort() {
+        List<UserFindDTO> dtos = new ArrayList<>();
+        List<User> users = findAll();
+        users.forEach(user -> dtos.add(new UserFindDTO(user)));
+        return dtos;
     }
 }
