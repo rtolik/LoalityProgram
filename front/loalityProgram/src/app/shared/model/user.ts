@@ -9,7 +9,7 @@ export class User {
   secondName: string;
   phone: string;
   dateOfBirth: string;
-  socialMedia: string[];
+  socialMedia: string;
   memberDate: string;
   cardId: number;
   isMember: boolean;

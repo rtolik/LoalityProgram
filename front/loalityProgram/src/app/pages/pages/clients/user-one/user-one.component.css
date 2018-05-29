@@ -1,0 +1,36 @@
+.content {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 50px 42.5px;
+  box-sizing: border-box;
+}
+button{
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  border: 2px solid black;
+  background-color: #ffb014;
+  font-family: Monserrat-Light;
+  font-size: 18px;
+  line-height: 24px;
+}
+.right{
+}
+
+.right h3{
+  font-size: 18px;
+  line-height: 24px;
+  font-family: Monserrat-Regular;
+}
+.right input{
+  margin-bottom: 8px;
+  color: black;
+  font-size: 18px;
+  line-height: 24px;
+  font-family: Monserrat-Regular;
+}
+.heading h3{
+  width: 100%;
+  text-align: center;
+}

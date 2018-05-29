@@ -13,10 +13,10 @@ export class UserService {
   constructor(private httpClient: HttpClient) {
   }
 
-  save(userForm: HTMLFormElement, userJson: string): Observable<User> {
-    let form: FormData = new FormData();
-    form.append('user', userJson);
-    return this.httpClient.post<User>(this.controller + '/save', form).catch(err => Observable.throw(err));
+  save(userForm: HTMLFormElement, user: User): Observable<User> {
+    let form: FormData = new FormData(userForm);
+    form.append('userJson', JSON.stringify(user));
+    return this.httpClient.post<User>(this.controller + '/create-user', form).catch(err => Observable.throw(err));
   }
   findUserFormRent(): Observable<User[]>{
     return this.httpClient.get<User[]>(this.controller + '/form-find-user').catch(err => Observable.throw(err));

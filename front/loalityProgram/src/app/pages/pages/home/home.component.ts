@@ -47,8 +47,6 @@ export class HomeComponent implements OnInit {
     },error => {
         console.log(error);
     });
-    console.log(new Date(0, 0, 0, 19, 0));
-
   }
 
   addHalfAndHour(time: string, el: HTMLDivElement) {
@@ -268,6 +266,7 @@ export class HomeComponent implements OnInit {
     for (let i=0; i< document.getElementsByClassName('one-plus-cell').length;i++) {
       document.getElementsByClassName('one-plus-cell')[i].classList.remove('background-orange');
     }
+    console.log(date);
     this.selectedTime='';
     this.selectedHours=0;
 
