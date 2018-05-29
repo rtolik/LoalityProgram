@@ -1,0 +1,113 @@
+.content {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 50px 42.5px;
+  box-sizing: border-box;
+}
+button{
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  border: 2px solid black;
+  background-color: #ffb014;
+  font-family: Monserrat-Light;
+  font-size: 18px;
+  line-height: 24px;
+}
+.right{
+}
+
+.right h3{
+  font-size: 18px;
+  line-height: 24px;
+  font-family: Monserrat-Regular;
+}
+.right input{
+  margin-bottom: 8px;
+  color: black;
+  font-size: 18px;
+  line-height: 24px;
+  font-family: Monserrat-Regular;
+}
+.heading h3{
+  width: 100%;
+  text-align: center;
+}
+label {
+  margin-bottom: 0;
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  font-family: Monserrat-Light;
+  font-size: 18px;
+  line-height: 24px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+label .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: transparent;
+  border: 1px solid black;
+
+}
+
+/* On mouse-over, add a grey background color */
+label:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+label .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+label .checkmark:after {
+  left: 7.5px;
+  top: 2.5px;
+  width: 9px;
+  height: 15px;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.d-flex.row.m-0 h3:nth-child(2){
+  padding-left: 15px;
+}
+.buttons{
+  margin-top: 20px;
+}
+.buttons input{
+  font-family: Monserrat-Light;
+  font-size: 18px;
+  line-height: 24px;
+  padding-left: 5px;
+  height: 100%;
+}
+.buttons * {
+  width: 100%;
+  margin: 0 5px;
+}

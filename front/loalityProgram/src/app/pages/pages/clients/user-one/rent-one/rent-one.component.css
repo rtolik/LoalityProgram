@@ -1,0 +1,13 @@
+.wrapper {
+  height: 80px;
+  background-color: #a1a1a1;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-family: Monserrat-Regular;
+  font-size: 18px;
+  line-height: 24px;
+  width: 100%;
+  text-align: center;
+}

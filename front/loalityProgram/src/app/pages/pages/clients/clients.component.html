@@ -1,6 +1,6 @@
 <div class="content d-flex">
   <div class="filters d-flex flex-column">
-    <input type="text" placeholder="Пошук">
+    <input (change)="loadPage(1,input.value)" #input type="text" placeholder="Пошук">
     <label>
       <input name="filter" type="radio">
       <span class="checkmark"></span>
@@ -39,15 +39,8 @@
       <h2>Ім'я, Прізвище</h2>
       <h2>Номер телефону</h2>
     </div>
-    <app-user-card-one></app-user-card-one>
-    <app-user-card-one></app-user-card-one>
-    <app-user-card-one></app-user-card-one>
-    <app-user-card-one></app-user-card-one>
-    <app-user-card-one></app-user-card-one>
-    <app-user-card-one></app-user-card-one>
-    <app-user-card-one></app-user-card-one>
-    <app-user-card-one></app-user-card-one>
-    <app-user-card-one></app-user-card-one>
+    <app-user-card-one *ngFor="let user of users" [user]="user"></app-user-card-one>
+
     <nav aria-label="Page navigation" class="align-self-center">
       <ul class="pagination">
         <li class="page-item">

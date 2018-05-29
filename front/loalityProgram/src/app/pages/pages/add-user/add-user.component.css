@@ -1,0 +1,138 @@
+.content {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 42.5px;
+  box-sizing: border-box;
+}
+
+.scroll-button {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 35px;
+}
+
+a {
+  height: 24px;
+  line-height: 24px;
+  text-decoration: none;
+  color: black;
+  font-family: Monserrat-Light;
+  font-size: 14px;
+  cursor: pointer;
+}
+.hidden{
+  visibility: hidden;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: black;
+  text-underline-color: black;
+  outline-color: black;
+}
+
+.border-scrolls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.border-scrolls span {
+  font-family: Monserrat-Light;
+  margin: 0 10px;
+  font-size: 20px;
+}
+
+.border-scrolls {
+  box-sizing: border-box;
+  border-bottom: 1px solid black;
+  padding: 0 20px 5px;
+}
+
+.add-user h2 {
+  font-family: Monserrat-Light;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.add-user {
+  width: 50%;
+
+  border: 2px solid black;
+  background-color: #ffffff;
+  margin: 30px auto;
+}
+
+form {
+  padding: 10px 10% 25px;
+  box-sizing: border-box;
+}
+
+form label {
+  font-family: Monserrat-Light;
+  font-size: 18px;
+  line-height: 18px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+form label textarea {
+  resize: none;
+  height: 75px;
+}
+
+form label input {
+  padding-left: 5px;
+  line-height: 25px;
+  font-family: Monserrat-Light;
+  font-size: 18px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+form figure {
+  margin: 25px auto 25px;
+  width: 50%;
+  height: auto;
+
+  border: 1px solid black;
+
+}
+
+.min-heigth {
+  min-height: 15vw;
+}
+
+figure img {
+  width: 100%;
+  height: auto;
+
+}
+
+button {
+  border: 1px solid black;
+  padding: 5px 10px;
+  font-family: Monserrat-Light;
+  font-size: 18px;
+  line-height: 24px;
+  background-color: #ffb014;
+}
+
+.input-date::-webkit-inner-spin-button {
+  display: none;
+}
+
+input[type="date"]::-webkit-clear-button {
+  display: none;
+}
+.input-date{
+  outline: none;
+  background-color: transparent;
+  font-family: Monserrat-Light;
+  font-size: 14px;
+  line-height: 24px;
+  border: 1px solid #dfdfdf;
+}

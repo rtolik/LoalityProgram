@@ -1,0 +1,60 @@
+<div class="content row m-0">
+  <div class="left col-3 flex-column align-items-center d-flex">
+    <!--<img src="" alt="">-->
+    <div style="border: 1px solid black; height: 250px; width: 100%"></div>
+  </div>
+  <div class="right col-9 ">
+    <div class="d-flex row m-0">
+      <h3 class="col-4">Імя:</h3>
+      <h3>Олег</h3>
+      <h3 class="offset-4"></h3>
+    </div>
+    <div class="d-flex row m-0">
+      <h3 class="col-4">Прізвище:</h3>
+      <h3>Олег</h3>
+      <h3 class="offset-4"></h3>
+    </div>
+    <div class="d-flex row m-0">
+      <h3 class="col-4">Скільки має бонуісв:</h3>
+      <h3>Олег</h3>
+      <h3 class="offset-4"></h3>
+    </div>
+    <div class="d-flex row m-0">
+      <h3 class="col-4">Номер телефону:</h3>
+      <h3>Олег</h3>
+      <h3 class="offset-4"></h3>
+    </div>
+    <div class="d-flex row m-0">
+      <h3 class="col-4">Дата:</h3>
+      <input type="text" class="col-4" [disabled]="editing==false"
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+      <h3 class="offset-4"></h3>
+    </div>
+    <div class="d-flex row m-0">
+      <h3 class="col-4">Час початку:</h3>
+      <input type="text" class="col-4" [disabled]="editing==false"
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+      <h3 class="offset-4"></h3>
+    </div>
+    <div class="d-flex row m-0">
+      <h3 class="col-4">Тривалість</h3>
+      <input type="text" class="col-4" [disabled]="editing==false"
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+      <h3 class="offset-4"></h3>
+    </div>
+  </div>
+  <div class="buttons w-100 d-flex justify-content-between align-items-center">
+    <button *ngIf="editing==false;" (click)="edit()"><img style="height: 24px; width: auto; margin-right: 10px;"
+                                                          src="../../../../../assets/svg/pencil.png"
+                                                          alt="">Редагувати
+    </button>
+    <button (click)="edit()" *ngIf="editing==true"><img style="height: 24px; width: auto; margin-right: 10px;"
+                                                        src="../../../../../assets/svg/pencil.png"
+                                                        alt="">Зберегти
+    </button>
+    <input type="number" placeholder="Скільки заплатив">
+    <input type="number" placeholder="Відняти бонуси">
+    <button>Закрити оренду</button>
+    <button>Не відбулася</button>
+  </div>
+</div>

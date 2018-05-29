@@ -9,11 +9,12 @@ export class User {
   secondName: string;
   phone: string;
   dateOfBirth: string;
-  socialMedia: string[];
+  socialMedia: string;
   memberDate: string;
   cardId: number;
   isMember: boolean;
   lastVisit: string;
+  dateOfMember: string;
   numberOfVisits: number;
   bonus: Bonus[];
   isActive: boolean;

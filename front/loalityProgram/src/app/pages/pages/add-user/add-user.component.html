@@ -1,0 +1,49 @@
+<div class="content">
+  <div class="scroll-button">
+    <div class="border-scrolls">
+      <a href="#/add-user" (click)="addMember=false">Додати користувача</a>
+      <span>|</span>
+      <a  href="#/add-user" (click)="addMember=true">Додати друга Photopolis</a>
+    </div>
+  </div>
+  <div class="add-user d-flex flex-column">
+    <h2 class="border-bottom border-dark text-center p-1">Додати клієнта</h2>
+    <form [formGroup]="userForm" #form (submit)="addUser(form)">
+      <label>Ім'я*
+        <input formControlName="name" type="text">
+      </label>
+      <label>Прізвище*
+        <input formControlName="surname" type="text">
+      </label>
+      <label *ngIf="addMember">По батькові*
+        <input formControlName="secondName" type="text">
+      </label>
+      <label>Номер телефону*
+        <input formControlName="phone" [textMask]='{mask: this.phoneMask}' placeholder="38 (___)-__-__-___" type="tel">
+      </label>
+      <label *ngIf="addMember">Дата народження*
+        <input formControlName="dateOfBirth" type="date" class="input-date">
+      </label>
+      <label *ngIf="addMember">Електронна адреса
+        <input formControlName="email" type="email" class="input-date">
+      </label>
+      <label *ngIf="addMember">Соціальні мережі
+        <input formControlName="socialMedia" type="text" class="input-date">
+      </label>
+      <label *ngIf="addMember">Номер карти програми лояльності*
+        <input formControlName="cardId" type="text" class="input-date">
+      </label>
+      <input type="file" id="file" class="d-none" name="img" (change)="readUrl($event)">
+      <figure [ngClass]="{'min-heigth':urlImg=='empty'}">
+        <img *ngIf="urlImg!='empty'"  [src]="urlImg" alt="">
+      </figure>
+      <label class="align-self-center text-center" for="file"
+             style="width: fit-content; margin: 0 auto 20px; padding: 5px 10px; background-color: #ffb014; border: 1px solid black; cursor: pointer">
+        Додати фото</label>
+      <div class="d-flex justify-content-between">
+        <h2 style="color: green" [ngClass]="{'hidden':!added}">-Успішно додано</h2>
+        <button  type="submit">Додати</button>
+      </div>
+    </form>
+  </div>
+</div>
