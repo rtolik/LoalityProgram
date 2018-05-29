@@ -8,12 +8,14 @@ import { UserCardOneComponent } from './pages/clients/user-card-one/user-card-on
 import { AddUserComponent } from './pages/add-user/add-user.component';
 import { UserOneComponent } from './pages/clients/user-one/user-one.component';
 import { RentOneComponent } from './pages/clients/user-one/rent-one/rent-one.component';
+import {RentOnePageComponent} from "./pages/rent-one-page/rent-one-page.component";
+import { FinancesComponent } from './pages/finances/finances.component';
 
 @NgModule({
   imports: [
     GlobalImportsModule
   ],
-  declarations: [PagesComponent, HeaderComponent, HomeComponent, ClientsComponent, UserCardOneComponent, AddUserComponent, UserOneComponent, RentOneComponent]
+  declarations: [PagesComponent, HeaderComponent, HomeComponent, ClientsComponent, UserCardOneComponent, AddUserComponent, UserOneComponent, RentOneComponent, RentOnePageComponent, FinancesComponent]
 })
 export class PagesModule {
 }

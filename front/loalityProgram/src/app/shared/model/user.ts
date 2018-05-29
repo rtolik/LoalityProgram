@@ -14,6 +14,7 @@ export class User {
   cardId: number;
   isMember: boolean;
   lastVisit: string;
+  dateOfMember: string;
   numberOfVisits: number;
   bonus: Bonus[];
   isActive: boolean;

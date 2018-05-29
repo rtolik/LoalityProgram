@@ -4,6 +4,7 @@ import {phoneMask} from "../../../shared/config/config";
 import {User} from "../../../shared/model/user";
 import {UserService} from "../../../shared/service/user.service";
 import {s} from "@angular/core/src/render3";
+import {isNullOrUndefined} from "util";
 
 @Component({
   selector: 'app-add-user',
@@ -61,6 +62,9 @@ export class AddUserComponent implements OnInit {
     });
     this.userForm.valueChanges.subscribe(next => {
       this.user = next;
+      if(!isNullOrUndefined(this.user.cardId)||this.user.cardId!=0){
+        this.user.dateOfMember=new Date().toISOString();
+      }
       console.log(this.user);
     })
 
