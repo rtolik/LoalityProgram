@@ -4,6 +4,7 @@ package photopolis.loalityprogram.DTO;
 import photopolis.loalityprogram.model.Rent;
 import photopolis.loalityprogram.model.User;
 
+import static photopolis.loalityprogram.service.utils.Utility.countDuration;
 import static photopolis.loalityprogram.service.utils.Utility.timeToDoubleParser;
 
 /**
@@ -29,7 +30,7 @@ public class DailyRentDTO {
         this.timeOfEnd =rent.getTimeOfEnd();
         this.rentStatus=rent.getRentStatus().toString();
         this.user = new UserDailyDTO(user);
-        this.duration=timeToDoubleParser(timeOfEnd)-timeToDoubleParser(timeOfStart);
+        this.duration=countDuration(this.timeOfStart,this.timeOfEnd);
     }
 
     public Integer getId() {

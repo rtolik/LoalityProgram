@@ -1,6 +1,7 @@
 package photopolis.loalityprogram.service.utils;
 
 
+import io.swagger.models.auth.In;
 
 /**
  * Created by Anatoliy on 25.05.2018.
@@ -33,6 +34,10 @@ public class Utility {
 
     public static String doubleTimeToStringParser(Double time){
         return time.toString();
+    }
+
+    public  static  Double countDuration(String timeOfStart, String timeOfEnd){
+        return timeToDoubleParser(timeOfEnd)-timeToDoubleParser(timeOfStart);
     }
 
 //    public static String outTimeParser(String time){

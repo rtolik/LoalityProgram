@@ -28,9 +28,11 @@ public class User {
 
     private String dateOfBirth;
 
-    private String [] socialMedia;
+    private String socialMedia;
 
     private Integer cardId;
+
+    private String dateOfMember;
 
     private String lastVisit;
 
@@ -50,8 +52,9 @@ public class User {
 
     public User() {}
 
-    public User(String imagePath, String name, String secondName, String surname, String phone, String dateOfBirth, String[] socialMedia,
-                       Integer cardId, String lastVisit, Integer numberOfVisits, Boolean isActive, Boolean isMember) {
+    public User(String imagePath, String name, String secondName, String surname, String phone, String dateOfBirth,
+                String socialMedia, Integer cardId, String lastVisit, Integer numberOfVisits, Boolean isActive,
+                Boolean isMember, String dateOfMember) {
         this.iamgePath=imagePath;
         this.name = name;
         this.secondName = secondName;
@@ -63,9 +66,8 @@ public class User {
         this.lastVisit = lastVisit;
         this.numberOfVisits = numberOfVisits;
         this.isActive = isActive;
-        this.bonuses = bonuses;
-        this.rents = rents;
         this.isMember=isMember;
+        this.dateOfMember=dateOfMember;
     }
 
     public Integer getId() {
@@ -122,11 +124,11 @@ public class User {
         return this;
     }
 
-    public String[] getSocialMedia() {
+    public String getSocialMedia() {
         return socialMedia;
     }
 
-    public User setSocialMedia(String[] socialMedia) {
+    public User setSocialMedia(String socialMedia) {
         this.socialMedia = socialMedia;
         return this;
     }
@@ -200,6 +202,15 @@ public class User {
 
     public User setIamgePath(String iamgePath) {
         this.iamgePath = iamgePath;
+        return this;
+    }
+
+    public String getDateOfMember() {
+        return dateOfMember;
+    }
+
+    public User setDateOfMember(String dateOfMember) {
+        this.dateOfMember = dateOfMember;
         return this;
     }
 }
