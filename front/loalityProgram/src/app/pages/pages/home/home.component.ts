@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {TestService} from "../../../shared/service/test.service";
 import {RentService} from "../../../shared/service/rent.service";
 import {timeMask} from "../../../shared/config/config";
@@ -7,6 +7,7 @@ import {Rent} from "../../../shared/model/rent";
 import {Subject} from "rxjs/Subject";
 import {UserService} from "../../../shared/service/user.service";
 import {User} from "../../../shared/model/user";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
     'PAID': 'Оплачено'
   };
 
-
+  @ViewChild('cell') cell: HTMLDivElement;
   dateStr : string=new Date().toISOString().substring(0,10);
   arr: Array<string> = new Array<string>(24);
   mask = timeMask;
@@ -264,9 +265,16 @@ export class HomeComponent implements OnInit {
   }
 
   getDate(date :string){
+    for (let i=0; i< document.getElementsByClassName('one-plus-cell').length;i++) {
+      document.getElementsByClassName('one-plus-cell')[i].classList.remove('background-orange');
+    }
+    this.selectedTime='';
+    this.selectedHours=0;
+
 
     this._rent.getAllByDate(date).subscribe(next => {
       this.rent=next;
+
       console.log(this.rent);
     }, error => {
       console.log(error);

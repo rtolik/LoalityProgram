@@ -33,13 +33,14 @@
   justify-content: center;
   height: 100%;
 }
-.container >h1:hover{
-  background-color: #e19613;
+.container-header >h1:hover{
+  color: white;
+  background-color: black;
   cursor: pointer;
 
 }
 h1{
-
+  outline: none;
   font-size: 24px;
 }
 h3 {

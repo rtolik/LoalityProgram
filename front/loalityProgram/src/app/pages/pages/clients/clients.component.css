@@ -1,0 +1,134 @@
+.content {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 50px 42.5px;
+  box-sizing: border-box;
+}
+
+.filters {
+  height: fit-content;
+  width: 30%;
+  border-right: 1px solid black;
+}
+
+.filters > input {
+  margin-bottom: 25px;
+  border-top: 0;
+  border-right: 0;
+  outline: none;
+  width: 90%;
+  font-size: 24px;
+  line-height: 24px;
+  font-family: Monserrat-Light;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 5px 5px;
+}
+.heading{
+  padding: 0 25px;
+
+}
+
+
+h2 {
+  width: 100px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 24px;
+  font-family: Monserrat-Light;
+}
+
+label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 25px;
+  cursor: pointer;
+  font-family: Monserrat-Light;
+  font-size: 18px;
+  line-height: 24px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+label .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: transparent;
+  border: 1px solid black;
+
+}
+
+/* On mouse-over, add a grey background color */
+label:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+label .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+label .checkmark:after {
+  left: 7.5px;
+  top: 2.5px;
+  width: 9px;
+  height: 15px;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.users {
+  padding-left: 10px;
+  width: 100%;
+}
+.page-link{
+  background-color: transparent;
+}
+.page-link:hover{
+  background-color: #a8a8a8;
+
+}
+li.page-item{
+  box-sizing: border-box;
+}
+li.page-item a{
+  box-sizing: border-box;
+}
+ul.pagination li:first-child:hover a{
+}
+ul.pagination li:last-child:hover a{
+}
+ul.pagination li:not(:first-child):not(:last-child):hover a{
+  border-left-color: #90a4ae;
+  border-right-color: #90a4ae;
+}
+ul.pagination li.current{
+  border-left-color: #90a4ae;
+  border-right-color: #90a4ae;
+  background-color: #d1d1d1!important;
+}
+.pagination span{
+  color: black!important;
+}
