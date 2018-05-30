@@ -65,7 +65,6 @@ export class AddUserComponent implements OnInit {
       if(!isNullOrUndefined(this.user.cardId)||this.user.cardId!=0){
         this.user.dateOfMember=new Date().toISOString();
       }
-      console.log(this.user);
     })
 
   }

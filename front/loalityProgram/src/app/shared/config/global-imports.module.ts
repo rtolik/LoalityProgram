@@ -7,6 +7,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {mainRoutes} from "../../main.routes";
 import {BrowserModule} from "@angular/platform-browser";
 import {TextMaskModule} from "angular2-text-mask";
+import {ImagePipe} from "../pipe/pipes/image.pipe";
+import {PipeModule} from "../pipe/pipe.module";
 
 
 const _routes: Routes = [
@@ -28,7 +30,8 @@ const _routes: Routes = [
     ReactiveFormsModule,
     RouterModule,
     ScrollToModule,
-    TextMaskModule
+    TextMaskModule,
+    PipeModule
   ],
   declarations: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -28,6 +28,12 @@
   padding: 0 25px;
 
 }
+.heading h2{
+  width: 100%;
+}
+.heading >div h2:first-child{
+  width: 100px;
+}
 
 
 h2 {

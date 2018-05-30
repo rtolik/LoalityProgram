@@ -5,6 +5,9 @@ import {PagesModule} from "./pages/pages.module";
 import {RouterModule, Routes} from "@angular/router";
 import {mainRoutes} from "./main.routes";
 import {ScrollToModule} from "ng2-scroll-to";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {ContentInterceptor} from "./shared/interceptor/content-interceptor";
+import { ImagePipe } from './shared/pipe/pipes/image.pipe';
 
 
 @NgModule({
@@ -15,7 +18,13 @@ import {ScrollToModule} from "ng2-scroll-to";
     GlobalImportsModule,
     PagesModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ContentInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

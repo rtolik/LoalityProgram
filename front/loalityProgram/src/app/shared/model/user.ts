@@ -3,7 +3,7 @@ import {Rent} from "./rent";
 
 export class User {
   id: number;
-  image : string;
+  imagePath : string;
   surname: string;
   name: string;
   secondName: string;

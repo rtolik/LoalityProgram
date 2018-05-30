@@ -8,7 +8,7 @@ import {url} from "../config/url";
 
 @Injectable()
 export class RentService {
-  readonly controller = url+'/rent';
+  readonly controller = '/rent';
 
   constructor(private httpClient: HttpClient) {
   }

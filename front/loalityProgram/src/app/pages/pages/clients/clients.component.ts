@@ -14,6 +14,7 @@ export class ClientsComponent implements OnInit {
   users:User[]=[];
   userModFilter: string='all';
   criterionFilter: string='alp';
+  userName = '';
 
   currentPage:number = 1;
   constructor(private _userService: UserService) {
@@ -25,9 +26,20 @@ export class ClientsComponent implements OnInit {
     })
   }
 
-  loadPage(page:number, str:string){
-    if (str==''){
-      str='empty';
+  userModFilterFunc(str: string) {
+    this.userModFilter = str;
+    this.loadPage(1)
+  }
+
+  criterionFilterFunc(str: string) {
+    this.criterionFilter = str;
+    this.loadPage(1)
+  }
+
+  loadPage(page: number) {
+    let str = this.userName;
+    if (str == '') {
+      str = 'empty'
     }
     this._userService.findAllPageableAvailable(page-1,10,str,this.userModFilter,this.criterionFilter).subscribe(next=>{
       console.log('loading');

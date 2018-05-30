@@ -1,33 +1,33 @@
 <div class="content d-flex">
   <div class="filters d-flex flex-column">
-    <input (change)="loadPage(1,input.value)" #input type="text" placeholder="Пошук">
-    <label>
+    <input (change)="loadPage(1)" [(ngModel)]="userName" #input type="text" placeholder="Пошук">
+    <label (click)="userModFilterFunc('all')">
       <input name="filter" type="radio">
       <span class="checkmark"></span>
       Всі
     </label>
-    <label>
+    <label (click)="userModFilterFunc('members')">
       <input name="filter" type="radio">
       <span class="checkmark"></span>
       Постійні
     </label>
-    <label>
+    <label (click)="userModFilterFunc('regular')">
       <input name="filter" type="radio">
       <span class="checkmark"></span>
       Звичайні
     </label>
     <input disabled type="text" placeholder="Сортування">
-    <label>
+    <label (click)="criterionFilterFunc('alp')">
       <input name="filter2" type="radio">
       <span class="checkmark"></span>
       По алфавіту А-Я
     </label>
-    <label>
+    <label (click)="criterionFilterFunc('rev')">
       <input name="filter2" type="radio">
       <span class="checkmark"></span>
       По алфавіту Я-А
     </label>
-    <label>
+    <label (click)="criterionFilterFunc('date')">
       <input name="filter2" type="radio">
       <span class="checkmark"></span>
       Даті додавання
@@ -35,9 +35,11 @@
   </div>
   <div class="users d-flex flex-column">
     <div class="heading d-flex justify-content-between align-items-center">
-      <h2>Аватар</h2>
+      <div class="w-100">
+      <h2 class="text-center">Аватар</h2>
+      </div>
       <h2>Ім'я, Прізвище</h2>
-      <h2>Номер телефону</h2>
+      <h2 class="text-right">Номер телефону</h2>
     </div>
     <app-user-card-one *ngFor="let user of users" [user]="user"></app-user-card-one>
 

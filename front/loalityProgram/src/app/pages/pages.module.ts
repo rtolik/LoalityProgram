@@ -10,6 +10,7 @@ import { UserOneComponent } from './pages/clients/user-one/user-one.component';
 import { RentOneComponent } from './pages/clients/user-one/rent-one/rent-one.component';
 import {RentOnePageComponent} from "./pages/rent-one-page/rent-one-page.component";
 import { FinancesComponent } from './pages/finances/finances.component';
+import {ImagePipe} from "../shared/pipe/pipes/image.pipe";
 
 @NgModule({
   imports: [
