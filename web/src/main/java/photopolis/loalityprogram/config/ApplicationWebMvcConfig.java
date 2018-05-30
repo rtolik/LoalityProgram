@@ -31,17 +31,15 @@ public class ApplicationWebMvcConfig extends WebMvcConfigurerAdapter {
     String rootPath = System.getProperty("catalina.home");
     String[] PATH = {
             "file:/" + rootPath + "/front/loalityProgram/dist",
-            "file:/" + rootPath + "/resources/"
+            "file:/" + rootPath + "/resources/LoalityProgram"
 
     };
 
 
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**")
+        registry.addResourceHandler("/res/**")
                 .addResourceLocations(PATH);
-        registry.addResourceHandler("/file/**")
-                .addResourceLocations("file:/" + rootPath + "/resources/");
     }
 
 
