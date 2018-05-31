@@ -29,9 +29,10 @@ public class ApplicationWebMvcConfig extends WebMvcConfigurerAdapter {
 
 
     String rootPath = System.getProperty("catalina.home");
+//    String rootPath = "D:\\test";
     String[] PATH = {
             "file:/" + rootPath + "/front/loalityProgram/dist",
-            "file:/" + rootPath + "/resources/LoalityProgram"
+            "file:/" + rootPath + "/resources/LoalityProgram/"
 
     };
 

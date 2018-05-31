@@ -3,10 +3,7 @@ package photopolis.loalityprogram.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import photopolis.loalityprogram.DTO.PageFinderDTO;
-import photopolis.loalityprogram.DTO.UserFIndClientDTO;
-import photopolis.loalityprogram.DTO.UserFindDTO;
-import photopolis.loalityprogram.DTO.UserPagesDTO;
+import photopolis.loalityprogram.DTO.*;
 import photopolis.loalityprogram.model.User;
 import photopolis.loalityprogram.repository.UserRepository;
 import photopolis.loalityprogram.service.BonusService;
@@ -35,38 +32,32 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private RentService rentService;
 
+    private final String photoPath= "/res/file";
+
     @Override
     public void createUser(MultipartFile img, String name, String secondName, String surname, String phone,
                            String dateOfBirth, String socialMedia, Integer cardId, String lastVisit,
-                           Integer numberOfVisits, Boolean isMember, String dateOfMember) {
+                           Boolean isMember, String dateOfMember, String email, String dateOfRegistration) {
         String uuid = UUID.randomUUID().toString();
         User user = new User();
         user.setName(name).setSecondName(secondName).setSurname(surname).setPhone(phone)
                 .setDateOfBirth(dataParser(dateOfBirth)).setSocialMedia(socialMedia).setCardId(cardId)
-                .setLastVisit(lastVisit).setNumberOfVisits(numberOfVisits).setMember(isMember)
-                .setIamgePath("/res/file/"+uuid+"/"+img.getOriginalFilename()).setDateOfMember(dataParser(dateOfMember));
-        String path = System.getProperty("catalina.home")+"/resources/photopolis.loalityprogram/file/"+uuid+"/"
-                + img.getOriginalFilename();
-        System.out.println(path);
-        File file = new File(path);
-
-        try{
-            file.getParentFile().mkdirs();
-            img.transferTo(file);
-        } catch (IOException e){
-            e.printStackTrace();
-            System.out.println("File Error!!!!");
-        }
+                .setLastVisit(lastVisit).setMember(isMember).setActive(true)
+                .setImagePath(saveFile(img)
+                )
+                .setDateOfMember(dataParser(dateOfMember)).setEmail(email).setDateOfRegistration(dateOfRegistration);
+        save(user);
+        if(user.getMember())
+            bonusService.save(0.0, 1,null,null,user.getId());
     }
 
     @Override
     public void save(String imagePath, String name, String secondName, String surname, String phone, String dateOfBirth,
-                     String socialMedia, Integer cardId, String lastVisit, Integer numberOfVisits, Boolean isMember,
-                     String dateofMember) {
+                     String socialMedia, Integer cardId, String lastVisit, Boolean isMember,
+                     Boolean isActive, String dateOfMember, String email,String dateOfRegistration) {
         userRepository.save(
-                new User(
-                        imagePath, name, secondName, surname, phone,dataParser(dateOfBirth), socialMedia, cardId,
-                        lastVisit, numberOfVisits,true,isMember, dataParser(dateofMember)
+                new User(imagePath,name,secondName,surname,phone,dateOfBirth,socialMedia,cardId,dateOfMember,lastVisit,
+                        email,dateOfRegistration,isActive,isMember
                 )
         );
     }
@@ -82,15 +73,30 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void update(Integer id, String imagePath, String name, String secondName, String surname, String phone,
+    public User update(Integer id, String imagePath, String name, String secondName, String surname, String phone,
                        String dateOfBirth, String socialMedia, Integer cardId, String lastVisit,
-                       Integer numberOfVisits, Boolean isActive,Boolean isMember, List<Integer> bonusId, String dateOfMember) {
+                       Boolean isActive,Boolean isMember, List<Integer> bonusId,
+                       String dateOfMember, String dateOfRegistration) {
         User tmp= findOne(id);
         tmp.setName(name).setSecondName(secondName).setSurname(surname).setPhone(phone).setDateOfBirth(dateOfBirth)
-                .setSocialMedia(socialMedia).setCardId(cardId).setLastVisit(lastVisit).setNumberOfVisits(numberOfVisits)
+                .setSocialMedia(socialMedia).setCardId(cardId).setLastVisit(lastVisit)
                 .setActive(isActive).setBonuses(bonusService.findAllByBonusesId(bonusId)).setMember(isMember)
-                .setIamgePath(imagePath).setDateOfMember(dataParser(dateOfMember));
+                .setImagePath(imagePath).setDateOfMember(dataParser(dateOfMember))
+                .setDateOfRegistration(dateOfRegistration);
         save(tmp);
+        return findOne(tmp.getId());
+    }
+
+    @Override
+    public User update(User user) {
+        save(user.setDateOfMember(dataParser(user.getDateOfMember())).setMember(!user.getCardId().equals(null)));
+        return findOne(user.getId());
+    }
+
+    @Override
+    public User updateWithImg(User user, MultipartFile file) {
+        return update(user.setImagePath(saveFile(file)).setDateOfMember(dataParser(user.getDateOfMember()))
+                .setMember(!user.getCardId().equals(null)));
     }
 
     @Override
@@ -106,6 +112,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findOne(Integer id) {
         return userRepository.findOne(id);
+    }
+
+    @Override
+    public UserFullWithBonus findOneDTO(Integer id) {
+        return new UserFullWithBonus(findOne(id));
     }
 
     @Override
@@ -170,9 +181,9 @@ public class UserServiceImpl implements UserService{
         if(mod.equals("all"))
             return users;
         if(mod.equals("regular"))
-            return users.stream().filter(user -> !user.getMember()).collect(toList());
+            return users.stream().filter(user -> !user.getMember() && user.getActive()).collect(toList());
         else {
-        return users.stream().filter(user -> user.getMember()).collect(toList());
+        return users.stream().filter(user -> user.getMember() && user.getActive()).collect(toList());
         }
     }
 
@@ -190,7 +201,7 @@ public class UserServiceImpl implements UserService{
         Comparator<User> dateComparator= new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
-                return o1.getDateOfMember().compareTo(o2.getDateOfMember());
+                return o1.getDateOfRegistration().compareTo(o2.getDateOfRegistration());
             }
         };
         if(criterion.equals("alp")) {
@@ -235,7 +246,31 @@ public class UserServiceImpl implements UserService{
         Integer pagesCount= findPagesCount(users,elOnPage);
         users =  findElementsOnPage(users,pagenum,elOnPage);
         users.forEach(user -> dtos.add(new UserPagesDTO(user)));
-        dto = new PageFinderDTO(dtos,pagesCount);
+        dto = new PageFinderDTO(dtos.isEmpty()?new ArrayList<>():dtos,pagesCount);
         return dto;
+    }
+
+    public String getFileTeg(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+
+    private String saveFile(MultipartFile multipartFile) {
+        String folder="";
+        try {
+            String tag = getFileTeg(multipartFile.getOriginalFilename());
+            String uuid = UUID.randomUUID().toString();
+
+            folder = String.format("%s/%s.%s", photoPath, uuid, tag);
+            File file = new File(System.getProperty("catalina.home") + folder);
+            file.getParentFile().mkdirs();//!correct
+            if (!file.exists()) {
+                multipartFile.transferTo(file);
+            } else {
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return folder;
     }
 }

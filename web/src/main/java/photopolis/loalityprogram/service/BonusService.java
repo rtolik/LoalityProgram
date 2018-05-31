@@ -32,4 +32,6 @@ public interface BonusService {
     void decrementBonus(Integer id);
 
     void countBonusByRentId(Integer rentId);
+
+    List<Bonus> findAllByUserId(Integer userId);
 }

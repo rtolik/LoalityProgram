@@ -3,6 +3,7 @@ package photopolis.loalityprogram.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import photopolis.loalityprogram.DTO.DailyRentDTO;
+import photopolis.loalityprogram.DTO.RentUserDTO;
 import photopolis.loalityprogram.model.Rent;
 import photopolis.loalityprogram.model.User;
 import photopolis.loalityprogram.model.enums.RentStatus;
@@ -29,12 +30,12 @@ public class RentServiceImpl implements RentService{
     private UserService userService;
 
     @Override
-    public void save(String date, String timeOfStart, Double duration, Double price, String comment,
+    public void save(String date, String timeOfStart, Double duration, Double price, Double bonusPrice, String comment,
                      Integer rentStatus, Integer userId) {
         rentRepository.save(
                 new Rent(dataParser(date), timeParser(timeOfStart),
                          doubleTimeToStringParser(timeToDoubleParser(timeOfStart)+ duration),
-                         price, comment, RentStatus.values()[rentStatus],
+                         price,bonusPrice, comment, RentStatus.values()[rentStatus],
                          userService.findOne(userId))
         );
     }
@@ -50,21 +51,22 @@ public class RentServiceImpl implements RentService{
     }
 
     @Override
-    public void update(Integer id, String date, String timeOfStart, String timeOfEnd, Double price, String comment,
-                       Integer rentStatus, Integer userId) {
+    public void update(Integer id, String date, String timeOfStart, String timeOfEnd, Double price, Double bonusPrice,
+                       String comment, Integer rentStatus, Integer userId) {
         save(
                 findOne(id).setDate(dataParser(date)).setTimeOfStart(timeParser(timeOfStart))
                            .setTimeOfEnd(timeParser(timeOfEnd)).setPrice(price).setComment(comment)
-                           .setRentStatus(RentStatus.values()[rentStatus])
+                           .setRentStatus(RentStatus.values()[rentStatus]).setBonusPrice(bonusPrice)
                            .setUser(userService.findOne(userId))
         );
     }
 
     @Override
-    public void submitRent(Integer id) {
+    public RentUserDTO submitRent(Integer id,Double price,Double bonusPrice) {
         save(
-                findOne(id).setRentStatus(RentStatus.PAID)
+                findOne(id).setRentStatus(RentStatus.PAID).setPrice(price).setBonusPrice(bonusPrice)
         );
+        return new RentUserDTO(findOne(id));
     }
 
     @Override
@@ -126,11 +128,6 @@ public class RentServiceImpl implements RentService{
     }
 
     @Override
-    public List<Rent> findAllBonusPaid() {
-        return findAll().stream().filter(rent -> rent.getRentStatus()==RentStatus.BONUSPAID).collect(toList());
-    }
-
-    @Override
     public List<Rent> findAllLeaved() {
         return findAll().stream().filter(rent -> rent.getRentStatus()==RentStatus.LEAVED).collect(toList());
     }
@@ -152,5 +149,23 @@ public class RentServiceImpl implements RentService{
             dtos.add(new DailyRentDTO(dailyRents.get(i),users.get(i)));
         }
         return dtos;
+    }
+
+    @Override
+    public void createNewRent(Integer userId, String date, String timeOfStart, Double duration, String comment) {
+        save(dataParser(date),timeOfStart,duration,0.0,0.0,comment,1,userId);
+    }
+
+    @Override
+    public RentUserDTO update(Integer id, String date, String timeOfStart, Double duration, String comment) {
+        save(findOne(id).setDate(date).setTimeOfStart(timeOfStart).setTimeOfEnd(
+                doubleTimeToStringParser(timeToDoubleParser(timeOfStart)+ duration)).setComment(comment)
+        );
+        return new RentUserDTO(findOne(id));
+    }
+
+    @Override
+    public RentUserDTO findOneDTO(Integer id) {
+        return new RentUserDTO(findOne(id));
     }
 }

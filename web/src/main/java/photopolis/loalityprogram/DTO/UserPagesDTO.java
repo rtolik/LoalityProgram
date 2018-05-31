@@ -9,7 +9,7 @@ public class UserPagesDTO {
 
     private Integer id;
 
-    private String iamgePath;
+    private String imagePath;
 
     private String name;
 
@@ -23,7 +23,7 @@ public class UserPagesDTO {
 
     public UserPagesDTO(User user) {
         this.id = user.getId();
-        this.iamgePath = user.getIamgePath();
+        this.imagePath = user.getImagePath();
         this.name = user.getName();
         this.secondName = user.getSecondName();
         this.surname = user.getSurname();
@@ -40,12 +40,12 @@ public class UserPagesDTO {
         return this;
     }
 
-    public String getIamgePath() {
-        return iamgePath;
+    public String getimagePath() {
+        return imagePath;
     }
 
-    public UserPagesDTO setIamgePath(String iamgePath) {
-        this.iamgePath = iamgePath;
+    public UserPagesDTO setimagePath(String imagePath) {
+        this.imagePath = imagePath;
         return this;
     }
 

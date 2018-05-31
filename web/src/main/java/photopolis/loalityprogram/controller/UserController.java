@@ -1,5 +1,7 @@
 package photopolis.loalityprogram.controller;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,9 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 import photopolis.loalityprogram.DTO.PageFinderDTO;
 import photopolis.loalityprogram.DTO.UserFIndClientDTO;
 import photopolis.loalityprogram.DTO.UserFindDTO;
+import photopolis.loalityprogram.DTO.UserFullWithBonus;
 import photopolis.loalityprogram.model.User;
 import photopolis.loalityprogram.service.UserService;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -42,27 +46,34 @@ public class UserController {
     }
 
     @RequestMapping(value = "/create-user", method = RequestMethod.POST)
-    private  ResponseEntity createUser(@RequestParam MultipartFile img, @RequestParam String name,
-                                       @RequestParam String secondName, @RequestParam String surname,
-                                       @RequestParam String phone, @RequestParam String dateOfBirth,
-                                       @RequestParam String socialMedia, @RequestParam Integer cardId,
-                                       @RequestParam String lastVisit, @RequestParam Integer numberOfVisits,
-                                       @RequestParam String dateOfMember) {
+    private  ResponseEntity<User> createUser(@RequestParam MultipartFile img, @RequestParam String userJson)  {
 
-        if(img.isEmpty() || name.equals(null) || surname.equals(null) ||phone.equals(null)) {
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        ObjectMapper mapper=new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+
+        User user=new User();
+        try {
+            user = mapper.readValue(userJson, User.class);
+        }
+        catch (Exception err)
+        {
+            return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+        }
+        if(img.isEmpty()) {
+            return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
         }
         userService.createUser(
-                img, name, secondName, surname, phone, dateOfBirth, socialMedia, cardId, lastVisit,
-                numberOfVisits, cardId != null,dateOfMember);
-        return  new ResponseEntity(HttpStatus.OK);
+                img, user.getName(), user.getSecondName(), user.getSurname(), user.getPhone(), user.getDateOfBirth(),
+                user.getSocialMedia(), user.getId(),user.getLastVisit(),
+                user.getCardId() != null, user.getDateOfMember(),user.getEmail(),user.getDateOfRegistration());
+        return  new ResponseEntity<User>(user,HttpStatus.OK);
     }
 
-    @RequestMapping(value = ".find-one",method = RequestMethod.GET)
-    private ResponseEntity<User> findOne(@RequestParam Integer id){
+    @RequestMapping(value = "/find-one/{id}",method = RequestMethod.GET)
+    private ResponseEntity<UserFullWithBonus> findOne(@PathVariable Integer id){
         if(id==null)
-            return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
-        return new ResponseEntity<User>(userService.findOne(id),HttpStatus.OK);
+            return new ResponseEntity<UserFullWithBonus>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<UserFullWithBonus>(userService.findOneDTO(id),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/find-all-pageable-active/{pageNumber}/{elOnPage}/{userName}/{userMode}/{criterion}",
@@ -80,4 +91,32 @@ public class UserController {
                 HttpStatus.OK
         );
     }
+
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    private ResponseEntity<User> update(@RequestParam String userJson, @RequestParam(required = false) MultipartFile img){
+        ObjectMapper mapper=new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+
+        User user=new User();
+        try {
+            user = mapper.readValue(userJson, User.class);
+        }
+        catch (Exception err)
+        {
+            return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+        }
+        if(img.isEmpty()|| img.equals(null)) {
+            return new ResponseEntity<User>(userService.update(user),HttpStatus.OK);
+        }
+        return new ResponseEntity<User>(userService.updateWithImg(user,img),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.POST)
+    private ResponseEntity setUnactive(@PathVariable Integer id){
+        if (id.equals(null))
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        userService.setUnActive(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 }

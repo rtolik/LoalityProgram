@@ -23,22 +23,25 @@ public class Rent {
 
     private Double price;
 
+    private Double bonusPrice;
+
     private String comment;
 
     private RentStatus rentStatus;
 
     @JsonIgnore
     @ManyToOne
-    User user;
+    private User user;
 
     public Rent() {}
 
-    public Rent(String date, String timeOfStart, String timeOfEnd, Double price, String comment,
+    public Rent(String date, String timeOfStart, String timeOfEnd, Double price,Double bonusPrice, String comment,
                        RentStatus rentStatus, User user) {
         this.date = date;
         this.timeOfStart = timeOfStart;
         this.timeOfEnd = timeOfEnd;
         this.price = price;
+        this.bonusPrice=bonusPrice;
         this.comment = comment;
         this.rentStatus=rentStatus;
         this.user = user;
@@ -113,6 +116,15 @@ public class Rent {
 
     public Rent setRentStatus(RentStatus rentStatus) {
         this.rentStatus = rentStatus;
+        return this;
+    }
+
+    public Double getBonusPrice() {
+        return bonusPrice;
+    }
+
+    public Rent setBonusPrice(Double bonusPrice) {
+        this.bonusPrice = bonusPrice;
         return this;
     }
 }

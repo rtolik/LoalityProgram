@@ -2,6 +2,7 @@ package photopolis.loalityprogram.service;
 
 
 import photopolis.loalityprogram.DTO.DailyRentDTO;
+import photopolis.loalityprogram.DTO.RentUserDTO;
 import photopolis.loalityprogram.model.Rent;
 
 
@@ -12,16 +13,20 @@ import java.util.List;
  */
 public interface RentService {
 
-    void save(String date, String timeOfStart, Double duration, Double price, String comment,
+    void save(String date, String timeOfStart, Double duration, Double price, Double bonusPrice, String comment,
                     Integer rentStatus, Integer userId);
     void save(Rent rent);
 
+    void createNewRent(Integer userId, String date, String timeOfStart, Double duration, String comment);
+
     void delete(Integer id);
 
-    void update(Integer id, String date, String timeOfStart, String timeOfEnd, Double price, String comment,
-                Integer rentStatus, Integer userId);
+    void update(Integer id, String date, String timeOfStart, String timeOfEnd, Double price,Double bonusPrice,
+                String comment, Integer rentStatus, Integer userId);
 
-    void submitRent(Integer id);
+    RentUserDTO update(Integer id, String date, String timeOfStart, Double duration,String comment);
+
+    RentUserDTO submitRent(Integer id,Double price,Double bonusPrice);
 
     void submitRentLeave(Integer id);
 
@@ -43,11 +48,14 @@ public interface RentService {
 
     List<Rent> findAllPaid();
 
-    List<Rent> findAllBonusPaid();
-
     List<Rent> findAllLeaved();
 
     List<Rent> findAllActing();
 
     List<DailyRentDTO> findAllForDay(String date);
+
+    RentUserDTO findOneDTO(Integer id);
+
+
+
 }

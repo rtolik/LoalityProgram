@@ -4,8 +4,10 @@ import org.springframework.web.multipart.MultipartFile;
 import photopolis.loalityprogram.DTO.PageFinderDTO;
 import photopolis.loalityprogram.DTO.UserFIndClientDTO;
 import photopolis.loalityprogram.DTO.UserFindDTO;
+import photopolis.loalityprogram.DTO.UserFullWithBonus;
 import photopolis.loalityprogram.model.User;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 /**
@@ -14,26 +16,33 @@ import java.util.List;
 public interface UserService {
 
     void createUser (MultipartFile img, String name, String secondName, String surname, String phone,
-                     String dateOfBirth, String socialMedia, Integer cardId, String lastVisit, Integer numberOfVisits,
-                     Boolean isMember, String dateOfmember);
+                     String dateOfBirth, String socialMedia, Integer cardId, String lastVisit,
+                     Boolean isMember, String dateOfmember, String email, String dateOfRegistration);
 
     void save(String imagePath, String name, String secondName, String surname, String phone, String dateOfBirth,
-              String socialMedia, Integer cardId, String lastVisit, Integer numberOfVisits, Boolean isMember,
-              String dateOfMember);
+              String socialMedia, Integer cardId, String lastVisit, Boolean isMember, Boolean isActive,
+              String dateOfMember, String email, String dateOfRegistration);
 
     void save(User user);
 
     void delete(Integer id);
 
-    void update(Integer id, String imagePath, String name, String secondName, String surname, String phone,
-                String dateOfBirth, String socialMedia, Integer cardId, String lastVisit, Integer numberOfVisits,
-                Boolean isActive,Boolean isMember, List<Integer> bonusId, String dateOfMember);
+    User update(Integer id, String imagePath, String name, String secondName, String surname, String phone,
+                String dateOfBirth, String socialMedia, Integer cardId, String lastVisit,
+                Boolean isActive,Boolean isMember, List<Integer> bonusId, String dateOfMember,
+                String dateOfRegistration);
+
+    User update(User user);
+
+    User updateWithImg(User user, MultipartFile file);
 
     void setUnActive(Integer id);
 
     void setActive(Integer id);
 
     User findOne(Integer id);
+
+    UserFullWithBonus findOneDTO(Integer id);
 
     List<User> findAll();
 

@@ -16,7 +16,7 @@ public class User {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String iamgePath;
+    private String imagePath;
 
     private String name;
 
@@ -36,7 +36,9 @@ public class User {
 
     private String lastVisit;
 
-    private Integer numberOfVisits;
+    private String email;
+
+    private String dateOfRegistration;
 
     private Boolean isActive;
 
@@ -53,9 +55,9 @@ public class User {
     public User() {}
 
     public User(String imagePath, String name, String secondName, String surname, String phone, String dateOfBirth,
-                String socialMedia, Integer cardId, String lastVisit, Integer numberOfVisits, Boolean isActive,
-                Boolean isMember, String dateOfMember) {
-        this.iamgePath=imagePath;
+                String socialMedia, Integer cardId, String dateOfMember, String lastVisit,
+                String email, String dateOfRegistration, Boolean isActive, Boolean isMember) {
+        this.imagePath = imagePath;
         this.name = name;
         this.secondName = secondName;
         this.surname = surname;
@@ -63,11 +65,12 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.socialMedia = socialMedia;
         this.cardId = cardId;
+        this.dateOfMember = dateOfMember;
         this.lastVisit = lastVisit;
-        this.numberOfVisits = numberOfVisits;
+        this.email = email;
+        this.dateOfRegistration = dateOfRegistration;
         this.isActive = isActive;
-        this.isMember=isMember;
-        this.dateOfMember=dateOfMember;
+        this.isMember = isMember;
     }
 
     public Integer getId() {
@@ -151,15 +154,6 @@ public class User {
         return this;
     }
 
-    public Integer getNumberOfVisits() {
-        return numberOfVisits;
-    }
-
-    public User setNumberOfVisits(Integer numberOfVisits) {
-        this.numberOfVisits = numberOfVisits;
-        return this;
-    }
-
     public Boolean getActive() {
         return isActive;
     }
@@ -196,12 +190,12 @@ public class User {
         return this;
     }
 
-    public String getIamgePath() {
-        return iamgePath;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public User setIamgePath(String iamgePath) {
-        this.iamgePath = iamgePath;
+    public User setImagePath(String imagePath) {
+        this.imagePath = imagePath;
         return this;
     }
 
@@ -211,6 +205,24 @@ public class User {
 
     public User setDateOfMember(String dateOfMember) {
         this.dateOfMember = dateOfMember;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public User setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public String getDateOfRegistration() {
+        return dateOfRegistration;
+    }
+
+    public User setDateOfRegistration(String dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
         return this;
     }
 }

@@ -21,7 +21,7 @@ public class UserFIndClientDTO {
 
     public UserFIndClientDTO(User user) {
         this.id = user.getId();
-        this.imagePath = user.getIamgePath();
+        this.imagePath = user.getImagePath();
         this.name = user.getName();
         this.surname = user.getSurname();
         this.phone = user.getPhone();

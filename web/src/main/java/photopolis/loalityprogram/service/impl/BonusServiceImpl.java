@@ -12,7 +12,9 @@ import photopolis.loalityprogram.service.RentService;
 import photopolis.loalityprogram.service.UserService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
 import static photopolis.loalityprogram.service.utils.Utility.dataParser;
 
 
@@ -110,5 +112,10 @@ public class BonusServiceImpl implements BonusService{
         List<Bonus> tmp= new ArrayList<>();
         id.forEach(el -> tmp.add(findOne(el)));
         return tmp;
+    }
+
+    @Override
+    public List<Bonus> findAllByUserId(Integer userId) {
+        return findAll().stream().filter(bonus -> bonus.getUser().getId().equals(userId)).collect(toList());
     }
 }
