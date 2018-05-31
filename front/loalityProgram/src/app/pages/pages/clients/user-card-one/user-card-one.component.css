@@ -1,14 +1,22 @@
 .content{
   padding:  0 25px;
   height: 100px;
-  background-color: #d1d1d1;
+
   margin-bottom: 15px;
   cursor: pointer;
 }
-.content:hover{
-  background-color: #a8a8a8;
+.bgRegular{
+  background-color: #d1d1d1;
 }
-
+.bgMember{
+  background-color: #ffb014;
+}
+.bgRegular:hover{
+  background-color: #a9a9a9;
+}
+.bgMember:hover{
+  background-color: #cd8d13;
+}
 h2{
   width: 100%;
   text-align: center;

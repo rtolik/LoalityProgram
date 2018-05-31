@@ -1,6 +1,6 @@
 .wrapper {
   height: 80px;
-  background-color: #a1a1a1;
+
   margin-bottom: 20px;
 }
 
@@ -10,4 +10,13 @@ h3 {
   line-height: 24px;
   width: 100%;
   text-align: center;
+}
+.leaved{
+  background-color: red;
+}
+.paid{
+  background-color: #ffb014;
+}
+.active{
+  background-color: green;
 }

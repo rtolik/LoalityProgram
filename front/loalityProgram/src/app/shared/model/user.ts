@@ -1,5 +1,6 @@
 import {Bonus} from "./bonus";
 import {Rent} from "./rent";
+import {s} from "@angular/core/src/render3";
 
 export class User {
   id: number;
@@ -8,6 +9,8 @@ export class User {
   name: string;
   secondName: string;
   phone: string;
+  email:string;
+  dateOfRegistration: string;
   dateOfBirth: string;
   socialMedia: string;
   memberDate: string;
@@ -15,7 +18,6 @@ export class User {
   isMember: boolean;
   lastVisit: string;
   dateOfMember: string;
-  numberOfVisits: number;
   bonus: Bonus[];
   isActive: boolean;
   rents: Rent[];

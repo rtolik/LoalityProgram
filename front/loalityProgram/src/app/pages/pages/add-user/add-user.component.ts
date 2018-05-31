@@ -62,9 +62,10 @@ export class AddUserComponent implements OnInit {
     });
     this.userForm.valueChanges.subscribe(next => {
       this.user = next;
-      if(!isNullOrUndefined(this.user.cardId)||this.user.cardId!=0){
+      if(!isNullOrUndefined(this.user.cardId)&&this.user.cardId!=0){
         this.user.dateOfMember=new Date().toISOString();
       }
+      this.user.dateOfRegistration=new Date().toISOString();
     })
 
   }

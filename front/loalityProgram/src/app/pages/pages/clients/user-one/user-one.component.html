@@ -1,12 +1,15 @@
 <div class="content row m-0">
-  <div class="left col-3 flex-column align-items-center d-flex">
-    <!--<img src="" alt="">-->
-    <div style="border: 1px solid black; height: 250px; width: 100%"></div>
+  <div class="left col-3 flex-column align-items-center justify-content-center d-flex">
+    <form class="w-100 flex-column align-items-center justify-content-center d-flex" action="" #form >
+      <img style="width: 100%; height: auto;" src="{{urlImage|nou}}" alt="{{user.name|nou}}">
+      <input (change)="readUrl($event)" class="d-none" id="img" type="file">
+      <label *ngIf="editing" for="img" >Змінити фото</label>
+    </form>
     <button *ngIf="editing==false;" (click)="edit()"><img style="height: 24px; width: auto; margin-right: 10px;"
                                                           src="../../../../../assets/svg/pencil.png"
                                                           alt="">Редагувати
     </button>
-    <button (click)="edit()" *ngIf="editing==true"><img style="height: 24px; width: auto; margin-right: 10px;"
+    <button (click)="updateUser(form)"  *ngIf="editing==true"><img style="height: 24px; width: auto; margin-right: 10px;"
                                                         src="../../../../../assets/svg/pencil.png"
                                                         alt="">Зберегти
     </button>
@@ -15,105 +18,105 @@
     <div class="d-flex row m-0">
       <h3 class="col-4">Імя:</h3>
       <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
-      <h3 class="offset-4"></h3>
-    </div>
-    <div class="d-flex row m-0">
-      <h3 class="col-4">По батькові:</h3>
-      <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+             [(ngModel)]="user.name"
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="{{user.name|nou}}">
       <h3 class="offset-4"></h3>
     </div>
     <div class="d-flex row m-0">
       <h3 class="col-4">Прізвище:</h3>
       <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+             [(ngModel)]="user.surname"
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="{{user.surname|nou}}">
+      <h3 class="offset-4"></h3>
+    </div>
+    <div class="d-flex row m-0" *ngIf="isNoU(user.secondName)||editing">
+      <h3 class="col-4">По батькові:</h3>
+      <input type="text" class="col-4" [disabled]="editing==false"
+             [(ngModel)]="user.secondName"
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="{{user.secondName|nou}}">
       <h3 class="offset-4"></h3>
     </div>
     <div class="d-flex row m-0">
       <h3 class="col-4">Номер телефону:</h3>
       <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+             [(ngModel)]="user.phone"
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="{{user.phone|nou}}">
       <h3 class="offset-4"></h3>
     </div>
-    <div class="d-flex row m-0">
+    <div class="d-flex row m-0" *ngIf="isNoU(user.email)||editing">
       <h3 class="col-4">Email:</h3>
       <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+             [(ngModel)]="user.email"
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="{{user.email|nou}}">
       <h3 class="offset-4"></h3>
     </div>
-    <div class="d-flex row m-0">
+    <div class="d-flex row m-0" *ngIf="isNoU(user.socialMedia)||editing">
       <h3 class="col-4">Соціальні мережі:</h3>
       <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+             [(ngModel)]="user.socialMedia"
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="{{user.socialMedia|nou}}">
       <h3 class="offset-4"></h3>
     </div>
-    <div class="d-flex row m-0">
+    <div class="d-flex row m-0"*ngIf="isNoU(user.dateOfBirth)||editing">
       <h3 class="col-4">Дата народження:</h3>
-      <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+      <input type="date" class="col-4" [disabled]="editing==false"
+             [(ngModel)]="user.dateOfBirth"
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="{{user.dateOfBirth|nou}}">
       <h3 class="offset-4"></h3>
     </div>
-    <div class="d-flex row m-0">
+    <div class="d-flex row m-0" *ngIf="isNoU(user.dateOfMember)">
       <h3 class="col-4">Дата отримання карти:</h3>
-      <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+      <input type="text" class="col-4 border-0" disabled
+             value="{{user.dateOfMember|nou}}">
       <h3 class="offset-4"></h3>
     </div>
-    <div class="d-flex row m-0">
+    <div class="d-flex row m-0" *ngIf="isNoU(user.cardId)||editing">
       <h3 class="col-4">Номер карти:</h3>
       <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+             [(ngModel)]="user.cardId"
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="{{user.cardId|nou}}">
       <h3 class="offset-4"></h3>
     </div>
-    <div class="d-flex row m-0">
+    <div class="d-flex row m-0" *ngIf="rents.length!=0&&isNoU(rents)">
       <h3 class="col-4">Скільки разів орендував:</h3>
-      <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+      <input type="text" class="col-4 border-0" disabled
+            value="{{rents.length}}">
       <h3 class="offset-4"></h3>
     </div>
-    <div class="d-flex row m-0">
+    <div class="d-flex row m-0" *ngIf="rents.length!=0&&isNoU(rents)">
       <h3 class="col-4">Скільки годин орендував:</h3>
-      <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+      <input type="text" class="col-4 border-0" disabled
+            value="{{calculateHours()}}">
       <h3 class="offset-4"></h3>
     </div>
-    <div class="d-flex row m-0">
+    <div class="d-flex row m-0" *ngIf="rents.length!=0&&isNoU(rents)">
       <h3 class="col-4">Скільки грошей заплатив:</h3>
-      <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+      <input type="text" class="col-4 border-0" disabled
+            value="{{calculateMoney()}}">
       <h3 class="offset-4"></h3>
     </div>
-    <div class="d-flex row m-0">
+    <div class="d-flex row m-0" *ngIf="isNoU(user.bonus)&&isNoU(user.bonus[0]|nou)">
       <h3 class="col-4">Кількість бонусів:</h3>
       <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="{{user.bonus[0].value|nou}}">
       <h3 class="col-4">До: 21.05.04</h3>
     </div>
-    <div class="d-flex row m-0">
+    <div class="d-flex row m-0" *ngIf="isNoU(user.bonus)&&isNoU(user.bonus[1])">
       <h3 class="col-4">Кількість акційних бонусів:</h3>
       <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="{{user.bonus[1].value|nou}}">
       <h3 class="col-4">До: 22.04.02</h3>
     </div>
-    <div class="buttons d-flex justify-content-between">
-      <button>Зробити постійним</button>
-      <button>Видалити клієнта</button>
-      <button>Вивести оренди</button>
+    <div class="buttons d-flex justify-content-end">
+      <button (click)="delete()">Видалити клієнта</button>
     </div>
-    <div class="rets pt-4">
+    <div class="rets pt-4" *ngIf="isNoU(rents)">
       <div class="heading d-flex justify-content-between">
         <h3>Дата</h3>
         <h3>Час початку</h3>
         <h3>Тривалість(годин)</h3>
       </div>
-      <app-rent-one></app-rent-one>
-      <app-rent-one></app-rent-one>
-      <app-rent-one></app-rent-one>
-      <app-rent-one></app-rent-one>
-      <app-rent-one></app-rent-one>
-      <app-rent-one></app-rent-one>
-      <app-rent-one></app-rent-one>
+      <app-rent-one *ngFor="let one of rents" [rent]="one"></app-rent-one>
     </div>
   </div>
 </div>

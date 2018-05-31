@@ -71,14 +71,14 @@
       <div class="wrapper">
         <label>
           Клієнт
-          <input  type="text" list="userList">
+          <input (change)="getUserId(inp.value)" #inp type="text" list="userList">
           <datalist id="userList">
-            <option *ngFor="let one of user" [value]="one.name+' '+one.surname "></option>
+            <option *ngFor="let one of user" [value]="one.id+'| '+one.name+' '+one.surname"></option>
           </datalist>
         </label>
         <label >
           Дата
-          <input class="border" [value]="dateStr"  type="date">
+          <input class="border"  [value]="dateStr"  type="date">
         </label>
         <label>
           Час початку оренди
@@ -90,10 +90,10 @@
         </label>
         <label >
           Коментар
-          <textarea name="" id="" ></textarea>
+          <textarea [(ngModel)]="newRent.comment" name="" id="" ></textarea>
         </label>
-        <button type="submit">Додати</button>
-        <p>-Успішно додано</p>
+        <button (click)="addRent()" type="submit">Додати</button>
+        <p *ngIf="added">-Успішно додано</p>
       </div>
     </form>
   </div>

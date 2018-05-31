@@ -15,8 +15,14 @@ export class RentService {
 
 
 
-  save(rentJson: string): Observable<Rent> {
-    return this.httpClient.post<Rent>(this.controller + '/save', rentJson).catch(err => Observable.throw(err));
+  save(rent: Rent,userId:number): Observable<Rent> {
+    let form = new FormData();
+    form.append('date',rent.date);
+    form.append('timeOfStart',rent.timeOfStart);
+    form.append('duration',rent.duration+'');
+    form.append('comment',rent.comment);
+
+    return this.httpClient.post<Rent>(this.controller + '/save/'+userId,form ).catch(err => Observable.throw(err));
   }
 
   submitRent(rentId: number): Observable<Rent> {
@@ -27,7 +33,7 @@ export class RentService {
     return this.httpClient.get<Rent>(this.controller + '/get-all-by-date/',{params: new HttpParams().set('date', date)}).catch(err => Observable.throw(err));
   }
 
-  getAllByUserId(userId: string): Observable<Rent[]> {
+  getAllByUserId(userId: number): Observable<Rent[]> {
     return this.httpClient.get<Rent>(this.controller + '/get-all-by-user-id/' + userId).catch(err => Observable.throw(err));
   }
 

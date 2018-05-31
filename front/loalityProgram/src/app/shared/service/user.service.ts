@@ -21,14 +21,28 @@ export class UserService {
     console.log(form.get('img'));
     return this.httpClient.post<User>(this.controller + '/create-user', form).catch(err => Observable.throw(err));
   }
-  findUserFormRent(): Observable<User[]>{
+
+  update(form: HTMLFormElement,user :User){
+    let obj :FormData= new FormData(form);
+    obj.append('userJson',JSON.stringify(user))
+    return this.httpClient.post<User>(this.controller + '/update', obj).catch(err => Observable.throw(err));
+  }
+
+  findUserFormRent(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.controller + '/form-find-user').catch(err => Observable.throw(err));
   }
-  findAllPageableAvailable(page:number,count:number,nameFilter:string,userModFilter:string,criterionFilter:string): Observable<PageableWrapper> {
-    console.log(this.controller+'/find-all-pageable-active/'+page+'/'+count+'/'+encodeURI(nameFilter)+'/'+userModFilter+'/'+criterionFilter);
-    return this.httpClient.get<PageableWrapper>(this.controller+'/find-all-pageable-active/'+page+'/'+count+'/'+encodeURI(nameFilter)+'/'+userModFilter+'/'+criterionFilter).catch(err => Observable.throw(err));
+
+  findAllPageableAvailable(page: number, count: number, nameFilter: string, userModFilter: string, criterionFilter: string): Observable<PageableWrapper> {
+    console.log(this.controller + '/find-all-pageable-active/' + page + '/' + count + '/' + encodeURI(nameFilter) + '/' + userModFilter + '/' + criterionFilter);
+    return this.httpClient.get<PageableWrapper>(this.controller + '/find-all-pageable-active/' + page + '/' + count + '/' + encodeURI(nameFilter) + '/' + userModFilter + '/' + criterionFilter).catch(err => Observable.throw(err));
   }
 
+  findOne(id: number): Observable<User> {
+    return this.httpClient.get<User>(this.controller + '/find-one/' + id).catch(err => Observable.throw(err));
+  }
 
+  delete(id: number): Observable<User>{
+    return this.httpClient.post<User>(this.controller + '/delete/' + id,null).catch(err => Observable.throw(err));
+  }
 
 }

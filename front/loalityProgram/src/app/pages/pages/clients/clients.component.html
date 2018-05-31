@@ -45,18 +45,25 @@
 
     <nav aria-label="Page navigation" class="align-self-center">
       <ul class="pagination">
-        <li class="page-item">
+        <li *ngIf="currentPage!=1" (click)="loadPage(0)" class="page-item">
           <a class="page-link" href="#" aria-label="Previous">
             <span aria-hidden="true">&laquo;&laquo;</span>
           </a>
         </li>
-        <li class="page-item"><a class="page-link" href="#" aria-label="Previous">
+        <li class="page-item" *ngIf="currentPage!=1" (click)="loadPage(currentPage-1)"><a class="page-link" href="#"
+                                                                                          aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a></li>
-        <li class="page-item current"><a class="page-link">1</a></li>
-        <li class="page-item"><a class="page-link">2</a></li>
-        <li class="page-item"><a class="page-link"> <span aria-hidden="true">&raquo;</span></a></li>
-        <li class="page-item">
+        <li class="page-item" *ngIf="currentPage>=3" (click)="loadPage(currentPage-2)"><a class="page-link">{{currentPage-2}}</a>
+        </li>
+        <li class="page-item" *ngIf="currentPage>=2" (click)="loadPage(currentPage-1)"><a class="page-link">{{currentPage-1}}</a>
+        </li>
+        <li class="page-item current" (click)="loadPage(currentPage)"><a class="page-link">{{currentPage}}</a></li>
+        <li class="page-item " *ngIf="numOfPages>=currentPage+1" (click)="loadPage(currentPage+1)"><a class="page-link">{{currentPage+1}}</a></li>
+        <li class="page-item " *ngIf="numOfPages>=currentPage+2" (click)="loadPage(currentPage+2)"><a class="page-link">{{currentPage+2}}</a></li>
+        <li class="page-item" *ngIf="numOfPages>=currentPage+1" (click)="loadPage(currentPage+1)"><a class="page-link"> <span
+          aria-hidden="true">&raquo;</span></a></li>
+        <li class="page-item" *ngIf="numOfPages>=currentPage+1" (click)="loadPage(numOfPages)">
           <a class="page-link" href="#" aria-label="Next">
             <span aria-hidden="true">&raquo;&raquo;</span>
           </a>
