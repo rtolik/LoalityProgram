@@ -34,3 +34,20 @@ button{
   width: 100%;
   text-align: center;
 }
+.input-date::-webkit-inner-spin-button {
+  display: none;
+}
+
+input[type="date"]::-webkit-clear-button {
+  display: none;
+}
+label{
+  border-radius: 5px;
+  border: 2px solid black;
+  margin: 10px auto;
+  font-family: Monserrat-Light;
+  font-size: 18px;
+  line-height: 24px;
+  background-color: #ffb014;
+  padding: 5px 10px;
+}

@@ -133,7 +133,12 @@ ul.pagination li:not(:first-child):not(:last-child):hover a{
 ul.pagination li.current{
   border-left-color: #90a4ae;
   border-right-color: #90a4ae;
-  background-color: #d1d1d1!important;
+}
+.current:hover{
+  background-color: transparent;
+}
+.current a{
+  background-color: #ffb014;
 }
 .pagination span{
   color: black!important;

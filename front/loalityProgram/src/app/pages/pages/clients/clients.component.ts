@@ -13,7 +13,7 @@ export class ClientsComponent implements OnInit {
   numOfPages:number;
   users:User[]=[];
   userModFilter: string='all';
-  criterionFilter: string='alp';
+  criterionFilter: string='date';
   userName = '';
 
   currentPage:number = 1;

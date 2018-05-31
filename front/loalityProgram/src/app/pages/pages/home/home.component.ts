@@ -163,6 +163,9 @@ export class HomeComponent implements OnInit {
           new Date(0, 0, 0, parseInt(startTime.substring(0, 2)), startTime.substring(3, 5) == '00' ? 0 : 30) < new Date(0, 0, 0, parseInt(next.timeOfEnd.substring(0, 2)), next.timeOfEnd.substring(3, 5) == '00' ? 0 : 30)
         ) {
           str = next.user.name + ' ' + next.user.surname;
+          if(next.user.isMember) {
+            str+=" *"
+          }
           if (upName && current) {
             if (upName.innerText == str) {
               upName.parentElement.style.display = 'none';
@@ -266,19 +269,52 @@ export class HomeComponent implements OnInit {
     for (let i=0; i< document.getElementsByClassName('one-plus-cell').length;i++) {
       document.getElementsByClassName('one-plus-cell')[i].classList.remove('background-orange');
     }
-    console.log(date);
+    this.arr=[];
+
+
     this.selectedTime='';
     this.selectedHours=0;
 
 
     this._rent.getAllByDate(date).subscribe(next => {
+
       this.rent=next;
 
       console.log(this.rent);
     }, error => {
       console.log(error);
+    },()=>{
+      for (let i = 0; i < this.arr.length; i++) {
+        this.arr[i] = new Date(0, 0, 0, i + 2, 0, 0, 0).toISOString().substring(11, 16) + '-' + new Date(0, 0, 0, i + 3, 0, 0, 0).toISOString().substring(11, 16);
+      }
     })
   }
+
+  newRent : Rent = new Rent();
+  userId: number=0;
+  added: boolean = false;
+  getUserId(str:string): void{
+    this.userId = parseInt(str.split('|')[0]);
+  }
+  addRent(){
+    this.newRent.date=this.dateStr;
+    this.newRent.timeOfStart=this.selectedTime;
+    this.newRent.duration=this.selectedHours;
+    this._rent.save(this.newRent,this.userId).subscribe(next=>{
+        this.newRent= new Rent();
+        this.userId=0;
+        this.selectedTime='';
+        this.selectedHours=0;
+    },error => {
+        console.log(error);
+    },()=>{
+      this.added=true;
+      setTimeout(this.added=false,2000)
+      this.getDate(this.dateStr);
+    })
+
+  }
+
 
   ngOnInit() {
   }

@@ -7,6 +7,7 @@ export class Rent {
   timeOfStart: string;
   timeOfEnd: string;
   price: number;
+  bonusPrice: number;
   comment: string;
   rentStatus: string;
   user: User;

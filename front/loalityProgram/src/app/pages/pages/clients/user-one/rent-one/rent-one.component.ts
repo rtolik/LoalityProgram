@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Rent} from "../../../../../shared/model/rent";
 
 @Component({
   selector: 'app-rent-one',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./rent-one.component.css']
 })
 export class RentOneComponent implements OnInit {
-
+  @Input() rent: Rent;
   constructor() { }
 
   ngOnInit() {
