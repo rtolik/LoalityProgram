@@ -8,6 +8,7 @@ import {Subject} from "rxjs/Subject";
 import {UserService} from "../../../shared/service/user.service";
 import {User} from "../../../shared/model/user";
 import {forEach} from "@angular/router/src/utils/collection";
+import {Bonus} from "../../../shared/model/bonus";
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,22 @@ export class HomeComponent implements OnInit {
   selectedTime: string = '';
   rent: Rent[] = [];
   user: User[]=[];
-
+  // rent = [{
+  //   id: 1,
+  //   duration: 2,
+  //   timeOfStart: '18:00',
+  //   timeOfEnd: '20:00',
+  //   rentStatus: 'AWAIT',
+  //   user: {
+  //     id: 1,
+  //     surname: 'Petryk',
+  //     name: 'Oleh',
+  //     secondName: 'Jaroslab',
+  //     phone: '0123213',
+  //     isMember: true,
+  //   }
+  // }
+  // ];
   constructor(private _rent: RentService, private _user : UserService) {
     for (let i = 0; i < this.arr.length; i++) {
       this.arr[i] = new Date(0, 0, 0, i + 2, 0, 0, 0).toISOString().substring(11, 16) + '-' + new Date(0, 0, 0, i + 3, 0, 0, 0).toISOString().substring(11, 16);
@@ -269,24 +285,18 @@ export class HomeComponent implements OnInit {
     for (let i=0; i< document.getElementsByClassName('one-plus-cell').length;i++) {
       document.getElementsByClassName('one-plus-cell')[i].classList.remove('background-orange');
     }
-    this.arr=[];
-
-
+    this.arr = new Array<string>(24);
+    for (let i = 0; i < this.arr.length; i++) {
+      this.arr[i] = new Date(0, 0, 0, i + 2, 0, 0, 0).toISOString().substring(11, 16) + '-' + new Date(0, 0, 0, i + 3, 0, 0, 0).toISOString().substring(11, 16);
+    }
     this.selectedTime='';
     this.selectedHours=0;
-
-
     this._rent.getAllByDate(date).subscribe(next => {
-
       this.rent=next;
-
       console.log(this.rent);
     }, error => {
       console.log(error);
     },()=>{
-      for (let i = 0; i < this.arr.length; i++) {
-        this.arr[i] = new Date(0, 0, 0, i + 2, 0, 0, 0).toISOString().substring(11, 16) + '-' + new Date(0, 0, 0, i + 3, 0, 0, 0).toISOString().substring(11, 16);
-      }
     })
   }
 
