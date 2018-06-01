@@ -71,31 +71,59 @@
       <div class="wrapper">
         <label>
           Клієнт
-          <input (change)="getUserId(inp.value)" #inp type="text" list="userList">
+          <input name="1" (change)="getUserId(inp.value)" #inp type="text" list="userList">
           <datalist id="userList">
             <option *ngFor="let one of user" [value]="one.id+'| '+one.name+' '+one.surname"></option>
           </datalist>
         </label>
         <label >
           Дата
-          <input class="border"  [value]="dateStr"  type="date">
+          <input name="2" class="border"  [value]="dateStr"  type="date">
         </label>
         <label>
           Час початку оренди
-          <input type="text" #inptval [value]="selectedTime" [textMask]='{mask: this.mask}' placeholder="00:00">
+          <input name="3" type="text" #inptval [value]="selectedTime" [textMask]='{mask: this.mask}' placeholder="00:00">
         </label>
         <label>
           Тривалість оренди
-          <input type="number" [value]="selectedHours" placeholder="0">
+          <input name="4" type="number" [value]="selectedHours" placeholder="0">
         </label>
         <label >
           Коментар
-          <textarea [(ngModel)]="newRent.comment" name="" id="" ></textarea>
+          <textarea [(ngModel)]="newRent.comment" name="5" id="" ></textarea>
         </label>
         <button (click)="addRent()" type="submit">Додати</button>
         <p *ngIf="added">-Успішно додано</p>
       </div>
     </form>
   </div>
+  </div>
+  <div class="statistics">
+  <h2>Статистика</h2>
+    <div class="buttons d-flex justify-content-around">
+      <input  #date class="input-date " type="date" >
+      <input  #date class="input-date " type="date" >
+      <button>Вивести</button>
+    </div>
+    <div class="statistics-table mt-5">
+      <div class="heading row m-0">
+        <h3 class="col-4">з 24.03.2018</h3>
+        <h3 class="col-4">по 25.03.2018</h3>
+        <h3 class="col-4">Результат</h3>
+      </div>
+      <div class="table-content  m-0 d-flex flex-column">
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Загальний прибуток</h3><h3 class="col-4"></h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів</h3><h3 class="col-4"></h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість орендованих годин</h3><h3 class="col-4"></h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів які скористувались бонусами</h3><h3 class="col-4"></h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість простих клієнтів</h3><h3 class="col-4"></h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість постійних клієнтів</h3><h3 class="col-4"></h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість год/клієнта</h3><h3 class="col-4"></h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Додано нових клієнтів</h3><h3 class="col-4"></h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість записів</h3><h3 class="col-4"></h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість підтверджених записів</h3><h3 class="col-4"></h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість скасованих записів</h3><h3 class="col-4"></h3></div>
+      </div>
+    </div>
   </div>
 </div>

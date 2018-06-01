@@ -183,3 +183,59 @@ form button{
 .closed{
   background-color: grey;
 }
+.statistics button{
+  font-size: 18px;
+  line-height: 24px;
+  font-family: Monserrat-Light;
+  border: 2px solid black;
+  padding: 5px 10px;
+  background-color: #ffb014;
+}
+.statistics h2{
+  margin: 50px auto 40px;
+  text-align: center;
+  font-size: 24px;
+  line-height: 24px;
+  font-family: Monserrat-Regular;
+}
+.statistics-table{
+  box-sizing: border-box;
+  border: 1px solid black;
+}
+.statistics-table h3{
+  padding: 5px 10px;
+  margin: 0;
+  text-align: center;
+  font-size: 18px;
+  line-height: 24px;
+  font-family: Monserrat-Light;
+}
+.stat-row{
+  flex-wrap: unset!important;
+}
+.statistics-table .heading h3{
+  box-sizing: border-box;
+  border-bottom: 1px solid black;
+}
+.statistics-table .heading h3:nth-child(2){
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+.stat-row:not(:last-child){
+  border-bottom: 1px solid black;
+}
+.stat-row h3:last-child{
+  border-right: 0;
+}
+
+.stat-row h3{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-right: 1px solid black;
+
+  padding: 5px 10px;
+  margin: 0;
+  box-sizing: border-box;
+
+}
