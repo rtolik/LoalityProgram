@@ -4,10 +4,9 @@ import org.springframework.web.multipart.MultipartFile;
 import photopolis.loalityprogram.DTO.PageFinderDTO;
 import photopolis.loalityprogram.DTO.UserFIndClientDTO;
 import photopolis.loalityprogram.DTO.UserFindDTO;
-import photopolis.loalityprogram.DTO.UserFullWithBonus;
+import photopolis.loalityprogram.DTO.UserFullWithBonusDTO;
 import photopolis.loalityprogram.model.User;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 /**
@@ -42,7 +41,7 @@ public interface UserService {
 
     User findOne(Integer id);
 
-    UserFullWithBonus findOneDTO(Integer id);
+    UserFullWithBonusDTO findOneDTO(Integer id);
 
     List<User> findAll();
 

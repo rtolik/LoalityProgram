@@ -10,11 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 import photopolis.loalityprogram.DTO.PageFinderDTO;
 import photopolis.loalityprogram.DTO.UserFIndClientDTO;
 import photopolis.loalityprogram.DTO.UserFindDTO;
-import photopolis.loalityprogram.DTO.UserFullWithBonus;
+import photopolis.loalityprogram.DTO.UserFullWithBonusDTO;
 import photopolis.loalityprogram.model.User;
 import photopolis.loalityprogram.service.UserService;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -51,6 +50,10 @@ public class UserController {
         ObjectMapper mapper=new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
 
+        System.out.println("-----------------------------------------------------------------------");
+        System.out.println(img);
+        System.out.println("-----------------------------------------------------------------------");
+        System.out.println(userJson);
         User user=new User();
         try {
             user = mapper.readValue(userJson, User.class);
@@ -62,18 +65,19 @@ public class UserController {
         if(img.isEmpty()) {
             return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
         }
+        System.out.println(user.toString());
         userService.createUser(
                 img, user.getName(), user.getSecondName(), user.getSurname(), user.getPhone(), user.getDateOfBirth(),
-                user.getSocialMedia(), user.getId(),user.getLastVisit(),
+                user.getSocialMedia(), user.getCardId(),user.getLastVisit(),
                 user.getCardId() != null, user.getDateOfMember(),user.getEmail(),user.getDateOfRegistration());
         return  new ResponseEntity<User>(user,HttpStatus.OK);
     }
 
     @RequestMapping(value = "/find-one/{id}",method = RequestMethod.GET)
-    private ResponseEntity<UserFullWithBonus> findOne(@PathVariable Integer id){
+    private ResponseEntity<UserFullWithBonusDTO> findOne(@PathVariable Integer id){
         if(id==null)
-            return new ResponseEntity<UserFullWithBonus>(HttpStatus.NO_CONTENT);
-        return new ResponseEntity<UserFullWithBonus>(userService.findOneDTO(id),HttpStatus.OK);
+            return new ResponseEntity<UserFullWithBonusDTO>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<UserFullWithBonusDTO>(userService.findOneDTO(id),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/find-all-pageable-active/{pageNumber}/{elOnPage}/{userName}/{userMode}/{criterion}",

@@ -33,7 +33,7 @@ public class RentServiceImpl implements RentService{
     public void save(String date, String timeOfStart, Double duration, Double price, Double bonusPrice, String comment,
                      Integer rentStatus, Integer userId) {
         rentRepository.save(
-                new Rent(dataParser(date), timeParser(timeOfStart),
+                new Rent(dataParser(date), timeOfStart,
                          doubleTimeToStringParser(timeToDoubleParser(timeOfStart)+ duration),
                          price,bonusPrice, comment, RentStatus.values()[rentStatus],
                          userService.findOne(userId))
@@ -144,16 +144,17 @@ public class RentServiceImpl implements RentService{
         dailyRents.forEach(rent ->
             users.add(userService.findByRentId(rent.getId()))
         );
+        System.out.println("user "+users.size());
         List<DailyRentDTO> dtos= new ArrayList<>();
         for(int i = 0; i < dailyRents.size(); i++){
-            dtos.add(new DailyRentDTO(dailyRents.get(i),users.get(i)));
+            dtos.add(new DailyRentDTO(dailyRents.get(i), users.get(i)));
         }
         return dtos;
     }
 
     @Override
     public void createNewRent(Integer userId, String date, String timeOfStart, Double duration, String comment) {
-        save(dataParser(date),timeOfStart,duration,0.0,0.0,comment,1,userId);
+        save(dataParser(date),timeOfStart,duration,0.0,0.0,comment,0,userId);
     }
 
     @Override
