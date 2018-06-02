@@ -311,8 +311,6 @@ export class HomeComponent implements OnInit {
   start:string='';
 
   getStat(){
-    console.log(this.end);
-    console.log(this.start);
     this._rent.getStatistic(this.start,this.end).subscribe(next=>{
         this.stat=next
     },error => {

@@ -19,7 +19,7 @@ export class RentService {
   }
 
   getStatistic(start:string,end:string):Observable<Statistic> {
-    return this.httpClient.post<Rent>('statistics/get/'+start+'/'+end,null ).catch(err => Observable.throw(err));
+    return this.httpClient.post<Rent>('/statistics/get/'+start+'/'+end,null ).catch(err => Observable.throw(err));
   }
 
   save(rent: Rent,userId:number): Observable<Rent> {

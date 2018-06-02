@@ -1,12 +1,14 @@
 <div class="content">
   <div class="scroll-button">
     <div class="border-scrolls">
-      <a href="#/add-user" (click)="addMember=false">Додати користувача</a>
+      <a href="#/add-user" (click)="addMember=false;partyBool=false;">Додати користувача</a>
       <span>|</span>
-      <a  href="#/add-user" (click)="addMember=true">Додати друга Photopolis</a>
+      <a href="#/add-user" (click)="addMember=true;partyBool=false">Додати друга Photopolis</a>
+      <span>|</span>
+      <a href="#/add-user" (click)="partyBool=true">Додати день бонусів</a>
     </div>
   </div>
-  <div class="add-user d-flex flex-column">
+  <div class="add-user d-flex flex-column" *ngIf="!partyBool">
     <h2 class="border-bottom border-dark text-center p-1">Додати клієнта</h2>
     <form [formGroup]="userForm" #form (submit)="addUser(form)">
       <label>Ім'я*
@@ -45,5 +47,31 @@
         <button  type="submit">Додати</button>
       </div>
     </form>
+  </div>
+  <div class="add-user d-flex flex-column" *ngIf="partyBool">
+    <h2 class="border-bottom border-dark text-center p-1">Додати день бонусів</h2>
+    <form [formGroup]="bonusDayForm" (submit)="addDay()">
+      <label>
+        Назву дня
+        <input type="text" formControlName="name">
+      </label>
+      <label>
+        Дату проведення
+        <input type="date" formControlName="date">
+      </label>
+      <label>
+        Кількість бонусів для нарахування
+        <input type="number" formControlName="bonusesToAdd">
+      </label>
+    </form>
+    <h2 class="text-center">Список активних днів</h2>
+    <div class=" kek justify-content-start  d-flex flex-column align-items-end  w-100" *ngFor="let one of bonusDays">
+      <div class=" one-day d-flex justify-content-between w-100  pl-3 pr-3">
+        <h2>Навза: {{one.name}}</h2>
+        <h2>Дата: {{one.date|DatePipe}}</h2>
+        <h2>Бонусів: {{one.bonusesToAdd}}</h2>
+      </div>
+      <button class="border-top-0" (click)="deleteDay(one.id)">X</button>
+    </div>
   </div>
 </div>

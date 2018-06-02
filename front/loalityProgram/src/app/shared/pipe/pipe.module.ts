@@ -15,6 +15,7 @@ import { DatePipe } from './pipes/date.pipe';
   ],
   exports: [
     ImagePipe,
+    DatePipe,
     NullOrUndefinedPipe
   ]
 })

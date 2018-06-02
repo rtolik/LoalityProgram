@@ -128,11 +128,28 @@ button {
 input[type="date"]::-webkit-clear-button {
   display: none;
 }
-.input-date{
+input[type="date"]{
   outline: none;
   background-color: transparent;
   font-family: Monserrat-Light;
   font-size: 14px;
   line-height: 24px;
   border: 1px solid #dfdfdf;
+}
+.one-day{
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 20px 0 0;
+}
+.one-day h2{
+  margin: 0;
+}
+.kek button{
+  border-top: 0;
+  border-right: 0;
+  padding: 2px 5px;
+  cursor: pointer;
+
 }

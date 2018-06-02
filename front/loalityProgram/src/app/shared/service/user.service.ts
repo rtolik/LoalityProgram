@@ -6,6 +6,8 @@ import "rxjs/add/operator/catch";
 import 'rxjs/add/observable/throw';
 import {url} from "../config/url";
 import {PageableWrapper} from "../model/pageable-wrapper";
+import {BonusDay} from "../model/bonus-day";
+import {Bonus} from "../model/bonus";
 
 @Injectable()
 export class UserService {
@@ -44,5 +46,28 @@ export class UserService {
   delete(id: number): Observable<User>{
     return this.httpClient.post<User>(this.controller + '/delete/' + id,null).catch(err => Observable.throw(err));
   }
+
+
+
+
+
+
+
+
+  findAllDays(): Observable<BonusDay[]>{
+    return this.httpClient.get<BonusDay[]>('/bonus-day/find-all').catch(err => Observable.throw(err));
+  }
+  saveBonusDay(bonusDay:BonusDay): Observable<BonusDay>{
+    let form = new FormData();
+    form.append('bonusDayJson',JSON.stringify(bonusDay));
+    return this.httpClient.post<BonusDay>('/bonus-day/save',form).catch(err => Observable.throw(err));
+  }
+  deleteBonusDay(bonusDayId:number): Observable<BonusDay>{
+    return this.httpClient.post<BonusDay>('/bonus-day/delete/'+bonusDayId,null).catch(err => Observable.throw(err));
+  }
+
+
+
+
 
 }

@@ -226,7 +226,12 @@ form button{
 .stat-row{
   flex-wrap: unset!important;
 }
+.heading input:nth-child(2){
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
 .heading input{
+  text-align: center;
   border-top: 0;
   border-left: 0;
   border-right: 0;

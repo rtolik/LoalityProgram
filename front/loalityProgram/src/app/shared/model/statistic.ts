@@ -10,5 +10,4 @@ export class Statistic {
   numOfPaidRents:number;
   numOfLeavedRents: number;
   numOfRegularClients:number;
-
 }
