@@ -1,0 +1,8 @@
+<div class="container-fluid d-flex justify-content-center align-items-center">
+  <div class="form d-flex justify-content-center align-items-center flex-column">
+    <label #log class="d-flex flex-column">Логін <input type="text"></label>
+    <label #pass class="d-flex flex-column">Пароль <input type="text"></label>
+    <label #pass class="d-flex  align-items-center">Запам'ятати <input #check type="checkbox" class="ml-3"></label>
+    <button (click)="logIn(log.value,pass.value,check)">Авторизуватись</button>
+  </div>
+</div>

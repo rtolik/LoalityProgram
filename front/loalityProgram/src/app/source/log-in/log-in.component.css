@@ -1,0 +1,34 @@
+.container-fluid{
+  height: 100vh;
+  width: 100%;
+  background-color: #ffb014;
+}
+.form{
+  width: 50%;
+  border: 1px solid black;
+  background-color: #fff;
+  height: 50vh;
+  box-sizing: border-box;
+}
+label{
+  font-family: Monserrat-Regular;
+  font-size: 18px;
+  line-height: 24px;
+  margin-bottom: 20px;
+}
+input{
+  font-family: Monserrat-Regular;
+  font-size: 18px;
+  line-height: 24px;
+
+}
+button{
+  font-family: Monserrat-Regular;
+  font-size: 18px;
+  line-height: 24px;
+
+  padding: 5px 10px;
+  background-color: #ffb014;
+  border: 1px solid black;
+}
+

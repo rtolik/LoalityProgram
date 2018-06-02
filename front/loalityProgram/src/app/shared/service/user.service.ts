@@ -1,17 +1,30 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, } from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {User} from "../model/user";
 import "rxjs/add/operator/catch";
 import 'rxjs/add/observable/throw';
-import {url} from "../config/url";
 import {PageableWrapper} from "../model/pageable-wrapper";
 import {BonusDay} from "../model/bonus-day";
-import {Bonus} from "../model/bonus";
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class UserService {
   readonly controller = '/user';
+
+  isLogged: boolean = false;
+  _isLogged = new Subject<boolean>();
+  isLogged$ = this._isLogged.asObservable();
+
+
+  login: string = '';
+  _login = new Subject<string>();
+  login$ = this._login.asObservable();
+
+
+  password: string = '';
+  _password = new Subject<string>();
+  password$ = this._password.asObservable();
 
   constructor(private httpClient: HttpClient) {
   }
@@ -69,6 +82,25 @@ export class UserService {
   }
 
 
+  logIn(login: string, password: string): Observable<boolean> {
+    return this.httpClient.post<boolean>(this.controller + '/log-in/' + login + '/' + password, null).catch(err => Observable.throw(err));
+  }
+
+
+  logData(log:string,pass:string,bool:boolean,check:boolean){
+    if(bool==true){
+      this.isLogged=bool;
+      this._isLogged.next(this.isLogged);
+      this.login=log;
+      this._login.next(this.login);
+      this.password=pass;
+      this._password.next(this.password);
+      if(check){
+        localStorage.setItem(log,pass);
+      }
+    }
+
+  }
 
 
 

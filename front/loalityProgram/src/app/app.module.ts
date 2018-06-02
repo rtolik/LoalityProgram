@@ -8,11 +8,15 @@ import {ScrollToModule} from "ng2-scroll-to";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ContentInterceptor} from "./shared/interceptor/content-interceptor";
 import { ImagePipe } from './shared/pipe/pipes/image.pipe';
+import { LogInComponent } from './source/log-in/log-in.component';
+import {LogInCanActive} from "./shared/can-active/log-in.can-active";
+import {UserService} from "./shared/service/user.service";
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LogInComponent
   ],
   imports: [
     GlobalImportsModule,
@@ -23,7 +27,9 @@ import { ImagePipe } from './shared/pipe/pipes/image.pipe';
       provide: HTTP_INTERCEPTORS,
       useClass: ContentInterceptor,
       multi: true
-    }
+    },
+    UserService,
+    LogInCanActive
   ],
   bootstrap: [AppComponent]
 })
