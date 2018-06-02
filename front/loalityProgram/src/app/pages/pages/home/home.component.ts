@@ -9,6 +9,7 @@ import {UserService} from "../../../shared/service/user.service";
 import {User} from "../../../shared/model/user";
 import {forEach} from "@angular/router/src/utils/collection";
 import {Bonus} from "../../../shared/model/bonus";
+import {Statistic} from "../../../shared/model/statistic";
 
 @Component({
   selector: 'app-home',
@@ -180,7 +181,7 @@ export class HomeComponent implements OnInit {
           new Date(0, 0, 0, parseInt(startTime.substring(0, 2)), startTime.substring(3, 5) == '00' ? 0 : 30) < new Date(0, 0, 0, parseInt(next.timeOfEnd.substring(0, 2)), next.timeOfEnd.substring(3, 5) == '00' ? 0 : 30)
         ) {
           str = next.user.name + ' ' + next.user.surname;
-          if(next.user.isMember) {
+          if(next.user.member) {
             str+=" *"
           }
           if (upName && current) {
@@ -229,8 +230,8 @@ export class HomeComponent implements OnInit {
     return str
   }
 
-  getRentStatus(startTime: string, cell: HTMLDivElement, upName?: HTMLParagraphElement, current?: HTMLDivElement,currentStatus?: HTMLDivElement,upStatus?:HTMLDivElement) {
-    if (upName && current) {
+  getRentStatus(startTime: string, cell: HTMLDivElement, up?: HTMLDivElement,currentStatus?: HTMLDivElement,upStatus?:HTMLDivElement) {
+    if ( up&&currentStatus&&upStatus) {
       currentStatus.parentElement.style.display = 'block';
       currentStatus.classList.add('h-50');
       currentStatus.parentElement.classList.remove('justify-content-center');
@@ -249,8 +250,8 @@ export class HomeComponent implements OnInit {
           new Date(0, 0, 0, parseInt(startTime.substring(0, 2)), startTime.substring(3, 5) == '00' ? 0 : 30) < new Date(0, 0, 0, parseInt(next.timeOfEnd.substring(0, 2)), next.timeOfEnd.substring(3, 5) == '00' ? 0 : 30)
         ) {
           str = this.rentEnum[next.rentStatus];
-          if (upName && current&&currentStatus&&upStatus) {
-            if (upName.innerText == current.innerText) {
+          if (up&&currentStatus&&upStatus) {
+            if (up.parentElement.style.display=='none') {
               upStatus.parentElement.style.display = 'none';
               currentStatus.classList.remove('h-50');
               currentStatus.parentElement.classList.add('justify-content-center');
@@ -265,6 +266,7 @@ export class HomeComponent implements OnInit {
   findRentClass(startTime: string, cell: HTMLDivElement): string {
     cell.classList.remove('reserved');
     cell.classList.remove('closed');
+    cell.classList.remove('leaved');
     startTime = startTime.substring(0, 5);
     if (!cell.classList.contains('border-bottom')) {
       startTime = startTime.substring(0, 2) + ':30';
@@ -277,11 +279,45 @@ export class HomeComponent implements OnInit {
         ) {
           if (next.rentStatus == 'AWAIT')
             cell.classList.add('reserved');
-          else
-            cell.classList.add('closed')
+          if(next.rentStatus=='PAID')
+            cell.classList.add('closed') ;
+          if(next.rentStatus=='LEAVED')
+            cell.classList.add('leaved');
         }
       });
     return ''
+  }
+  getLink(startTime: string, cell: HTMLDivElement): string {
+
+    startTime = startTime.substring(0, 5);
+    if (!cell.classList.contains('border-bottom')) {
+      startTime = startTime.substring(0, 2) + ':30';
+    }
+    let str='';
+    this.rent.forEach(next => {
+      if (
+        new Date(0, 0, 0, parseInt(next.timeOfStart.substring(0, 2)), next.timeOfStart.substring(3, 5) == '00' ? 0 : 30) <= new Date(0, 0, 0, parseInt(startTime.substring(0, 2)), startTime.substring(3, 5) == '00' ? 0 : 30)
+        &&
+        new Date(0, 0, 0, parseInt(startTime.substring(0, 2)), startTime.substring(3, 5) == '00' ? 0 : 30) < new Date(0, 0, 0, parseInt(next.timeOfEnd.substring(0, 2)), next.timeOfEnd.substring(3, 5) == '00' ? 0 : 30)
+      ) {
+        str='rent/'+next.id;
+      }
+    });
+    return str;
+  }
+
+  stat: Statistic= new Statistic();
+  end:string='';
+  start:string='';
+
+  getStat(){
+    console.log(this.end);
+    console.log(this.start);
+    this._rent.getStatistic(this.start,this.end).subscribe(next=>{
+        stat=next
+    },error => {
+        console.log(error);
+    })
   }
 
   getDate(date :string){

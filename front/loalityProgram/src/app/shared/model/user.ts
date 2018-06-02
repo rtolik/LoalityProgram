@@ -15,10 +15,10 @@ export class User {
   socialMedia: string;
   memberDate: string;
   cardId: number;
-  isMember: boolean;
+  member: boolean;
   lastVisit: string;
   dateOfMember: string;
-  bonus: Bonus[];
+  bonuses: Bonus[];
   isActive: boolean;
   rents: Rent[];
 }

@@ -111,3 +111,23 @@ label .checkmark:after {
   width: 100%;
   margin: 0 5px;
 }
+.buttons input{
+  height: 38px;
+}
+textarea{
+  width: 100%;
+  resize: none;
+  max-height: 250px;
+  font-family: Monserrat-Light;
+  font-size: 18px;
+  color: black!important;
+  line-height: 24px;
+  padding: 5px 0 0 15px;
+}
+.input-date::-webkit-inner-spin-button {
+  display: none;
+}
+
+input[type="date"]::-webkit-clear-button {
+  display: none;
+}

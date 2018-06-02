@@ -37,6 +37,7 @@ export class AddUserComponent implements OnInit {
   }
 
   addUser(form: HTMLFormElement) {
+
     this.userService.save(form, this.user).subscribe(next => {
       console.log(next);
     }, error => {
@@ -54,7 +55,7 @@ export class AddUserComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       surname: new FormControl('', [Validators.required]),
       secondName: new FormControl('',),
-      phone: new FormControl('', [Validators.required]),
+      phone: new FormControl('', [Validators.required, Validators.minLength(12)]),
       dateOfBirth: new FormControl('',),
       email: new FormControl('',),
       socialMedia: new FormControl(''),
@@ -65,6 +66,14 @@ export class AddUserComponent implements OnInit {
       if(!isNullOrUndefined(this.user.cardId)&&this.user.cardId!=0){
         this.user.dateOfMember=new Date().toISOString();
       }
+      if (this.user.dateOfBirth == '')
+        this.user.dateOfBirth = null;
+      if (this.user.secondName == '')
+        this.user.secondName = null;
+      if (this.user.socialMedia == '')
+        this.user.socialMedia = null;
+      if (this.user.email == '')
+        this.user.email = null;
       this.user.dateOfRegistration=new Date().toISOString();
     })
 

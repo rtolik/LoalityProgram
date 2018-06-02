@@ -183,6 +183,9 @@ form button{
 .closed{
   background-color: grey;
 }
+.leaved{
+  background-color: red;
+}
 .statistics button{
   font-size: 18px;
   line-height: 24px;
@@ -190,6 +193,15 @@ form button{
   border: 2px solid black;
   padding: 5px 10px;
   background-color: #ffb014;
+}
+.one-plus-cell{
+  outline: none;
+}
+.name-uuu{
+  cursor: pointer;
+}
+.name-uuu:hover{
+  color: #ffb014;
 }
 
 .statistics h2{
@@ -213,6 +225,12 @@ form button{
 }
 .stat-row{
   flex-wrap: unset!important;
+}
+.heading input{
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid black;
 }
 .statistics-table .heading h3{
   box-sizing: border-box;

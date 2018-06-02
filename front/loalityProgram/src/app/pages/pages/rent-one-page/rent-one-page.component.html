@@ -1,60 +1,85 @@
-<div class="content row m-0">
+<div class="content row m-0" *ngIf="bool">
   <div class="left col-3 flex-column align-items-center d-flex">
-    <!--<img src="" alt="">-->
-    <div style="border: 1px solid black; height: 250px; width: 100%"></div>
+    <img style=" width: 100%" [src]='rent.user.imagePath|image'>
   </div>
   <div class="right col-9 ">
     <div class="d-flex row m-0">
       <h3 class="col-4">Імя:</h3>
-      <h3>Олег</h3>
+      <h3>{{rent.user.name}}</h3>
       <h3 class="offset-4"></h3>
     </div>
     <div class="d-flex row m-0">
       <h3 class="col-4">Прізвище:</h3>
-      <h3>Олег</h3>
+      <h3>{{rent.user.surname}}</h3>
       <h3 class="offset-4"></h3>
     </div>
-    <div class="d-flex row m-0">
+    <div class="d-flex row m-0" *ngIf="rent.user.member">
       <h3 class="col-4">Скільки має бонуісв:</h3>
-      <h3>Олег</h3>
+      <h3>{{gerAllBonus()}}</h3>
       <h3 class="offset-4"></h3>
     </div>
     <div class="d-flex row m-0">
       <h3 class="col-4">Номер телефону:</h3>
-      <h3>Олег</h3>
+      <h3>{{rent.user.phone}}</h3>
       <h3 class="offset-4"></h3>
     </div>
     <div class="d-flex row m-0">
       <h3 class="col-4">Дата:</h3>
-      <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+      <input type="date" class="col-4" [disabled]="editing==false"
+             [(ngModel)]="rent.date"
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" >
       <h3 class="offset-4"></h3>
     </div>
     <div class="d-flex row m-0">
       <h3 class="col-4">Час початку:</h3>
-      <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+      <input type="string" class="col-4" [disabled]="editing==false"
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" [textMask]='{mask: this.mask}' [(ngModel)]="rent.timeOfStart">
       <h3 class="offset-4"></h3>
     </div>
     <div class="d-flex row m-0">
       <h3 class="col-4">Тривалість</h3>
       <input type="text" class="col-4" [disabled]="editing==false"
-             [ngClass]="{'border-0': editing==false,'border':editing==true}" value="Олег">
+             [ngClass]="{'border-0': editing==false,'border':editing==true}" [(ngModel)]="rent.duration">
+      <h3 class="offset-4"></h3>
+    </div>
+    <div class="d-flex row m-0">
+      <h3 class="col-4">Коментар</h3>
+      <textarea  class="col-4" [disabled]="editing==false"
+                [ngClass]="{'border-0': editing==false,'border':editing==true}" [(ngModel)]="rent.comment"></textarea>
+      <h3 class="offset-4"></h3>
+    </div>
+    <div class="d-flex row m-0">
+      <h3 class="col-4">Коментар</h3>
+      <textarea  class="col-4" [disabled]="editing==false"
+                [ngClass]="{'border-0': editing==false,'border':editing==true}" [(ngModel)]="rent.comment"></textarea>
+      <h3 class="offset-4"></h3>
+    </div>
+    <div class="d-flex row m-0">
+      <h3 class="col-4">Cтатус</h3>
+      <input  class="col-4 border-0"  disabled
+                [(ngModel)]="rentEnum[rent.rentStatus]">
       <h3 class="offset-4"></h3>
     </div>
   </div>
-  <div class="buttons w-100 d-flex justify-content-between align-items-center">
+  <div *ngIf="!rentClosed" class="buttons w-100 d-flex justify-content-between align-items-start ">
     <button *ngIf="editing==false;" (click)="edit()"><img style="height: 24px; width: auto; margin-right: 10px;"
                                                           src="../../../../../assets/svg/pencil.png"
                                                           alt="">Редагувати
     </button>
-    <button (click)="edit()" *ngIf="editing==true"><img style="height: 24px; width: auto; margin-right: 10px;"
+    <button (click)="updateRent()" *ngIf="editing==true"><img style="height: 24px; width: auto; margin-right: 10px;"
                                                         src="../../../../../assets/svg/pencil.png"
                                                         alt="">Зберегти
     </button>
-    <input type="number" placeholder="Скільки заплатив">
-    <input type="number" placeholder="Відняти бонуси">
-    <button>Закрити оренду</button>
-    <button>Не відбулася</button>
+    <div>
+    <input class='d-block' type="number" placeholder="Скільки заплатив" [(ngModel)]="price">
+    <p>Заплатити грошей</p>
+    </div>
+    <div *ngIf="rent.user.member">
+    <input *ngIf="rent.user.member" type="number" placeholder="Відняти бонуси" [(ngModel)]="bonus">
+      <p>Заплатити бонусів</p>
+    </div>
+    <button (click)="submit()">Закрити оренду</button>
+    <button (click)="leaved()">Не відбулася</button>
+    <button (click)="delete()">Видалити</button>
   </div>
 </div>

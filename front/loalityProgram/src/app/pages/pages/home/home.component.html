@@ -25,6 +25,7 @@
         <div class="h-100  info-cell d-flex ">
           <div class="pluses-cell">
             <div
+              routerLink="{{getLink(one.substring(0,5),plusOne)}}"
               [ngClass]='findRentClass(one.substring(0,5),plusOne)'
               #plusOne
               (click)="addHalfAndHour(one,plusOne)"
@@ -32,6 +33,7 @@
               +
             </div>
             <div
+              routerLink="{{getLink(one.substring(0,5),plusOne)}}"
               [ngClass]='findRentClass(one.substring(0,5),plusTwo)'
               #plusTwo
               (click)="addHalfAndHour(one,plusTwo)"
@@ -39,10 +41,11 @@
           </div>
           <div class="user-info d-flex">
             <div class="name border-dark border-right d-flex flex-column">
-              <div  class="h-50 w-100 border-bottom border-dark">
+              <div  class="h-50 w-100 name-uuu border-bottom border-dark"   routerLink="{{getLink(one.substring(0,5),plusOne)}}">
+
                <p #upName class="m-0 text-center"> {{getName(one.substring(0,5),plusOne)}}</p>
               </div>
-              <div class="h-50 w-100" #currentName >
+              <div class="h-50 w-100 name-uuu" #currentName routerLink="{{getLink(one.substring(0,5),plusOne)}}" >
                <p class="m-0 text-center"> {{getName(one.substring(0,5),plusTwo,upName,currentName)}}</p>
               </div>
             </div>
@@ -59,7 +62,7 @@
                 <p #upStatus class="m-0 text-center"> {{getRentStatus(one.substring(0,5),plusOne)}}</p>
               </div>
               <div class="h-50 w-100" #currentStatus>
-                <p class="m-0 text-center"> {{getRentStatus(one.substring(0,5),plusTwo,upPhone,currentPhone,currentStatus,upStatus)}}</p>
+                <p class="m-0 text-center"> {{getRentStatus(one.substring(0,5),plusTwo,upPhone,currentStatus,upStatus)}}</p>
               </div></div>
           </div>
         </div>
@@ -100,29 +103,30 @@
   </div>
   <div class="statistics">
   <h2>Статистика</h2>
-    <div class="buttons d-flex justify-content-around">
-      <input  #date class="input-date " type="date" >
-      <input  #date class="input-date " type="date" >
-      <button>Вивести</button>
+    <div class="buttons d-flex justify-content-around align-items-start">
+      <input  class="input-date mb-5" type="date" [(ngModel)]="start">
+      <input class="input-date mb-5" type="date" [(ngModel)]="end">
+      <button (click)="getStat()">Вивести</button>
     </div>
     <div class="statistics-table mt-5">
       <div class="heading row m-0">
-        <h3 class="col-4">з 24.03.2018</h3>
-        <h3 class="col-4">по 25.03.2018</h3>
+
+        <input type="date" disabled class="col-4 " [(ngModel)]="start">
+        <input type="date" disabled class="col-4 "  [(ngModel)]="end">
         <h3 class="col-4">Результат</h3>
       </div>
       <div class="table-content  m-0 d-flex flex-column">
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Загальний прибуток</h3><h3 class="col-4"></h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів</h3><h3 class="col-4"></h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість орендованих годин</h3><h3 class="col-4"></h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів які скористувались бонусами</h3><h3 class="col-4"></h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість простих клієнтів</h3><h3 class="col-4"></h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість постійних клієнтів</h3><h3 class="col-4"></h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість год/клієнта</h3><h3 class="col-4"></h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Додано нових клієнтів</h3><h3 class="col-4"></h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість записів</h3><h3 class="col-4"></h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість підтверджених записів</h3><h3 class="col-4"></h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість скасованих записів</h3><h3 class="col-4"></h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Загальний прибуток</h3><h3 class="col-4">{{stat.profit}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів</h3><h3 class="col-4">{{stat.numOfClients}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість орендованих годин</h3><h3 class="col-4">{{stat.hoursRented}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів які скористувались бонусами</h3>{{stat.bonusPaidClients}}<h3 class="col-4"></h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість простих клієнтів</h3><h3 class="col-4">{{stat.numOfRegularClients}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість постійних клієнтів</h3><h3 class="col-4">{{stat.numOfFriendClients}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість год/клієнта</h3><h3 class="col-4">{{stat.hoursPerClient}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Додано нових клієнтів</h3><h3 class="col-4">{{stat.newClients}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість записів</h3><h3 class="col-4"></h3>{{stat.numOfRents}}</div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість підтверджених записів</h3><h3 class="col-4">{{stat.numOfPaidRents}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість покинутих записів</h3><h3 class="col-4">{{stat.numOfLeavedRents}}</h3></div>
       </div>
     </div>
   </div>

@@ -4,6 +4,7 @@
   margin-bottom: 20px;
 }
 
+
 h3 {
   font-family: Monserrat-Regular;
   font-size: 18px;
@@ -15,7 +16,7 @@ h3 {
   background-color: red;
 }
 .paid{
-  background-color: #ffb014;
+  background-color: grey;
 }
 .active{
   background-color: green;

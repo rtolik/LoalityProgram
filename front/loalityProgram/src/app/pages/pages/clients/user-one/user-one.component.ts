@@ -19,16 +19,25 @@ export class UserOneComponent implements OnInit {
   rents: Rent[] = [];
   urlImage:string='';
 
+  bonusType={
+    'REGULAR':'',
+    'BIRTHDAY':' на день народження',
+    'ANNIVERSARY':'на річницю отримання карти',
+    'PARTY':'на свято',
+  }
+
 
 
 
   constructor(private _route: ActivatedRoute, private _user: UserService, private _rent: RentService, private img: ImagePipe) {
     _route.params.subscribe(next => {
       _user.findOne(next['id']).subscribe(next => {
+        console.log(next);
         this.user = next;
+        console.log(this.user);
         this.urlImage=this.img.transform(next.imagePath);
         this._rent.getAllByUserId(this.user.id).subscribe(next => {
-          this.rents = next;
+          this.rents = next.reverse();
         }, error => {
           console.log(error);
         })
@@ -37,6 +46,14 @@ export class UserOneComponent implements OnInit {
       })
     });
 
+  }
+  getClosed(){
+    let num=0;
+    this.rents.forEach(next=>{
+      if(next.rentStatus=='PAID')
+        num+=1;
+    });
+    return num;
   }
 
   readUrl(event: any) {
@@ -53,11 +70,9 @@ export class UserOneComponent implements OnInit {
 
   updateUser(form:HTMLFormElement){
     this.editing=false;
-    alert(this.user.cardId);
     if(!isNullOrUndefined(this.user.cardId)&&this.user.cardId!=0) {
       this.user.dateOfMember=new Date().toISOString();
     }
-    alert(this.user.dateOfBirth);
     this._user.update(form,this.user).subscribe(next=>{
         this.user=next;
         this.urlImage=this.img.transform(next.imagePath);
@@ -90,6 +105,7 @@ export class UserOneComponent implements OnInit {
   }
 
   isNoU(obj: any):boolean{
+
     return !isNullOrUndefined(obj);
   }
 
