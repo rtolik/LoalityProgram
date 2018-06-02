@@ -59,7 +59,9 @@ export class UserService {
   }
   saveBonusDay(bonusDay:BonusDay): Observable<BonusDay>{
     let form = new FormData();
-    form.append('bonusDayJson',JSON.stringify(bonusDay));
+    form.append('name',bonusDay.name);
+    form.append('date',bonusDay.date);
+    form.append('bonusesToAdd',bonusDay.bonusesToAdd+'');
     return this.httpClient.post<BonusDay>('/bonus-day/save',form).catch(err => Observable.throw(err));
   }
   deleteBonusDay(bonusDayId:number): Observable<BonusDay>{
