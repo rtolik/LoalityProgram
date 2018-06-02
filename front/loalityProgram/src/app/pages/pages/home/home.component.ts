@@ -165,6 +165,7 @@ export class HomeComponent implements OnInit {
         current.classList.add('h-50')
         current.parentElement.classList.remove('justify-content-center');
         current.style.fontSize = '14px';
+        upName.style.fontSize='14px';
     }
 
     startTime = startTime.substring(0, 5);
@@ -198,9 +199,10 @@ export class HomeComponent implements OnInit {
   getPhone(startTime: string, cell: HTMLDivElement, upName?: HTMLParagraphElement, current?: HTMLDivElement) {
     if (upName && current) {
       upName.parentElement.style.display = 'block';
-      current.classList.add('h-50')
+      current.classList.add('h-50');
       current.parentElement.classList.remove('justify-content-center');
       current.style.fontSize = '14px';
+      upName.style.fontSize='14px';
     }
     startTime = startTime.substring(0, 5);
     if (!cell.classList.contains('border-bottom')) {
@@ -227,12 +229,13 @@ export class HomeComponent implements OnInit {
     return str
   }
 
-  getRentStatus(startTime: string, cell: HTMLDivElement, upName?: HTMLParagraphElement, current?: HTMLDivElement) {
+  getRentStatus(startTime: string, cell: HTMLDivElement, upName?: HTMLParagraphElement, current?: HTMLDivElement,currentStatus?: HTMLDivElement,upStatus?:HTMLDivElement) {
     if (upName && current) {
-      upName.parentElement.style.display = 'block';
-      current.classList.add('h-50')
-      current.parentElement.classList.remove('justify-content-center');
-      current.style.fontSize = '14px';
+      currentStatus.parentElement.style.display = 'block';
+      currentStatus.classList.add('h-50');
+      currentStatus.parentElement.classList.remove('justify-content-center');
+      currentStatus.style.fontSize = '14px';
+      upStatus.style.fontSize='14px';
     }
     startTime = startTime.substring(0, 5);
     if (!cell.classList.contains('border-bottom')) {
@@ -246,12 +249,12 @@ export class HomeComponent implements OnInit {
           new Date(0, 0, 0, parseInt(startTime.substring(0, 2)), startTime.substring(3, 5) == '00' ? 0 : 30) < new Date(0, 0, 0, parseInt(next.timeOfEnd.substring(0, 2)), next.timeOfEnd.substring(3, 5) == '00' ? 0 : 30)
         ) {
           str = this.rentEnum[next.rentStatus];
-          if (upName && current) {
-            if (upName.innerText == str) {
-              upName.parentElement.style.display = 'none';
-              current.classList.remove('h-50')
-              current.parentElement.classList.add('justify-content-center');
-              current.style.fontSize = '16px';
+          if (upName && current&&currentStatus&&upStatus) {
+            if (upName.innerText == current.innerText) {
+              upStatus.parentElement.style.display = 'none';
+              currentStatus.classList.remove('h-50');
+              currentStatus.parentElement.classList.add('justify-content-center');
+              currentStatus.style.fontSize = '16px';
             }
           }
         }
@@ -289,14 +292,16 @@ export class HomeComponent implements OnInit {
     for (let i = 0; i < this.arr.length; i++) {
       this.arr[i] = new Date(0, 0, 0, i + 2, 0, 0, 0).toISOString().substring(11, 16) + '-' + new Date(0, 0, 0, i + 3, 0, 0, 0).toISOString().substring(11, 16);
     }
-    this.selectedTime='';
+
     this.selectedHours=0;
-    this._rent.getAllByDate(date).subscribe(next => {
+    console.log(this.dateStr);
+    this._rent.getAllByDate(this.dateStr).subscribe(next => {
       this.rent=next;
       console.log(this.rent);
     }, error => {
       console.log(error);
     },()=>{
+
     })
   }
 
@@ -310,9 +315,9 @@ export class HomeComponent implements OnInit {
     this.newRent.date=this.dateStr;
     this.newRent.timeOfStart=this.selectedTime;
     this.newRent.duration=this.selectedHours;
+    console.log(this.newRent);
     this._rent.save(this.newRent,this.userId).subscribe(next=>{
         this.newRent= new Rent();
-        this.userId=0;
         this.selectedTime='';
         this.selectedHours=0;
     },error => {
