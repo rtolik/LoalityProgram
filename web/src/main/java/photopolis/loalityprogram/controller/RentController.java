@@ -11,6 +11,9 @@ import photopolis.loalityprogram.service.RentService;
 
 import java.util.List;
 
+import static photopolis.loalityprogram.service.utils.Utility.doubleTimeToStringParser;
+import static photopolis.loalityprogram.service.utils.Utility.timeToDoubleParser;
+
 /**
  * Created by Anatoliy on 25.05.2018.
  */
@@ -22,12 +25,12 @@ public class RentController {
     private RentService rentService;
 
 
-    @RequestMapping(value = "/get-all-by-date",method = RequestMethod.GET)
+    @RequestMapping(value = "/find-all-by-date",method = RequestMethod.GET)
     private ResponseEntity<List<DailyRentDTO>> getAllByDate(@RequestParam(required = true) String date){
         if(date==null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<List<DailyRentDTO>>(HttpStatus.BAD_REQUEST);
         else
-            return new ResponseEntity<>(rentService.findAllForDay(date),HttpStatus.OK);
+            return new ResponseEntity<List<DailyRentDTO>>(rentService.findAllForDay(date),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/find-one/{id}", method = RequestMethod.GET)

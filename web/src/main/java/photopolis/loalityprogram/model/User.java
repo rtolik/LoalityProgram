@@ -225,4 +225,14 @@ public class User {
         this.dateOfRegistration = dateOfRegistration;
         return this;
     }
+
+
+    @Override
+    public String toString(){
+        return "id= "+id+" name= "+name+" secondname= "+secondName+" surname= "+surname+" phone= "+phone+
+                " dateOfBirth= "+dateOfBirth+ " socialMedia= "+socialMedia+" cardId= "+cardId+
+                " dateOfMember= "+ dateOfMember+" lastvisit= "+ lastVisit+" email= "+email+
+                " dateOfRegistration= "+dateOfRegistration+" isActive= "+isActive+" isMember= "+isMember;
+    }
+
 }

@@ -26,7 +26,7 @@ public class RentUserDTO {
 
     private String rentStatus;
 
-    private UserFullWithBonus user;
+    private UserFullWithBonusDTO user;
 
     public RentUserDTO(Rent rent) {
         this.id = rent.getId();
@@ -37,6 +37,6 @@ public class RentUserDTO {
         this.bonusPrice = rent.getBonusPrice();
         this.comment = rent.getComment();
         this.rentStatus = rent.getRentStatus().toString();
-        this.user = new UserFullWithBonus(rent.getUser());
+        this.user = new UserFullWithBonusDTO(rent.getUser());
     }
 }

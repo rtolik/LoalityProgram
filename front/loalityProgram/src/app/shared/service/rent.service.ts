@@ -4,7 +4,6 @@ import {Observable} from "rxjs/Observable";
 import {Rent} from "../model/rent";
 import "rxjs/add/operator/catch";
 import 'rxjs/add/observable/throw';
-import {url} from "../config/url";
 
 @Injectable()
 export class RentService {
@@ -30,11 +29,11 @@ export class RentService {
   }
 
   getAllByDate(date: string): Observable<Rent[]> {
-    return this.httpClient.get<Rent>(this.controller + '/get-all-by-date/',{params: new HttpParams().set('date', date)}).catch(err => Observable.throw(err));
+    return this.httpClient.get<Rent>(this.controller + '/find-all-by-date/',{params: new HttpParams().set('date', date)}).catch(err => Observable.throw(err));
   }
 
   getAllByUserId(userId: number): Observable<Rent[]> {
-    return this.httpClient.get<Rent>(this.controller + '/get-all-by-user-id/' + userId).catch(err => Observable.throw(err));
+    return this.httpClient.get<Rent>(this.controller + '/find-all-by-user-id/' + userId).catch(err => Observable.throw(err));
   }
 
 }

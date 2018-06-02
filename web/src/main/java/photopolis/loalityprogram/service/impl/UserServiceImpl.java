@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import photopolis.loalityprogram.DTO.*;
 import photopolis.loalityprogram.model.User;
+import photopolis.loalityprogram.model.enums.BonusType;
 import photopolis.loalityprogram.repository.UserRepository;
 import photopolis.loalityprogram.service.BonusService;
 import photopolis.loalityprogram.service.RentService;
@@ -16,6 +17,7 @@ import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 import static photopolis.loalityprogram.service.utils.Utility.dataParser;
+import static photopolis.loalityprogram.service.utils.Utility.datePluser;
 
 /**
  * Created by Anatoliy on 24.05.2018.
@@ -41,14 +43,17 @@ public class UserServiceImpl implements UserService{
         String uuid = UUID.randomUUID().toString();
         User user = new User();
         user.setName(name).setSecondName(secondName).setSurname(surname).setPhone(phone)
-                .setDateOfBirth(dataParser(dateOfBirth)).setSocialMedia(socialMedia).setCardId(cardId)
-                .setLastVisit(lastVisit).setMember(isMember).setActive(true)
+                .setDateOfBirth(dateOfBirth == null?"":dataParser(dateOfBirth)).setSocialMedia(socialMedia)
+                .setCardId(cardId).setLastVisit(lastVisit).setMember(isMember).setActive(true)
                 .setImagePath(saveFile(img)
                 )
-                .setDateOfMember(dataParser(dateOfMember)).setEmail(email).setDateOfRegistration(dateOfRegistration);
+                .setDateOfMember(dateOfMember==null?"":dataParser(dateOfMember))
+                .setEmail(email).setDateOfRegistration(dataParser(dateOfRegistration));
         save(user);
         if(user.getMember())
-            bonusService.save(0.0, 1,null,null,user.getId());
+            bonusService.save(50.0, 0,dataParser(dateOfRegistration),
+                    datePluser(dataParser(dateOfRegistration), BonusType.REGULAR)
+                    ,user.getId());
     }
 
     @Override
@@ -115,8 +120,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserFullWithBonus findOneDTO(Integer id) {
-        return new UserFullWithBonus(findOne(id));
+    public UserFullWithBonusDTO findOneDTO(Integer id) {
+        return new UserFullWithBonusDTO(findOne(id));
     }
 
     @Override

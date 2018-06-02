@@ -6,6 +6,9 @@ package photopolis.loalityprogram.config;
 public class Constants {
 
     public static final Double BONUS_MULTIPLUER = 0.1;
+    public static final Integer REGULAR_BONUS_DURATION_MOUNTH=6;
+    public static final Integer PARTY_BONUS_DURATION_DAYS=7;
+
     public static final String YYYY_MM_DD = "yyyy-MM-dd";
     public static final String YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
     public static final String EMAIL_LOGIN="anazariks@gmail.com";
