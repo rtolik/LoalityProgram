@@ -81,19 +81,17 @@ public class RentServiceImpl implements RentService{
             save(
                     findOne(id).setRentStatus(RentStatus.BONUSPAID).setPrice(price).setBonusPrice(bonusPrice)
             );
-            if (bonusPrice != 0.0) {
-                Double bonusPriceLeft = bonusPrice;
-                List<Bonus> bonuses = findOne(id).getUser().getBonuses();
-                for (int i = 3; i <= 0; i--) {
-                    if (bonuses.get(i).getValue() < bonusPriceLeft) {
-                        bonusPriceLeft -= bonuses.get(3).getValue();
-                        bonusService.updateValue(bonuses.get(i).getId(), 0.0);
-                        System.out.println("---------------------------------------------------------------------------");
-                    } else {
-                        bonusService.updateValue(bonuses.get(i).getId(), bonuses.get(i).getValue() - bonusPriceLeft);
-                        System.out.println("===========================================================================");
-                        break;
-                    }
+            Double bonusPriceLeft = bonusPrice;
+            List<Bonus> bonuses = findOne(id).getUser().getBonuses();
+            for (int i = 3; i <= 0; i--) {
+                if (bonuses.get(i).getValue() < bonusPriceLeft) {
+                    bonusPriceLeft -= bonuses.get(3).getValue();
+                    bonusService.updateValue(bonuses.get(i).getId(), 0.0);
+                    System.out.println("---------------------------------------------------------------------------");
+                } else {
+                    bonusService.updateValue(bonuses.get(i).getId(), bonuses.get(i).getValue() - bonusPriceLeft);
+                    System.out.println("===========================================================================");
+                    break;
                 }
             }
         }
