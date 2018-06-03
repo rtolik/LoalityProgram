@@ -348,6 +348,8 @@ export class HomeComponent implements OnInit {
     this.newRent.date = this.dateStr;
     this.newRent.timeOfStart = this.selectedTime;
     this.newRent.duration = this.selectedHours;
+    if (!this.newRent.comment)
+      this.newRent.comment = '';
     console.log(this.newRent);
     this._rent.save(this.newRent, this.userId).subscribe(next => {
       this.newRent = new Rent();
