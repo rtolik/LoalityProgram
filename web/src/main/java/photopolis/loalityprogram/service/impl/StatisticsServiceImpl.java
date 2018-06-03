@@ -1,6 +1,6 @@
 package photopolis.loalityprogram.service.impl;
 
-import com.sun.org.apache.regexp.internal.RE;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import photopolis.loalityprogram.model.Rent;
@@ -11,11 +11,10 @@ import photopolis.loalityprogram.service.BonusService;
 import photopolis.loalityprogram.service.RentService;
 import photopolis.loalityprogram.service.StatisticsService;
 import photopolis.loalityprogram.service.UserService;
-import photopolis.loalityprogram.service.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import static java.util.stream.Collectors.toList;
 import static photopolis.loalityprogram.service.utils.Utility.countDuration;
@@ -25,6 +24,8 @@ import static photopolis.loalityprogram.service.utils.Utility.countDuration;
  */
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
+
+    private static final Logger logger= Logger.getLogger(StatisticsServiceImpl.class);
 
     @Autowired
     private UserService userService;
@@ -37,19 +38,19 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public Statistic getStatistic(String startDate, String endDate) {
-        Statistic statistic= new Statistic();
-        List<Rent> rents=rentService.findAllInDateInterval(startDate,endDate);
-        statistic.setProfit(getProfit(rents));
-        statistic.setNumOfClients(getNumOfClients(rents));
-        statistic.setHoursRented(getRentedHours(rents));
-        statistic.setBonusPaidClients(getnumBonusPaidClients(rents));
-        statistic.setNumOfRegularClients(getUserByType(rents,false));
-        statistic.setNumOfFriendClients(getUserByType(rents,true));
-        statistic.setHoursPerClient(statistic.getHoursRented()/statistic.getNumOfClients());
-        statistic.setNewClients(userService.findNewUsersInDateInterval(startDate,endDate).size());
-        statistic.setNumOfRents(rents.size());
-        statistic.setNumOfPaidRents(getnumOfRentsByStatus(rents,RentStatus.PAID,RentStatus.BONUSPAID));
-        statistic.setNumOfPaidRents(getnumOfRentsByStatus(rents,RentStatus.LEAVED));
+        Statistic statistic = new Statistic();
+        List<Rent> rents = rentService.findAllInDateInterval(startDate, endDate);
+        statistic.setProfit(getProfit(rents))
+                .setNumOfClients(getNumOfClients(rents))
+                .setHoursRented(getRentedHours(rents))
+                .setBonusPaidClients(getnumBonusPaidClients(rents))
+                .setNumOfRegularClients(getUserByType(rents, false))
+                .setNumOfFriendClients(getUserByType(rents, true))
+                .setHoursPerClient(statistic.getHoursRented() / statistic.getNumOfClients())
+                .setNewClients(userService.findNewUsersInDateInterval(startDate, endDate).size())
+                .setNumOfRents(rents.size())
+                .setNumOfPaidRents(getNumOfRentsByStatus(rents, RentStatus.PAID, RentStatus.BONUSPAID))
+                .setNumOfLeavedRents(getNumOfRentsByStatus(rents, RentStatus.LEAVED));
         return statistic;
     }
 
@@ -85,15 +86,19 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     private Integer getUserByType(List<Rent> rents, Boolean isMember){
-        List<Rent> sorted=rents.stream().filter(rent -> rent.getUser().getMember().equals(isMember)).collect(toList());
+        List<Rent> sorted=rents.stream().filter(rent -> {
+            logger.info(rent.getUser());
+            logger.info("Equality "+(rent.getUser().getMember() == isMember));
+            return rent.getUser().getMember() == isMember;
+        }).collect(toList());
         return getNumOfClients(sorted);
     }
 
-    private Integer getnumOfRentsByStatus(List<Rent> rents, RentStatus rentStatus){
+    private Integer getNumOfRentsByStatus(List<Rent> rents, RentStatus rentStatus){
         return rents.stream().filter(rent -> rent.getRentStatus().equals(rentStatus)).collect(toList()).size();
     }
 
-    private Integer getnumOfRentsByStatus(List<Rent> rents, RentStatus rentStatus,RentStatus secondStatus){
+    private Integer getNumOfRentsByStatus(List<Rent> rents, RentStatus rentStatus, RentStatus secondStatus){
         return rents.stream()
                 .filter(
                         rent -> rent.getRentStatus().equals(rentStatus)||rent.getRentStatus().equals(secondStatus)

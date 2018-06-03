@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import photopolis.loalityprogram.model.Statistic;
 import photopolis.loalityprogram.service.StatisticsService;
+import photopolis.loalityprogram.service.utils.Utility;
+
+import static photopolis.loalityprogram.service.utils.Utility.dataParser;
 
 /**
  * Created by Anatoliy on 03.06.2018.
@@ -24,6 +27,9 @@ public class StatisticsController {
     private ResponseEntity<Statistic> getStat(@PathVariable String startDate, @PathVariable String endDate){
         if (startDate==null||endDate==null)
             return new ResponseEntity<Statistic>(HttpStatus.NO_CONTENT);
-        return new ResponseEntity<Statistic>(statisticsService.getStatistic(startDate,endDate),HttpStatus.OK);
+        return new ResponseEntity<Statistic>(
+                statisticsService.getStatistic(dataParser(startDate),dataParser(endDate))
+                ,HttpStatus.OK
+        );
     }
 }
