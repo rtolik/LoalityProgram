@@ -35,13 +35,13 @@
   </div>
   <div class="users d-flex flex-column">
     <div class="heading d-flex justify-content-between align-items-center">
-      <div class="w-100">
+
       <h2 class="text-center">Аватар</h2>
-      </div>
       <h2>Ім'я, Прізвище</h2>
-      <h2 class="text-right">Номер телефону</h2>
+      <h2 class="text-center">Номер телефону</h2>
     </div>
     <app-user-card-one *ngFor="let user of users" [user]="user"></app-user-card-one>
+    <app-user-card-one [user]="user"></app-user-card-one>
 
     <nav aria-label="Page navigation" class="align-self-center">
       <ul class="pagination">

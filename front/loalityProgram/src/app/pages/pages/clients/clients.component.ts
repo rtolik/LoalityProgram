@@ -16,6 +16,14 @@ export class ClientsComponent implements OnInit {
   criterionFilter: string='date';
   userName = '';
 
+  user={
+    name:'Oleh',
+    member:true,
+    surname:"patryk",
+    imagePath:'loalityProgram/src/assets/svg/logo.png',
+    phone:'12312312312'
+  }
+
   currentPage:number = 1;
   constructor(private _userService: UserService) {
     this._userService.findAllPageableAvailable(this.currentPage-1,10,'empty',this.userModFilter,this.criterionFilter).subscribe(next=>{
