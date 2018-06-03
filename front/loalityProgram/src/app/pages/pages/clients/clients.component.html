@@ -41,8 +41,6 @@
       <h2 class="text-center">Номер телефону</h2>
     </div>
     <app-user-card-one *ngFor="let user of users" [user]="user"></app-user-card-one>
-    <app-user-card-one [user]="user"></app-user-card-one>
-
     <nav aria-label="Page navigation" class="align-self-center">
       <ul class="pagination">
         <li *ngIf="currentPage!=1" (click)="loadPage(0)" class="page-item">
