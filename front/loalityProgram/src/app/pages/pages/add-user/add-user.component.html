@@ -35,7 +35,7 @@
       <label *ngIf="addMember">Номер карти програми лояльності*
         <input formControlName="cardId" type="text" class="input-date">
       </label>
-      <input type="file" id="file" class="d-none" name="img" (change)="readUrl($event)">
+      <input type="file" id="file" class="d-none" name="img" accept="image/*" (change)="readUrl($event)">
       <figure [ngClass]="{'min-heigth':urlImg=='empty'}">
         <img *ngIf="urlImg!='empty'"  [src]="urlImg" alt="">
       </figure>
