@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.resource.VersionResourceResolver;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -29,18 +30,20 @@ public class ApplicationWebMvcConfig extends WebMvcConfigurerAdapter {
 
 
     String rootPath = System.getProperty("catalina.home");
-//    String rootPath = "D:\\test";
+    //    String rootPath = "D:\\test";
     String[] PATH = {
             "file:/" + rootPath + "/front/loalityProgram/dist",
-            "file:/" + rootPath + "/resources/LoalityProgram/"
-
+            "file:/" + rootPath + "/resources/LoalityProgram/",
+            "file:/" + rootPath + "/res/"
     };
 
 
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/res/**")
-                .addResourceLocations(PATH);
+                .addResourceLocations(PATH)
+                .resourceChain(false)
+                .addResolver(new VersionResourceResolver().addContentVersionStrategy("/**"));
     }
 
 
@@ -69,6 +72,7 @@ public class ApplicationWebMvcConfig extends WebMvcConfigurerAdapter {
                 .version(SWAGGER_API_VERSION)
                 .build();
     }
+
     @Bean
     public Docket decksApi() {
         return new Docket(DocumentationType.SWAGGER_2)
