@@ -81,7 +81,10 @@ export class UserService {
 
 
   logIn(login: string, password: string): Observable<boolean> {
-    return this.httpClient.post<boolean>(this.controller + '/log-in/' + login + '/' + password, null).catch(err => Observable.throw(err));
+    let form = new FormData();
+    form.append('login',login);
+    form.append('password',password);
+    return this.httpClient.post<boolean>(this.controller + '/log-in', form).catch(err => Observable.throw(err));
   }
 
 
