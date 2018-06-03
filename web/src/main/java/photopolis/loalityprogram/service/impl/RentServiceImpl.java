@@ -85,8 +85,10 @@ public class RentServiceImpl implements RentService{
                     if (bonuses.get(i).getValue() < bonusPriceLeft) {
                         bonusPriceLeft -= bonuses.get(3).getValue();
                         bonusService.updateValue(bonuses.get(i).getId(), 0.0);
+                        System.out.println("---------------------------------------------------------------------------");
                     } else {
                         bonusService.updateValue(bonuses.get(i).getId(), bonuses.get(i).getValue() - bonusPriceLeft);
+                        System.out.println("===========================================================================");
                         break;
                     }
                 }
@@ -170,7 +172,6 @@ public class RentServiceImpl implements RentService{
         dailyRents.forEach(rent ->
             users.add(userService.findByRentId(rent.getId()))
         );
-        System.out.println("user "+users.size());
         List<DailyRentDTO> dtos= new ArrayList<>();
         for(int i = 0; i < dailyRents.size(); i++){
             dtos.add(new DailyRentDTO(dailyRents.get(i), users.get(i)));

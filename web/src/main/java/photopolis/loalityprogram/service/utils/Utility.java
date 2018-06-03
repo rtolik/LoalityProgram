@@ -125,8 +125,8 @@ public class Utility {
     }
 
     public static Boolean dataComparer(String leftDate, String rightDate){
-        String [] leftSplit=leftDate.split(":");
-        String [] rightSplit=rightDate.split(":");
+        String [] leftSplit=leftDate.split("-");
+        String [] rightSplit=rightDate.split("-");
         Integer leftYear=Integer.parseInt(leftSplit[0]);
         Integer rightYear=Integer.parseInt(rightSplit[0]);
         if(leftYear>rightYear)
