@@ -1,5 +1,6 @@
 package photopolis.loalityprogram.service.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +25,8 @@ import static photopolis.loalityprogram.service.utils.Utility.datePluser;
  */
 @Service
 public class UserServiceImpl implements UserService{
+
+    private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -267,6 +270,7 @@ public class UserServiceImpl implements UserService{
             folder = String.format("%s/%s.%s", photoPath, uuid, tag);
             File file = new File(System.getProperty("catalina.home") + folder);
             file.getParentFile().mkdirs();//!correct
+            LOGGER.info(System.getProperty("catalina.home") + folder);
             if (!file.exists()) {
                 multipartFile.transferTo(file);
             } else {
