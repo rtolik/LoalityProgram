@@ -71,4 +71,6 @@ public interface UserService {
     PageFinderDTO pageParserFilter(String name, Integer pagenum, Integer elOnPage,String userMod, String criterion);
 
     Boolean login(String login,String password);
+
+    List<User> findNewUsersInDateInterval(String startDate,String endDate);
 }

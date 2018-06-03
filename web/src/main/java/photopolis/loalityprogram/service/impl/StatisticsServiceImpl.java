@@ -41,7 +41,13 @@ public class StatisticsServiceImpl implements StatisticsService {
         statistic.setNumOfClients(getNumOfClients(rents));
         statistic.setHoursRented(getRentedHours(rents));
         statistic.setBonusPaidClients(getnumBonusPaidClients(rents));
-
+        statistic.setNumOfRegularClients(getUserByType(rents,false));
+        statistic.setNumOfFriendClients(getUserByType(rents,true));
+        statistic.setHoursPerClient(statistic.getHoursRented()/statistic.getNumOfClients());
+        statistic.setNewClients(userService.findNewUsersInDateInterval(startDate,endDate).size());
+        statistic.setNumOfRents(rents.size());
+        statistic.setNumOfPaidRents(getnumOfRentsByStatus(rents,RentStatus.PAID,RentStatus.BONUSPAID));
+        statistic.setNumOfPaidRents(getnumOfRentsByStatus(rents,RentStatus.LEAVED));
         return statistic;
     }
 
@@ -78,6 +84,19 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     private Integer getUserByType(List<Rent> rents, Boolean isMember){
         List<Rent> sorted=rents.stream().filter(rent -> rent.getUser().getMember().equals(isMember)).collect(toList());
-        return null;
+        return getNumOfClients(sorted);
     }
+
+    private Integer getnumOfRentsByStatus(List<Rent> rents, RentStatus rentStatus){
+        return rents.stream().filter(rent -> rent.getRentStatus().equals(rentStatus)).collect(toList()).size();
+    }
+
+    private Integer getnumOfRentsByStatus(List<Rent> rents, RentStatus rentStatus,RentStatus secondStatus){
+        return rents.stream()
+                .filter(
+                        rent -> rent.getRentStatus().equals(rentStatus)||rent.getRentStatus().equals(secondStatus)
+                ).collect(toList()).size();
+    }
+
+
 }

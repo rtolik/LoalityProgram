@@ -200,7 +200,7 @@ public class RentServiceImpl implements RentService{
     @Override
     public List<Rent> findAllInDateInterval(String startDate, String endDate) {
         return findAll().stream().filter(
-                rent -> !dataComparer(rent.getDate(),startDate)&&dataComparer(rent.getDate(),endDate)
+                rent -> dataComparer(rent.getDate(),startDate)&&!dataComparer(rent.getDate(),endDate)
         ).collect(toList());
     }
 }

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
+import static photopolis.loalityprogram.service.utils.Utility.dataComparer;
 import static photopolis.loalityprogram.service.utils.Utility.dataParser;
 import static photopolis.loalityprogram.service.utils.Utility.datePluser;
 
@@ -290,5 +291,14 @@ public class UserServiceImpl implements UserService{
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public List<User> findNewUsersInDateInterval(String startDate, String endDate) {
+        return findAll().stream()
+                .filter(
+                        user -> dataComparer(user.getDateOfRegistration(),startDate)
+                                &&!dataComparer(user.getDateOfRegistration(),endDate)
+                ).collect(toList());
     }
 }
