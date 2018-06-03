@@ -70,8 +70,10 @@ public class BonusServiceImpl implements BonusService{
 
     @Override
     public void updateValue(Integer id, Double value) {
+        Bonus bonus=  findOne(id).setValue(value);
+
         save(
-                findOne(id).setValue(value)
+                bonus
         );
     }
 

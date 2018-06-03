@@ -43,8 +43,7 @@ public class User {
     private Boolean isActive;
 
     private Boolean isMember;
-
-    @JsonIgnore
+    
     @OneToMany(mappedBy = "user")
     private List<Bonus> bonuses;
 

@@ -43,17 +43,21 @@ public class UserServiceImpl implements UserService{
         String uuid = UUID.randomUUID().toString();
         User user = new User();
         user.setName(name).setSecondName(secondName).setSurname(surname).setPhone(phone)
-                .setDateOfBirth(dateOfBirth == null?"":dataParser(dateOfBirth)).setSocialMedia(socialMedia)
+                .setDateOfBirth(dateOfBirth == null?null:dataParser(dateOfBirth)).setSocialMedia(socialMedia)
                 .setCardId(cardId).setLastVisit(lastVisit).setMember(isMember).setActive(true)
                 .setImagePath(saveFile(img)
                 )
-                .setDateOfMember(dateOfMember==null?"":dataParser(dateOfMember))
+                .setDateOfMember(dateOfMember==null?null:dataParser(dateOfMember))
                 .setEmail(email).setDateOfRegistration(dataParser(dateOfRegistration));
         save(user);
-        if(user.getMember())
-            bonusService.save(50.0, 0,dataParser(dateOfRegistration),
+        if(user.getMember()) {
+            bonusService.save(50.0, 0, dataParser(dateOfRegistration),
                     datePluser(dataParser(dateOfRegistration), BonusType.REGULAR)
-                    ,user.getId());
+                    , user.getId());
+            bonusService.save(0.0,1,null,null,user.getId());
+            bonusService.save(0.0,2,null,null,user.getId());
+            bonusService.save(0.0,3,null,null,user.getId());
+        }
     }
 
     @Override
@@ -117,11 +121,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findOne(Integer id) {
         return userRepository.findOne(id);
-    }
-
-    @Override
-    public UserFullWithBonusDTO findOneDTO(Integer id) {
-        return new UserFullWithBonusDTO(findOne(id));
     }
 
     @Override

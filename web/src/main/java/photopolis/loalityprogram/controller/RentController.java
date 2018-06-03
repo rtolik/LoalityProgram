@@ -1,5 +1,6 @@
 package photopolis.loalityprogram.controller;
 
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,5 +76,23 @@ public class RentController {
         if(id.equals(null)|| price.equals(null)||bonusPrice.equals(null))
             return new ResponseEntity<RentUserDTO>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<RentUserDTO>(rentService.submitRent(id,price,bonusPrice),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/leave-rent/{id}",method = RequestMethod.POST)
+    private ResponseEntity<RentUserDTO> leaveRent(@PathVariable Integer id){
+        if(id==null){
+            return new ResponseEntity<RentUserDTO>(HttpStatus.NO_CONTENT);
+        }
+        rentService.submitRentLeave(id);
+        return new ResponseEntity<RentUserDTO>(rentService.findOneDTO(id),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/delete{id}",method = RequestMethod.POST)
+    private ResponseEntity delete(@PathVariable Integer id){
+        if(id==null){
+            return new ResponseEntity<RentUserDTO>(HttpStatus.NO_CONTENT);
+        }
+        rentService.delete(id);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

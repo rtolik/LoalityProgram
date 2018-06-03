@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import photopolis.loalityprogram.DTO.DailyRentDTO;
 import photopolis.loalityprogram.DTO.RentUserDTO;
+import photopolis.loalityprogram.model.Bonus;
 import photopolis.loalityprogram.model.Rent;
 import photopolis.loalityprogram.model.User;
 import photopolis.loalityprogram.model.enums.RentStatus;
 import photopolis.loalityprogram.repository.RentRepository;
+import photopolis.loalityprogram.service.BonusService;
 import photopolis.loalityprogram.service.RentService;
 import photopolis.loalityprogram.service.UserService;
 
@@ -28,6 +30,9 @@ public class RentServiceImpl implements RentService{
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BonusService bonusService;
 
     @Override
     public void save(String date, String timeOfStart, Double duration, Double price, Double bonusPrice, String comment,
@@ -66,6 +71,19 @@ public class RentServiceImpl implements RentService{
         save(
                 findOne(id).setRentStatus(RentStatus.PAID).setPrice(price).setBonusPrice(bonusPrice)
         );
+        if(bonusPrice!=0.0) {
+            Double bonusPriceLeft = bonusPrice;
+            List<Bonus> bonuses = findOne(id).getUser().getBonuses();
+            for (int i = 3; i <= 0; i--) {
+                if (bonuses.get(i).getValue() < bonusPriceLeft) {
+                    bonusPriceLeft -= bonuses.get(3).getValue();
+                    bonusService.updateValue(bonuses.get(i).getId(), 0.0);
+                } else {
+                    bonusService.updateValue(bonuses.get(i).getId(), bonuses.get(i).getValue() - bonusPriceLeft);
+                    break;
+                }
+            }
+        }
         return new RentUserDTO(findOne(id));
     }
 
@@ -159,6 +177,7 @@ public class RentServiceImpl implements RentService{
 
     @Override
     public RentUserDTO update(Integer id, String date, String timeOfStart, Double duration, String comment) {
+        rentRepository.
         save(findOne(id).setDate(date).setTimeOfStart(timeOfStart).setTimeOfEnd(
                 doubleTimeToStringParser(timeToDoubleParser(timeOfStart)+ duration)).setComment(comment)
         );

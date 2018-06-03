@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import photopolis.loalityprogram.DTO.PageFinderDTO;
 import photopolis.loalityprogram.DTO.UserFIndClientDTO;
 import photopolis.loalityprogram.DTO.UserFindDTO;
-import photopolis.loalityprogram.DTO.UserFullWithBonusDTO;
 import photopolis.loalityprogram.model.User;
 import photopolis.loalityprogram.service.UserService;
 
@@ -49,11 +48,7 @@ public class UserController {
 
         ObjectMapper mapper=new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
-
-        System.out.println("-----------------------------------------------------------------------");
-        System.out.println(img);
-        System.out.println("-----------------------------------------------------------------------");
-        System.out.println(userJson);
+        mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT,true);
         User user=new User();
         try {
             user = mapper.readValue(userJson, User.class);
@@ -74,10 +69,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/find-one/{id}",method = RequestMethod.GET)
-    private ResponseEntity<UserFullWithBonusDTO> findOne(@PathVariable Integer id){
+    private ResponseEntity<User> findOne(@PathVariable Integer id){
         if(id==null)
-            return new ResponseEntity<UserFullWithBonusDTO>(HttpStatus.NO_CONTENT);
-        return new ResponseEntity<UserFullWithBonusDTO>(userService.findOneDTO(id),HttpStatus.OK);
+            return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<User>(userService.findOne(id),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/find-all-pageable-active/{pageNumber}/{elOnPage}/{userName}/{userMode}/{criterion}",
@@ -97,9 +92,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
-    private ResponseEntity<User> update(@RequestParam String userJson, @RequestParam(required = false) MultipartFile img){
+    private ResponseEntity<User> update(@RequestParam String userJson,
+                                        @RequestParam(required = false) MultipartFile img){
         ObjectMapper mapper=new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+        mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT,true);
 
         User user=new User();
         try {
@@ -109,7 +106,7 @@ public class UserController {
         {
             return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
         }
-        if(img.isEmpty()|| img.equals(null)) {
+        if (img ==null) {
             return new ResponseEntity<User>(userService.update(user),HttpStatus.OK);
         }
         return new ResponseEntity<User>(userService.updateWithImg(user,img),HttpStatus.OK);

@@ -10,7 +10,9 @@ import photopolis.loalityprogram.model.enums.BonusType;
 public class Utility {
 
     public static String dataParser(String dataISO) {
-        if(dataISO.equals(null)||dataISO.equals(""))
+        if(dataISO==null)
+            return null;
+        if (dataISO.equals(""))
             return null;
         String retDate = "";
         for (int i = 0; i < 10; i++) {
