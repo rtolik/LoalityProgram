@@ -14,6 +14,7 @@ import photopolis.loalityprogram.service.RentService;
 import photopolis.loalityprogram.service.UserService;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -68,19 +69,26 @@ public class RentServiceImpl implements RentService{
 
     @Override
     public RentUserDTO submitRent(Integer id,Double price,Double bonusPrice) {
-        save(
-                findOne(id).setRentStatus(RentStatus.PAID).setPrice(price).setBonusPrice(bonusPrice)
-        );
-        if(bonusPrice!=0.0) {
-            Double bonusPriceLeft = bonusPrice;
-            List<Bonus> bonuses = findOne(id).getUser().getBonuses();
-            for (int i = 3; i <= 0; i--) {
-                if (bonuses.get(i).getValue() < bonusPriceLeft) {
-                    bonusPriceLeft -= bonuses.get(3).getValue();
-                    bonusService.updateValue(bonuses.get(i).getId(), 0.0);
-                } else {
-                    bonusService.updateValue(bonuses.get(i).getId(), bonuses.get(i).getValue() - bonusPriceLeft);
-                    break;
+        if(bonusPrice==0.0) {
+            save(
+                    findOne(id).setRentStatus(RentStatus.PAID).setPrice(price).setBonusPrice(bonusPrice)
+            );
+        }
+        else {
+            save(
+                    findOne(id).setRentStatus(RentStatus.BONUSPAID).setPrice(price).setBonusPrice(bonusPrice)
+            );
+            if (bonusPrice != 0.0) {
+                Double bonusPriceLeft = bonusPrice;
+                List<Bonus> bonuses = findOne(id).getUser().getBonuses();
+                for (int i = 3; i <= 0; i--) {
+                    if (bonuses.get(i).getValue() < bonusPriceLeft) {
+                        bonusPriceLeft -= bonuses.get(3).getValue();
+                        bonusService.updateValue(bonuses.get(i).getId(), 0.0);
+                    } else {
+                        bonusService.updateValue(bonuses.get(i).getId(), bonuses.get(i).getValue() - bonusPriceLeft);
+                        break;
+                    }
                 }
             }
         }
@@ -187,5 +195,12 @@ public class RentServiceImpl implements RentService{
     @Override
     public RentUserDTO findOneDTO(Integer id) {
         return new RentUserDTO(findOne(id));
+    }
+
+    @Override
+    public List<Rent> findAllInDateInterval(String startDate, String endDate) {
+        return findAll().stream().filter(
+                rent -> !dataComparer(rent.getDate(),startDate)&&dataComparer(rent.getDate(),endDate)
+        ).collect(toList());
     }
 }

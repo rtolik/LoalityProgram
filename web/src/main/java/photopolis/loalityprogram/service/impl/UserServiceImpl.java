@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import photopolis.loalityprogram.DTO.*;
+import photopolis.loalityprogram.config.Constants;
 import photopolis.loalityprogram.model.User;
 import photopolis.loalityprogram.model.enums.BonusType;
 import photopolis.loalityprogram.repository.UserRepository;
@@ -276,5 +277,14 @@ public class UserServiceImpl implements UserService{
             e.printStackTrace();
         }
         return folder;
+    }
+
+    @Override
+    public Boolean login(String login, String password) {
+        if (login.equals(Constants.LOGIN)) {
+            if (password.equals(Constants.PASSWORD))
+                return true;
+        }
+        return false;
     }
 }
