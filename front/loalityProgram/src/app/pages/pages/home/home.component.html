@@ -1,8 +1,8 @@
 <div class="scroll-button">
   <div class="border-scrolls">
-  <a scrollTo  href="#calendar">Календар зайнятості</a>
-  <span>|</span>
-  <a scrollTo  href="#stat">Підрахунок статистики</a>
+    <a scrollTo href="#calendar">Календар зайнятості</a>
+    <span>|</span>
+    <a scrollTo href="#stat">Підрахунок статистики</a>
   </div>
 </div>
 <div class="content pb-5 mt-5" id="calendar">
@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div *ngFor="let one of arr;let i = index" class="d-flex   cell" #cell  >
+      <div *ngFor="let one of arr;let i = index" class="d-flex   cell" #cell>
         <div class="h-100 hour-cell  d-flex align-items-center justify-content-center">{{one}}</div>
         <div class="h-100  info-cell d-flex ">
           <div class="pluses-cell">
@@ -37,16 +37,18 @@
               [ngClass]='findRentClass(one.substring(0,5),plusTwo)'
               #plusTwo
               (click)="addHalfAndHour(one,plusTwo)"
-              class="h-50  one-plus-cell border-dark border-right d-flex justify-content-center align-items-center">+</div>
+              class="h-50  one-plus-cell border-dark border-right d-flex justify-content-center align-items-center">+
+            </div>
           </div>
           <div class="user-info d-flex">
             <div class="name border-dark border-right d-flex flex-column">
-              <div  class="h-50 w-100 name-uuu border-bottom border-dark"   routerLink="{{getLink(one.substring(0,5),plusOne)}}">
+              <div class="h-50 w-100 name-uuu border-bottom border-dark"
+                   routerLink="{{getLink(one.substring(0,5),plusOne)}}">
 
-               <p #upName class="m-0 text-center"> {{getName(one.substring(0,5),plusOne)}}</p>
+                <p #upName class="m-0 text-center"> {{getName(one.substring(0,5),plusOne)}}</p>
               </div>
-              <div class="h-50 w-100 name-uuu" #currentName routerLink="{{getLink(one.substring(0,5),plusOne)}}" >
-               <p class="m-0 text-center"> {{getName(one.substring(0,5),plusTwo,upName,currentName)}}</p>
+              <div class="h-50 w-100 name-uuu" #currentName routerLink="{{getLink(one.substring(0,5),plusOne)}}">
+                <p class="m-0 text-center"> {{getName(one.substring(0,5),plusTwo,upName,currentName)}}</p>
               </div>
             </div>
             <div class="phone border-dark border-right d-flex flex-column">
@@ -62,49 +64,52 @@
                 <p #upStatus class="m-0 text-center"> {{getRentStatus(one.substring(0,5),plusOne)}}</p>
               </div>
               <div class="h-50 w-100" #currentStatus>
-                <p class="m-0 text-center"> {{getRentStatus(one.substring(0,5),plusTwo,upPhone,currentStatus,upStatus)}}</p>
-              </div></div>
+                <p class="m-0 text-center">
+                  {{getRentStatus(one.substring(0,5),plusTwo,upPhone,currentStatus,upStatus)}}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  <div class="form col-md-4  pr-md-0 m-0">
-    <form >
-      <h2 class="text-center">Бронювання</h2>
-      <div class="wrapper">
-        <label>
-          Клієнт
-          <input name="1" (change)="getUserId(inp.value)" #inp type="text" list="userList">
-          <datalist id="userList">
-            <option *ngFor="let one of user" [value]="one.id+'| '+one.name+' '+one.surname"></option>
-          </datalist>
-        </label>
-        <label >
-          Дата
-          <input name="2" class="border"  [value]="dateStr"  type="date">
-        </label>
-        <label>
-          Час початку оренди
-          <input name="3" type="text" #inptval [value]="selectedTime" [textMask]='{mask: this.mask}' placeholder="00:00">
-        </label>
-        <label>
-          Тривалість оренди
-          <input name="4" type="number" [value]="selectedHours" placeholder="0">
-        </label>
-        <label >
-          Коментар
-          <textarea [(ngModel)]="newRent.comment" name="5" id="" ></textarea>
-        </label>
-        <button (click)="addRent()" type="submit">Додати</button>
-        <p *ngIf="added">-Успішно додано</p>
-      </div>
-    </form>
-  </div>
+    <div class="form col-md-4  pr-md-0 m-0">
+      <form>
+        <h2 class="text-center">Бронювання</h2>
+        <div class="wrapper">
+          <label>
+            Клієнт
+            <input name="1" (change)="getUserId(inp.value)" #inp type="text" list="userList">
+            <datalist id="userList">
+              <option *ngFor="let one of user" [value]="one.id+'| '+one.name+' '+one.surname"></option>
+            </datalist>
+          </label>
+          <label>
+            Дата
+            <input name="2" class="border" [value]="dateStr" type="date">
+          </label>
+          <label>
+            Час початку оренди
+            <input name="3" type="text" #inptval [value]="selectedTime" [textMask]='{mask: this.mask}'
+                   placeholder="00:00">
+          </label>
+          <label>
+            Тривалість оренди
+            <input name="4" type="number" [value]="selectedHours" placeholder="0">
+          </label>
+          <label>
+            Коментар
+            <textarea [(ngModel)]="newRent.comment" name="5" id=""></textarea>
+          </label>
+          <button (click)="addRent()" type="submit">Додати</button>
+          <p *ngIf="added">-Успішно додано</p>
+        </div>
+      </form>
+    </div>
   </div>
   <div id="stat" class="statistics">
-  <h2>Статистика</h2>
+    <h2>Статистика</h2>
     <div class="buttons d-flex justify-content-around align-items-start">
-      <input  class="input-date mb-5" type="date" [(ngModel)]="start">
+      <input class="input-date mb-5" type="date" [(ngModel)]="start">
       <input class="input-date mb-5" type="date" [(ngModel)]="end">
       <button (click)="getStat()">Вивести</button>
     </div>
@@ -112,21 +117,33 @@
       <div class="heading row m-0">
 
         <input type="date" disabled class="col-4 " [(ngModel)]="start">
-        <input type="date" disabled class="col-4 "  [(ngModel)]="end">
+        <input type="date" disabled class="col-4 " [(ngModel)]="end">
         <h3 class="col-4">Результат</h3>
       </div>
       <div class="table-content  m-0 d-flex flex-column">
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Загальний прибуток</h3><h3 class="col-4">{{stat.profit}}</h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів</h3><h3 class="col-4">{{stat.numOfClients}}</h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість орендованих годин</h3><h3 class="col-4">{{stat.hoursRented}}</h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів які скористувались бонусами</h3>{{stat.bonusPaidClients}}<h3 class="col-4"></h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість простих клієнтів</h3><h3 class="col-4">{{stat.numOfRegularClients}}</h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість постійних клієнтів</h3><h3 class="col-4">{{stat.numOfFriendClients}}</h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість год/клієнта</h3><h3 class="col-4">{{stat.hoursPerClient}}</h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Додано нових клієнтів</h3><h3 class="col-4">{{stat.newClients}}</h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість записів</h3><h3 class="col-4"></h3>{{stat.numOfRents}}</div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість підтверджених записів</h3><h3 class="col-4">{{stat.numOfPaidRents}}</h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість покинутих записів</h3><h3 class="col-4">{{stat.numOfLeavedRents}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Загальний прибуток</h3>
+          <h3 class="col-4">{{stat.profit}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів</h3>
+          <h3 class="col-4">{{stat.numOfClients}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість орендованих годин</h3>
+          <h3 class="col-4">{{stat.hoursRented}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів які скористувались бонусами</h3>
+          <h3 class="col-4">{{stat.bonusPaidClients}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість простих клієнтів</h3>
+          <h3 class="col-4">{{stat.numOfRegularClients}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість постійних клієнтів</h3>
+          <h3 class="col-4">{{stat.numOfFriendClients}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість год/клієнта</h3>
+          <h3 class="col-4">{{stat.hoursPerClient}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Додано нових клієнтів</h3>
+          <h3 class="col-4">{{stat.newClients}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість записів</h3>
+          <h3 class="col-4">{{stat.numOfRents}}</h3>
+        </div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість підтверджених записів</h3>
+          <h3 class="col-4">{{stat.numOfPaidRents}}</h3></div>
+        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість покинутих записів</h3>
+          <h3 class="col-4">{{stat.numOfLeavedRents}}</h3></div>
       </div>
     </div>
   </div>
