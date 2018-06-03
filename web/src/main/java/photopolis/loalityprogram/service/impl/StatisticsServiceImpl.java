@@ -2,6 +2,7 @@ package photopolis.loalityprogram.service.impl;
 
 import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import photopolis.loalityprogram.model.Rent;
 import photopolis.loalityprogram.model.Statistic;
 import photopolis.loalityprogram.model.User;
@@ -22,6 +23,7 @@ import static photopolis.loalityprogram.service.utils.Utility.countDuration;
 /**
  * Created by Anatoliy on 03.06.2018.
  */
+@Service
 public class StatisticsServiceImpl implements StatisticsService {
 
     @Autowired
