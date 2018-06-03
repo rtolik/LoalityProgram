@@ -69,6 +69,9 @@ public class RentServiceImpl implements RentService{
 
     @Override
     public RentUserDTO submitRent(Integer id,Double price,Double bonusPrice) {
+        System.err.println("--------------------------bonusPrice--------------------");
+        System.err.println(bonusPrice);
+        System.err.println("--------------------------bonusPrice--------------------");
         if(bonusPrice==0.0) {
             save(
                     findOne(id).setRentStatus(RentStatus.PAID).setPrice(price).setBonusPrice(bonusPrice)
