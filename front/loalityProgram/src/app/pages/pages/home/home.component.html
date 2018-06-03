@@ -1,11 +1,11 @@
 <div class="scroll-button">
   <div class="border-scrolls">
-  <a href="">Календар зайнятості</a>
+  <a scrollTo  href="#calendar">Календар зайнятості</a>
   <span>|</span>
-  <a href="">Підрахунок статистики</a>
+  <a scrollTo  href="#stat">Підрахунок статистики</a>
   </div>
 </div>
-<div class="content pb-5 mt-5">
+<div class="content pb-5 mt-5" id="calendar">
   <input (change)="getDate(date.value)" #date class="input-date mb-5" type="date" [(ngModel)]="dateStr">
   <div class="table-form row m-0">
     <div class="table col-md-8   pl-md-0 m-0">
@@ -101,7 +101,7 @@
     </form>
   </div>
   </div>
-  <div class="statistics">
+  <div id="stat" class="statistics">
   <h2>Статистика</h2>
     <div class="buttons d-flex justify-content-around align-items-start">
       <input  class="input-date mb-5" type="date" [(ngModel)]="start">

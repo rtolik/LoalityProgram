@@ -12,7 +12,7 @@ import {Subject} from "rxjs/Subject";
 export class UserService {
   readonly controller = '/user';
 
-  isLogged: boolean = false;
+  isLogged: boolean = true;
   _isLogged = new Subject<boolean>();
   isLogged$ = this._isLogged.asObservable();
 
