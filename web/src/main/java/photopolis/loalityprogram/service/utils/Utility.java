@@ -124,6 +124,24 @@ public class Utility {
         return result;
     }
 
+    public static Boolean dataComparer(String leftDate, String rightDate){
+        String [] leftSplit=leftDate.split(":");
+        String [] rightSplit=rightDate.split(":");
+        Integer leftYear=Integer.parseInt(leftSplit[0]);
+        Integer rightYear=Integer.parseInt(rightSplit[0]);
+        if(leftYear>rightYear)
+            return true;
+        Integer leftMounth=Integer.parseInt(leftSplit[1]);
+        Integer rightMounth=Integer.parseInt(rightSplit[1]);
+        if (leftMounth>rightMounth)
+            return true;
+        Integer leftDay=Integer.parseInt(rightSplit[2]);
+        Integer rightDay=Integer.parseInt(rightSplit[2]);
+        if (leftDay>rightDay)
+            return true;
+        return false;
+    }
+
 //    public static String outTimeParser(String time){
 //        String retTime=time+=":";
 //        String tmp=time.substring(3,5);

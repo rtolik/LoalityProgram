@@ -1,9 +1,11 @@
 package photopolis.loalityprogram.service.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import photopolis.loalityprogram.DTO.*;
+import photopolis.loalityprogram.config.Constants;
 import photopolis.loalityprogram.model.User;
 import photopolis.loalityprogram.model.enums.BonusType;
 import photopolis.loalityprogram.repository.UserRepository;
@@ -24,6 +26,8 @@ import static photopolis.loalityprogram.service.utils.Utility.datePluser;
  */
 @Service
 public class UserServiceImpl implements UserService{
+
+    private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -267,6 +271,7 @@ public class UserServiceImpl implements UserService{
             folder = String.format("%s/%s.%s", photoPath, uuid, tag);
             File file = new File(System.getProperty("catalina.home") + folder);
             file.getParentFile().mkdirs();//!correct
+//            LOGGER.info(System.getProperty("catalina.home") + folder);
             if (!file.exists()) {
                 multipartFile.transferTo(file);
             } else {
@@ -276,5 +281,14 @@ public class UserServiceImpl implements UserService{
             e.printStackTrace();
         }
         return folder;
+    }
+
+    @Override
+    public Boolean login(String login, String password) {
+        if (login.equals(Constants.LOGIN)) {
+            if (password.equals(Constants.PASSWORD))
+                return true;
+        }
+        return false;
     }
 }

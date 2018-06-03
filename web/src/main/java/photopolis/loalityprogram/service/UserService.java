@@ -69,4 +69,6 @@ public interface UserService {
     List<User> findElementsOnPage(List<User> users, Integer pageNum, Integer elOnPage);
 
     PageFinderDTO pageParserFilter(String name, Integer pagenum, Integer elOnPage,String userMod, String criterion);
+
+    Boolean login(String login,String password);
 }

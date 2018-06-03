@@ -1,14 +1,10 @@
-import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
+import {NgModule} from '@angular/core';
+import {AppComponent} from './app.component';
 import {GlobalImportsModule} from "./shared/config/global-imports.module";
 import {PagesModule} from "./pages/pages.module";
-import {RouterModule, Routes} from "@angular/router";
-import {mainRoutes} from "./main.routes";
-import {ScrollToModule} from "ng2-scroll-to";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ContentInterceptor} from "./shared/interceptor/content-interceptor";
-import { ImagePipe } from './shared/pipe/pipes/image.pipe';
-import { LogInComponent } from './source/log-in/log-in.component';
+import {LogInComponent} from './source/log-in/log-in.component';
 import {LogInCanActive} from "./shared/can-active/log-in.can-active";
 import {UserService} from "./shared/service/user.service";
 

@@ -120,4 +120,18 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "log-in",method = RequestMethod.POST)
+    private ResponseEntity<Boolean> login(@RequestParam String login, @RequestParam String password){
+        if(login==null || password==null){
+            return  new ResponseEntity<Boolean>(HttpStatus.NO_CONTENT);
+        }
+
+        System.out.println("--------------------------------------------------------");
+        System.out.println("Login "+login);
+        System.out.println("Password "+password);
+        return new ResponseEntity<Boolean>(userService.login(login,password),HttpStatus.OK);
+    }
+
+
 }

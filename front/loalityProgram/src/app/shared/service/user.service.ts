@@ -89,15 +89,17 @@ export class UserService {
 
 
   logData(log:string,pass:string,bool:boolean,check:boolean){
-    if(bool==true){
+    if(bool){
+      console.log('hui bliat');
       this.isLogged=bool;
+      console.log(`this.isLogged ${this.isLogged}`);
       this._isLogged.next(this.isLogged);
       this.login=log;
       this._login.next(this.login);
       this.password=pass;
       this._password.next(this.password);
       if(check){
-        localStorage.setItem(log,pass);
+        localStorage.setItem('is_auth','true');
       }
     }
 

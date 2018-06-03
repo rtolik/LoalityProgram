@@ -1,4 +1,4 @@
-import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {UserService} from "../service/user.service";
@@ -6,23 +6,22 @@ import {isNullOrUndefined} from "util";
 
 
 @Injectable()
-export class LogInCanActive {
+export class LogInCanActive implements CanActivate {
   constructor(private _router: Router, private _user: UserService, @Inject(PLATFORM_ID) private platformId: Object) {
 
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    let bool=false;
-    bool=this._user.isLogged;
-    this._user.isLogged$.subscribe(next=>{
-        bool=next;
-    });
-    if(!isNullOrUndefined(localStorage.getItem(this._user.login))){
-      bool=true;
+    let bool :boolean;
+    bool = this._user.isLogged;
+    console.log(`this._user.isLogged ${this._user.isLogged}`);
+    console.log(`bool ${bool}`);
+    if (!isNullOrUndefined(localStorage.getItem('is_auth'))) {
+      bool = true;
     }
-    if(bool==false){
+    if (!bool) {
       this._router.navigateByUrl('/log-in');
     }
-   return bool;
+    return bool;
   }
 }

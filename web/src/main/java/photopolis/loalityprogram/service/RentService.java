@@ -56,6 +56,6 @@ public interface RentService {
 
     RentUserDTO findOneDTO(Integer id);
 
-
+    List<Rent> findAllInDateInterval(String startDate, String endDate);
 
 }
