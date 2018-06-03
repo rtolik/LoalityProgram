@@ -14,8 +14,6 @@ export class LogInCanActive implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     let bool :boolean;
     bool = this._user.isLogged;
-    console.log(`this._user.isLogged ${this._user.isLogged}`);
-    console.log(`bool ${bool}`);
     if (!isNullOrUndefined(localStorage.getItem('is_auth'))) {
       bool = true;
     }

@@ -17,7 +17,7 @@ export class LogInComponent implements OnInit {
     this._user.logIn(log, pass).subscribe(next => {
       this._user.logData(log, pass, next, check.checked);
       if (next) {
-        console.log('navigating');
+        // console.log('navigating');
         this._router.navigateByUrl('');
       }
     }, error => {
