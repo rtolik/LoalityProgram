@@ -14,7 +14,6 @@ export class ContentInterceptor implements HttpInterceptor {
   }
 
   intercept<T>(req: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
-    console.log('kurvamat');
     req = req.clone({url: url + req.url});
     if (isPlatformBrowser(this.platformId)) {
       req = req.clone({headers: this.getHeaders(req)});

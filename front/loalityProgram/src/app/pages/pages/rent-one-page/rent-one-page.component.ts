@@ -52,9 +52,10 @@ export class RentOnePageComponent implements OnInit {
     console.log(this.bonus);
     console.log(this.price);
     if (this.bonus != 0 || this.price != 0) {
+      console.log(`${this.rent.id}, ${this.price}, ${this.bonus}`);
       this._rent.submitRent(this.rent.id, this.price, this.bonus).subscribe(next => {
         this.rent = next;
-        console.log('ahsbdhsad');
+        console.log('ahsbdhsad',this.rent);
         this.rentClosed = true;
       }, error => {
         console.log(error);
