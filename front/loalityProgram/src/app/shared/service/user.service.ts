@@ -32,8 +32,6 @@ export class UserService {
   save(userForm: HTMLFormElement, user: User): Observable<User> {
     let form: FormData = new FormData(userForm);
     form.append('userJson', JSON.stringify(user));
-    console.log(form.get('userJson'));
-    console.log(form.get('img'));
     return this.httpClient.post<User>(this.controller + '/create-user', form).catch(err => Observable.throw(err));
   }
 

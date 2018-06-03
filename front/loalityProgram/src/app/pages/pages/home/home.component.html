@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="content pb-5 mt-5">
-  <input (change)="getDate()" #date class="input-date mb-5" type="date" [(ngModel)]="dateStr">
+  <input (change)="getDate(date.value)" #date class="input-date mb-5" type="date" [(ngModel)]="dateStr">
   <div class="table-form row m-0">
     <div class="table col-md-8   pl-md-0 m-0">
       <div class="cell d-flex heading">
