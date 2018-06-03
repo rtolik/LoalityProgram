@@ -271,7 +271,7 @@ public class UserServiceImpl implements UserService{
             folder = String.format("%s/%s.%s", photoPath, uuid, tag);
             File file = new File(System.getProperty("catalina.home") + folder);
             file.getParentFile().mkdirs();//!correct
-            LOGGER.info(System.getProperty("catalina.home") + folder);
+//            LOGGER.info(System.getProperty("catalina.home") + folder);
             if (!file.exists()) {
                 multipartFile.transferTo(file);
             } else {
