@@ -19,6 +19,6 @@ export class User {
   lastVisit: string;
   dateOfMember: string;
   bonuses: Bonus[];
-  isActive: boolean;
+  active: boolean;
   rents: Rent[];
 }

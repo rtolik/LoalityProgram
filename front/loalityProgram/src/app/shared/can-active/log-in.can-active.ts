@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {UserService} from "../service/user.service";
 import {isNullOrUndefined} from "util";
+import {xor, xorConstVal} from "../config/config";
 
 
 @Injectable()
@@ -14,8 +15,9 @@ export class LogInCanActive implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     let bool :boolean;
     bool = this._user.isLogged;
-    if (!isNullOrUndefined(localStorage.getItem('is_auth'))) {
-      bool = true;
+    if (!isNullOrUndefined(localStorage.getItem('xored'))) {
+      if (localStorage.getItem('xored') == xor(localStorage.getItem('login'), localStorage.getItem('password')))
+        bool = true;
     }
     if (!bool) {
       this._router.navigateByUrl('/log-in');

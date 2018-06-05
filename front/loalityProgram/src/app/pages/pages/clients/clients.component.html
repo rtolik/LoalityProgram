@@ -1,6 +1,7 @@
 <div class="content d-flex">
   <div class="filters d-flex flex-column">
     <input (change)="loadPage(1)" [(ngModel)]="userName" #input type="text" placeholder="Пошук">
+    <input (change)="loadPage(1)" [(ngModel)]="userPhone" [textMask]='{mask: this.phoneMask}' placeholder="38 (___)-__-__-___" #input type="text" >
     <label (click)="userModFilterFunc('all')">
       <input name="filter" type="radio">
       <span class="checkmark"></span>
@@ -15,6 +16,11 @@
       <input name="filter" type="radio">
       <span class="checkmark"></span>
       Звичайні
+    </label>
+    <label (click)="userModFilterFunc('deleted')">
+      <input name="filter" type="radio">
+      <span class="checkmark"></span>
+      Видалені
     </label>
     <input disabled type="text" placeholder="Сортування">
     <label (click)="criterionFilterFunc('alp')">
@@ -43,12 +49,12 @@
     <app-user-card-one *ngFor="let user of users" [user]="user"></app-user-card-one>
     <nav aria-label="Page navigation" class="align-self-center">
       <ul class="pagination">
-        <li *ngIf="currentPage!=1" (click)="loadPage(0)" class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
+        <li *ngIf="currentPage!=1" (click)="loadPage(1)" class="page-item">
+          <a class="page-link" aria-label="Previous">
             <span aria-hidden="true">&laquo;&laquo;</span>
           </a>
         </li>
-        <li class="page-item" *ngIf="currentPage!=1" (click)="loadPage(currentPage-1)"><a class="page-link" href="#"
+        <li class="page-item" *ngIf="currentPage!=1" (click)="loadPage(currentPage-1)"><a class="page-link"
                                                                                           aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a></li>
@@ -62,7 +68,7 @@
         <li class="page-item" *ngIf="numOfPages>=currentPage+1" (click)="loadPage(currentPage+1)"><a class="page-link"> <span
           aria-hidden="true">&raquo;</span></a></li>
         <li class="page-item" *ngIf="numOfPages>=currentPage+1" (click)="loadPage(numOfPages)">
-          <a class="page-link" href="#" aria-label="Next">
+          <a class="page-link"  aria-label="Next">
             <span aria-hidden="true">&raquo;&raquo;</span>
           </a>
         </li>

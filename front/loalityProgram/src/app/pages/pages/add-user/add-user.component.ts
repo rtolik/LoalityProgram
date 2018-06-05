@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {phoneMask} from "../../../shared/config/config";
 import {User} from "../../../shared/model/user";
@@ -6,12 +6,13 @@ import {UserService} from "../../../shared/service/user.service";
 import {s} from "@angular/core/src/render3";
 import {isNullOrUndefined} from "util";
 import {BonusDay} from "../../../shared/model/bonus-day";
+import {BonusDayService} from "../../../shared/service/bonus-day.service";
 
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css'],
-  providers: [UserService]
+  providers: [UserService,BonusDayService]
 })
 export class AddUserComponent implements OnInit {
   urlImg: string = 'empty';
@@ -25,9 +26,8 @@ export class AddUserComponent implements OnInit {
   bonusDay: BonusDay = new BonusDay();
   bonusDays: BonusDay[] = [];
 
-
-  constructor(private userService: UserService) {
-    this.userService.findAllDays().subscribe(next => {
+  constructor(private userService: UserService,private _bonus:BonusDayService) {
+    this._bonus.findAllDays().subscribe(next => {
       this.bonusDays = next;
     }, error => {
       console.log(error);
@@ -55,6 +55,7 @@ export class AddUserComponent implements OnInit {
       console.log(error);
     }, () => {
       this.added = true;
+      this.urlImg='empty';
       setTimeout(() => {
         this.added = false;
       }, 2000)
@@ -63,7 +64,7 @@ export class AddUserComponent implements OnInit {
 
 
   deleteDay(id:number){
-  this.userService.deleteBonusDay(id).subscribe(next=>{
+  this._bonus.deleteBonusDay(id).subscribe(next=>{
       this.bonusDays.forEach((next,ind)=>{
         if(next.id==id){
           this.bonusDays.splice(ind,1);
@@ -74,7 +75,7 @@ export class AddUserComponent implements OnInit {
   })
   }
   addDay() {
-    this.userService.saveBonusDay(this.bonusDay).subscribe(next => {
+    this._bonus.saveBonusDay(this.bonusDay).subscribe(next => {
       this.bonusDays.push(next);
       this.bonusDayForm.reset();
     }, error => {

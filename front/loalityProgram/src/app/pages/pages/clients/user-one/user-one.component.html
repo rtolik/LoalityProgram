@@ -1,8 +1,8 @@
 <div class="content row m-0">
   <div class="left col-3 flex-column align-items-center  d-flex">
-    <form class="w-100 flex-column align-items-center  d-flex" action="" #form >
+    <form class="w-100 flex-column align-items-center  d-flex" action=""  #form >
       <img style="width: 100%; height: auto;" src="{{urlImage|nou}}" alt="{{user.name|nou}}">
-      <input (change)="readUrl($event)" class="d-none" id="img" type="file">
+      <input (change)="readUrl($event)" class="d-none" name="img" id="img" type="file">
       <label *ngIf="editing" for="img" >Змінити фото</label>
     </form>
     <button *ngIf="editing==false;" (click)="edit()"><img style="height: 24px; width: auto; margin-right: 10px;"
@@ -113,8 +113,12 @@
         <!--<h3 class="col-4">До: 21.05.04</h3>-->
       <!--</div>-->
     </div>
-    <div class="buttons d-flex justify-content-end">
-      <button (click)="delete()">Видалити клієнта</button>
+    <div class="buttons d-flex justify-content-end"  *ngIf="user.active">
+      <button (click)="delete()" *ngIf="user.active">Видалити клієнта</button>
+    </div>
+
+    <div class="buttons d-flex justify-content-end" *ngIf="!user.active">
+      <button (click)="revive()">Відновити клієнта</button>
     </div>
     <div class="rets pt-4" *ngIf="isNoU(rents)">
       <div class="heading d-flex justify-content-between">

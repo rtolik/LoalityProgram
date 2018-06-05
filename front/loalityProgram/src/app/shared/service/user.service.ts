@@ -7,6 +7,8 @@ import 'rxjs/add/observable/throw';
 import {PageableWrapper} from "../model/pageable-wrapper";
 import {BonusDay} from "../model/bonus-day";
 import {Subject} from "rxjs/Subject";
+import {Auth} from "../model/auth";
+
 
 @Injectable()
 export class UserService {
@@ -37,7 +39,7 @@ export class UserService {
 
   update(form: HTMLFormElement,user :User): Observable<User>{
     let obj :FormData= new FormData(form);
-    obj.append('userJson',JSON.stringify(user))
+    obj.append('userJson',JSON.stringify(user));
     return this.httpClient.post<User>(this.controller + '/update', obj).catch(err => Observable.throw(err));
   }
 
@@ -45,9 +47,9 @@ export class UserService {
     return this.httpClient.get<User[]>(this.controller + '/form-find-user').catch(err => Observable.throw(err));
   }
 
-  findAllPageableAvailable(page: number, count: number, nameFilter: string, userModFilter: string, criterionFilter: string): Observable<PageableWrapper> {
-    console.log(this.controller + '/find-all-pageable-active/' + page + '/' + count + '/' + encodeURI(nameFilter) + '/' + userModFilter + '/' + criterionFilter);
-    return this.httpClient.get<PageableWrapper>(this.controller + '/find-all-pageable-active/' + page + '/' + count + '/' + encodeURI(nameFilter) + '/' + userModFilter + '/' + criterionFilter).catch(err => Observable.throw(err));
+  findAllPageableAvailable(page: number, count: number, nameFilter: string,phoneFilter:string, userModFilter: string, criterionFilter: string): Observable<PageableWrapper> {
+    console.log(this.controller + '/find-all-pageable-active/' + page + '/' + count + '/' + encodeURI(nameFilter)+'/'+phoneFilter+ '/' + userModFilter + '/' + criterionFilter);
+    return this.httpClient.get<PageableWrapper>(this.controller + '/find-all-pageable-active/' + page + '/' + count + '/' + encodeURI(nameFilter)+'/'+phoneFilter+ '/' + userModFilter + '/' + criterionFilter).catch(err => Observable.throw(err));
   }
 
   findOne(id: number): Observable<User> {
@@ -57,52 +59,43 @@ export class UserService {
   delete(id: number): Observable<User>{
     return this.httpClient.post<User>(this.controller + '/delete/' + id,null).catch(err => Observable.throw(err));
   }
-
-
-
-
-
-
-
-
-  findAllDays(): Observable<BonusDay[]>{
-    return this.httpClient.get<BonusDay[]>('/bonus-day/find-all').catch(err => Observable.throw(err));
-  }
-  saveBonusDay(bonusDay:BonusDay): Observable<BonusDay>{
-    let form = new FormData();
-    form.append('name',bonusDay.name);
-    form.append('date',bonusDay.date);
-    form.append('bonusesToAdd',bonusDay.bonusesToAdd+'');
-    return this.httpClient.post<BonusDay>('/bonus-day/save',form).catch(err => Observable.throw(err));
-  }
-  deleteBonusDay(bonusDayId:number): Observable<BonusDay>{
-    return this.httpClient.post<BonusDay>('/bonus-day/delete/'+bonusDayId,null).catch(err => Observable.throw(err));
+  revive(id: number): Observable<User>{
+    return this.httpClient.post<User>(this.controller + '/recover/' + id,null).catch(err => Observable.throw(err));
   }
 
 
-  logIn(login: string, password: string): Observable<boolean> {
+
+
+
+
+
+
+
+
+  logIn(login: string, password: string): Observable<Auth> {
     let form = new FormData();
     form.append('login',login);
     form.append('password',password);
-    return this.httpClient.post<boolean>(this.controller + '/log-in', form).catch(err => Observable.throw(err));
+    return this.httpClient.post<Auth>(this.controller + '/log-in', form).catch(err => Observable.throw(err));
   }
 
 
-  logData(log:string,pass:string,bool:boolean,check:boolean){
-    if(bool){
-      console.log('hui bliat');
-      this.isLogged=bool;
-      console.log(`this.isLogged ${this.isLogged}`);
+
+
+  logData(log:string,pass:string,auth:Auth,check:boolean){
+    if(auth.authorised){
+      this.isLogged=true;
       this._isLogged.next(this.isLogged);
       this.login=log;
       this._login.next(this.login);
       this.password=pass;
       this._password.next(this.password);
       if(check){
-        localStorage.setItem('is_auth','true');
+        localStorage.setItem('xored',auth.xored);
+        localStorage.setItem('login', this.login);
+        localStorage.setItem('password', this.password);
       }
     }
-
   }
 
 

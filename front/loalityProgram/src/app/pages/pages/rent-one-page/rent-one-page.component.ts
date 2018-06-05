@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {RentService} from "../../../shared/service/rent.service";
 import {Rent} from "../../../shared/model/rent";
 import {timeMask} from "../../../shared/config/config";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-rent-one-page',
@@ -25,14 +26,14 @@ export class RentOnePageComponent implements OnInit {
   bool = false;
   rentClosed: boolean;
 
-  constructor(private router: ActivatedRoute, private _rent: RentService) {
+  constructor(private router: ActivatedRoute, private _rent: RentService,private location: Location) {
     this.router.params.subscribe(next => {
       _rent.findOne(next['id']).subscribe(next => {
         console.log(next);
         this.rent = next;
         console.log(this.rent);
         this.bool = true;
-        this.rentClosed = this.rent.rentStatus == 'PAID'
+        this.rentClosed = this.rent.rentStatus == 'PAID'||this.rent.rentStatus=='LEAVED'||this.rent.rentStatus=='BONUSPAID'
       }, error => {
         console.log(error);
       })
@@ -73,7 +74,8 @@ export class RentOnePageComponent implements OnInit {
   }
   delete(){
     this._rent.delete(this.rent.id).subscribe(next=>{
-        this.rent.rentStatus='ВИДАЛЕНО'
+      this.rent=new Rent();
+      this.location.back();
     },error => {
         console.log(error);
     })

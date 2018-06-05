@@ -11,12 +11,13 @@ import { RentOneComponent } from './pages/clients/user-one/rent-one/rent-one.com
 import {RentOnePageComponent} from "./pages/rent-one-page/rent-one-page.component";
 import { FinancesComponent } from './pages/finances/finances.component';
 import {ImagePipe} from "../shared/pipe/pipes/image.pipe";
+import  {UpComponent} from "../source/up/up.component";
 
 @NgModule({
   imports: [
     GlobalImportsModule
   ],
-  declarations: [PagesComponent, HeaderComponent, HomeComponent, ClientsComponent, UserCardOneComponent, AddUserComponent, UserOneComponent, RentOneComponent, RentOnePageComponent, FinancesComponent]
+  declarations: [PagesComponent, HeaderComponent, HomeComponent, ClientsComponent, UserCardOneComponent, AddUserComponent, UserOneComponent, RentOneComponent, RentOnePageComponent, FinancesComponent,UpComponent]
 })
 export class PagesModule {
 }
