@@ -117,44 +117,58 @@
       <input class="input-date mb-5" type="date" [(ngModel)]="end">
       <button (click)="getStat()" scrollTo href="#stat">Вивести</button>
     </div>
-    <div class="statistics-table mt-5 col-md-8 p-0  " *ngIf="showStat">
+    <div class="statistics-table mt-5 col-md-8 p-0  " >
       <div class="heading row m-0 ">
         <input type="date" disabled class="col-4 " [(ngModel)]="start">
         <input type="date" disabled class="col-4 " [(ngModel)]="end">
         <h3 class="col-4">Результат</h3>
       </div>
       <div class="table-content  m-0 d-flex col-12  p-0 flex-column">
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Загальний прибуток</h3>
-          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.profit}}</h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів</h3>
-          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.numOfClients}}</h3>
+        <div class="stat-row d-flex m-0">
+          <h3 class="col-8">Загальний прибуток</h3>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.profit|nou}}</h3>
         </div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість орендованих годин</h3>
-          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.hoursRented}}</h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів які скористувались бонусами</h3>
-          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.bonusPaidClients}}</h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість простих клієнтів</h3>
+        <div class="stat-row d-flex m-0">
+          <h3 class="col-8">Кількість клієнтів</h3>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.numOfClients|nou}}</h3>
+        </div>
+        <div class="stat-row d-flex m-0">
+          <h3 class="col-8">Кількість орендованих годин</h3>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.hoursRented|nou}}</h3>
+        </div>
+        <div class="stat-row d-flex m-0">
+          <h3 class="col-8">Кількість клієнтів які скористувались бонусами</h3>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.bonusPaidClients|nou}}</h3>
+        </div>
+        <div class="stat-row d-flex m-0">
+          <h3 class="col-8">Кількість простих клієнтів</h3>
           <div class="col-4  w-100 row m-0 d-flex">
-            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.numOfRegularClients}}</h3>
-            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.percentRegularClients}}%</h3></div>
-        </div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість постійних клієнтів</h3>
-          <div class="col-4 w-100 row m-0">
-            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.numOfFriendClients}}</h3>
-            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.percentFriendClients}}%</h3>
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.numOfRegularClients|nou}}</h3>
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.percentRegularClients|nou}}%</h3>
           </div>
         </div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість год/клієнта</h3>
-          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.hoursPerClient}}</h3></div>
-        <div class="stat-row d-flex m-0"><h3 class="col-8">Додано нових клієнтів</h3>
-          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.newClients}}</h3></div>
+        <div class="stat-row d-flex m-0">
+          <h3 class="col-8">Кількість постійних клієнтів</h3>
+          <div class="col-4 w-100 row m-0">
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.numOfFriendClients|nou}}</h3>
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.percentFriendClients|nou}}%</h3>
+          </div>
+        </div>
+        <div class="stat-row d-flex m-0">
+          <h3 class="col-8">Кількість год/клієнта</h3>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.hoursPerClient|nou}}</h3>
+        </div>
+        <div class="stat-row d-flex m-0">
+          <h3 class="col-8">Додано нових клієнтів</h3>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.newClients|nou}}</h3>
+        </div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість записів</h3>
-          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.numOfRents}}</h3>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.numOfRents|nou}}</h3>
         </div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість підтверджених записів</h3>
           <div class="col-4 w-100 row m-0 d-flex">
-            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.numOfPaidRents}}</h3>
-            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.percentPaidRents}}%</h3>
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.numOfPaidRents|nou}}</h3>
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.percentPaidRents|nou}}%</h3>
           </div>
         </div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість покинутих записів</h3>
@@ -162,6 +176,7 @@
             <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.numOfLeavedRents}}</h3>
             <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.percentLeavedRents}}%</h3>
           </div>
+      </div>
       </div>
     </div>
   </div>

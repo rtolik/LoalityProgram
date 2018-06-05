@@ -29,7 +29,6 @@ export class HomeComponent implements OnInit {
   selectedTime: string = '';
   rent: Rent[] = [];
   user: User[] = [];
-  showStat=false;
   // rent = [{
   //   id: 1,
   //   duration: 2,
@@ -313,9 +312,14 @@ export class HomeComponent implements OnInit {
   }
 
   getStat() {
+    console.log(this.start);
+    console.log(this.end);
+    if(isNullOrUndefined(this.start)&&isNullOrUndefined(this.end)||this.start==''&&this.end=='') {
+      this.start=new Date().toISOString().split('T')[0];
+      this.end=new Date().toISOString().split('T')[0];
+    }
     this._rent.getStatistic(this.start, this.end).subscribe(next => {
       this.stat = next;
-      this.showStat=true;
       console.log(this.stat);
     }, error => {
       console.log(error);
