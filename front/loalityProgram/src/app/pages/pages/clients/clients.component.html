@@ -17,6 +17,11 @@
       <span class="checkmark"></span>
       Звичайні
     </label>
+    <label (click)="userModFilterFunc('deleted')">
+      <input name="filter" type="radio">
+      <span class="checkmark"></span>
+      Видалені
+    </label>
     <input disabled type="text" placeholder="Сортування">
     <label (click)="criterionFilterFunc('alp')">
       <input name="filter2" type="radio">

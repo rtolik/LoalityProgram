@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
   selectedTime: string = '';
   rent: Rent[] = [];
   user: User[] = [];
+  showStat=false;
   // rent = [{
   //   id: 1,
   //   duration: 2,
@@ -163,7 +164,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  getName(startTime: string, cell: HTMLDivElement, upName?: HTMLParagraphElement, current?: HTMLDivElement) {
+  getName(startTime: string, cell: HTMLDivElement, upName?: HTMLParagraphElement, current?: HTMLDivElement,currentId?:HTMLParagraphElement,upId?:HTMLParagraphElement) {
+
     if (upName && current) {
       upName.parentElement.style.display = 'block';
       current.classList.add('h-50')
@@ -188,9 +190,9 @@ export class HomeComponent implements OnInit {
           str += " *"
         }
         if (upName && current) {
-          if (upName.innerText == str) {
+          if (upId.innerText == currentId.innerText) {
             upName.parentElement.style.display = 'none';
-            current.classList.remove('h-50')
+            current.classList.remove('h-50');
             current.parentElement.classList.add('justify-content-center');
             current.style.fontSize = '18px';
           }
@@ -200,7 +202,7 @@ export class HomeComponent implements OnInit {
     return str
   }
 
-  getPhone(startTime: string, cell: HTMLDivElement, upName?: HTMLParagraphElement, current?: HTMLDivElement) {
+  getPhone(startTime: string, cell: HTMLDivElement, upName?: HTMLParagraphElement, current?: HTMLDivElement,currentId?:HTMLParagraphElement,upId?:HTMLParagraphElement) {
     if (upName && current) {
       upName.parentElement.style.display = 'block';
       current.classList.add('h-50');
@@ -221,7 +223,7 @@ export class HomeComponent implements OnInit {
       ) {
         str = next.user.phone;
         if (upName && current) {
-          if (upName.innerText == str) {
+          if (upId.innerText == currentId.innerText) {
             upName.parentElement.style.display = 'none';
             current.classList.remove('h-50');
             current.parentElement.classList.add('justify-content-center');
@@ -233,8 +235,8 @@ export class HomeComponent implements OnInit {
     return str
   }
 
-  getRentStatus(startTime: string, cell: HTMLDivElement, up?: HTMLDivElement, currentStatus?: HTMLDivElement, upStatus?: HTMLDivElement) {
-    if (up && currentStatus && upStatus) {
+  getRentStatus(startTime: string, cell: HTMLDivElement, currentStatus?: HTMLDivElement, upStatus?: HTMLDivElement,currentId?:HTMLParagraphElement,upId?:HTMLParagraphElement) {
+    if ( currentStatus && upStatus) {
       currentStatus.parentElement.style.display = 'block';
       currentStatus.classList.add('h-50');
       currentStatus.parentElement.classList.remove('justify-content-center');
@@ -253,8 +255,8 @@ export class HomeComponent implements OnInit {
         new Date(0, 0, 0, parseInt(startTime.substring(0, 2)), startTime.substring(3, 5) == '00' ? 0 : 30) < new Date(0, 0, 0, parseInt(next.timeOfEnd.substring(0, 2)), next.timeOfEnd.substring(3, 5) == '00' ? 0 : 30)
       ) {
         str = this.rentEnum[next.rentStatus];
-        if (up && currentStatus && upStatus) {
-          if (up.parentElement.style.display == 'none') {
+        if ( currentStatus && upStatus) {
+          if (currentId.innerText == upId.innerText) {
             upStatus.parentElement.style.display = 'none';
             currentStatus.classList.remove('h-50');
             currentStatus.parentElement.classList.add('justify-content-center');
@@ -313,10 +315,29 @@ export class HomeComponent implements OnInit {
   getStat() {
     this._rent.getStatistic(this.start, this.end).subscribe(next => {
       this.stat = next;
+      this.showStat=true;
       console.log(this.stat);
     }, error => {
       console.log(error);
     })
+  }
+
+  getRentId(startTime:string, cell:HTMLDivElement){
+    startTime = startTime.substring(0, 5);
+    if (!cell.classList.contains('border-bottom')) {
+      startTime = startTime.substring(0, 2) + ':30';
+    }
+    let str = '';
+    this.rent.forEach(next => {
+      if (
+        new Date(0, 0, 0, parseInt(next.timeOfStart.substring(0, 2)), next.timeOfStart.substring(3, 5) == '00' ? 0 : 30) <= new Date(0, 0, 0, parseInt(startTime.substring(0, 2)), startTime.substring(3, 5) == '00' ? 0 : 30)
+        &&
+        new Date(0, 0, 0, parseInt(startTime.substring(0, 2)), startTime.substring(3, 5) == '00' ? 0 : 30) < new Date(0, 0, 0, parseInt(next.timeOfEnd.substring(0, 2)), next.timeOfEnd.substring(3, 5) == '00' ? 0 : 30)
+      ) {
+        str = next.id+'';
+      }
+    });
+    return str;
   }
 
   getDate(date: string) {

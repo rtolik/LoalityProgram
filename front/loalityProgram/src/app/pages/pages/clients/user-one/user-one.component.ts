@@ -68,6 +68,15 @@ export class UserOneComponent implements OnInit {
     }
   }
 
+  revive() {
+    this._user.revive(this.user.id).subscribe(next => {
+      this.user = next;
+    }, error => {
+      console.log(error);
+    })
+
+  }
+
   updateUser(form:HTMLFormElement){
     this.editing=false;
     if(!isNullOrUndefined(this.user.cardId)&&this.user.cardId!=0&&!this.user.member) {
@@ -83,6 +92,7 @@ export class UserOneComponent implements OnInit {
   }
   delete(){
     this._user.delete(this.user.id).subscribe(next=>{
+      this.user = next;
         console.log(next);
     },error => {
         console.log(error);
@@ -92,7 +102,8 @@ export class UserOneComponent implements OnInit {
   calculateHours() {
     let hours = 0;
     this.rents.forEach(next => {
-      hours += next.rentStatus=='PAID'&&next.duration!=null&&next.duration!=undefined?next.duration:0;
+      if (next.rentStatus == 'PAID' || next.rentStatus == 'BONUSPAID')
+        hours += next.duration != null && next.duration != undefined ? next.duration : 0;
     });
     return hours
   }

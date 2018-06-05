@@ -7,7 +7,6 @@ import 'rxjs/add/observable/throw';
 import {PageableWrapper} from "../model/pageable-wrapper";
 import {BonusDay} from "../model/bonus-day";
 import {Subject} from "rxjs/Subject";
-import {xor} from '../config/config'
 import {Auth} from "../model/auth";
 
 
@@ -60,27 +59,17 @@ export class UserService {
   delete(id: number): Observable<User>{
     return this.httpClient.post<User>(this.controller + '/delete/' + id,null).catch(err => Observable.throw(err));
   }
-
-
-
-
-
-
-
-
-  findAllDays(): Observable<BonusDay[]>{
-    return this.httpClient.get<BonusDay[]>('/bonus-day/find-all').catch(err => Observable.throw(err));
+  revive(id: number): Observable<User>{
+    return this.httpClient.post<User>(this.controller + '/recover/' + id,null).catch(err => Observable.throw(err));
   }
-  saveBonusDay(bonusDay:BonusDay): Observable<BonusDay>{
-    let form = new FormData();
-    form.append('name',bonusDay.name);
-    form.append('date',bonusDay.date);
-    form.append('bonusesToAdd',bonusDay.bonusesToAdd+'');
-    return this.httpClient.post<BonusDay>('/bonus-day/save',form).catch(err => Observable.throw(err));
-  }
-  deleteBonusDay(bonusDayId:number): Observable<BonusDay>{
-    return this.httpClient.post<BonusDay>('/bonus-day/delete/'+bonusDayId,null).catch(err => Observable.throw(err));
-  }
+
+
+
+
+
+
+
+
 
 
   logIn(login: string, password: string): Observable<Auth> {

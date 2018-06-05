@@ -44,11 +44,14 @@
             <div class="name border-dark border-right d-flex flex-column">
               <div class="h-50 w-100 name-uuu border-bottom border-dark"
                    routerLink="{{getLink(one.substring(0,5),plusOne)}}">
-
+                <p #upId class="id none d-none">{{getRentId(one.substring(0,5),plusOne)}}</p>
                 <p #upName class="m-0 text-center"> {{getName(one.substring(0,5),plusOne)}}</p>
               </div>
-              <div class="h-50 w-100 name-uuu" #currentName routerLink="{{getLink(one.substring(0,5),plusOne)}}">
-                <p class="m-0 text-center"> {{getName(one.substring(0,5),plusTwo,upName,currentName)}}</p>
+
+              <div class="h-50 w-100 name-uuu" #currentName routerLink="{{getLink(one.substring(0,5),plusTwo)}}">
+                <p #currentId class="id d-none">{{getRentId(one.substring(0,5),plusTwo)}}</p>
+                <p class="m-0 text-center">
+                  {{getName(one.substring(0,5),plusTwo,upName,currentName,currentId,upId)}}</p>
               </div>
             </div>
             <div class="phone border-dark border-right d-flex flex-column">
@@ -56,7 +59,8 @@
                 <p #upPhone class="m-0 text-center"> {{getPhone(one.substring(0,5),plusOne)}}</p>
               </div>
               <div class="h-50 w-100" #currentPhone>
-                <p class="m-0 text-center"> {{getPhone(one.substring(0,5),plusTwo,upPhone,currentPhone)}}</p>
+                <p class="m-0 text-center">
+                  {{getPhone(one.substring(0,5),plusTwo,upPhone,currentPhone,currentId,upId)}}</p>
               </div>
             </div>
             <div class="status d-flex flex-column">
@@ -65,7 +69,7 @@
               </div>
               <div class="h-50 w-100" #currentStatus>
                 <p class="m-0 text-center">
-                  {{getRentStatus(one.substring(0,5),plusTwo,upPhone,currentStatus,upStatus)}}</p>
+                  {{getRentStatus(one.substring(0,5),plusTwo,currentStatus,upStatus,currentId,upId)}}</p>
               </div>
             </div>
           </div>
@@ -111,9 +115,9 @@
     <div class="buttons d-flex col-md-8 p-0 justify-content-around align-items-start">
       <input class="input-date mb-5" type="date" [(ngModel)]="start">
       <input class="input-date mb-5" type="date" [(ngModel)]="end">
-      <button (click)="getStat()">Вивести</button>
+      <button (click)="getStat()" scrollTo href="#stat">Вивести</button>
     </div>
-    <div class="statistics-table mt-5 col-md-8 p-0  ">
+    <div class="statistics-table mt-5 col-md-8 p-0  " *ngIf="showStat">
       <div class="heading row m-0 ">
         <input type="date" disabled class="col-4 " [(ngModel)]="start">
         <input type="date" disabled class="col-4 " [(ngModel)]="end">
@@ -121,28 +125,43 @@
       </div>
       <div class="table-content  m-0 d-flex col-12  p-0 flex-column">
         <div class="stat-row d-flex m-0"><h3 class="col-8">Загальний прибуток</h3>
-          <h3 class="col-4">{{stat.profit}}</h3></div>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.profit}}</h3></div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів</h3>
-          <h3 class="col-4">{{stat.numOfClients}}</h3></div>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.numOfClients}}</h3>
+        </div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість орендованих годин</h3>
-          <h3 class="col-4">{{stat.hoursRented}}</h3></div>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.hoursRented}}</h3></div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів які скористувались бонусами</h3>
-          <h3 class="col-4">{{stat.bonusPaidClients}}</h3></div>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.bonusPaidClients}}</h3></div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість простих клієнтів</h3>
-          <h3 class="col-4">{{stat.numOfRegularClients}}</h3></div>
+          <div class="col-4  w-100 row m-0 d-flex">
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.numOfRegularClients}}</h3>
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.percentRegularClients}}%</h3></div>
+        </div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість постійних клієнтів</h3>
-          <h3 class="col-4">{{stat.numOfFriendClients}}</h3></div>
+          <div class="col-4 w-100 row m-0">
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.numOfFriendClients}}</h3>
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.percentFriendClients}}%</h3>
+          </div>
+        </div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість год/клієнта</h3>
-          <h3 class="col-4">{{stat.hoursPerClient}}</h3></div>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.hoursPerClient}}</h3></div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Додано нових клієнтів</h3>
-          <h3 class="col-4">{{stat.newClients}}</h3></div>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.newClients}}</h3></div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість записів</h3>
-          <h3 class="col-4">{{stat.numOfRents}}</h3>
+          <h3 class="col-4 w-100 d-flex justify-content-center">{{stat.numOfRents}}</h3>
         </div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість підтверджених записів</h3>
-          <h3 class="col-4">{{stat.numOfPaidRents}}</h3></div>
+          <div class="col-4 w-100 row m-0 d-flex">
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.numOfPaidRents}}</h3>
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.percentPaidRents}}%</h3>
+          </div>
+        </div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість покинутих записів</h3>
-          <h3 class="col-4">{{stat.numOfLeavedRents}}</h3></div>
+          <div class="col-4 w-100 row d-flex m-0">
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.numOfLeavedRents}}</h3>
+            <h3 class="col-6 w-100 d-flex justify-content-center">{{stat.percentLeavedRents}}%</h3>
+          </div>
       </div>
     </div>
   </div>

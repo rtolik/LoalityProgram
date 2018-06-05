@@ -50,26 +50,27 @@
   </div>
   <div class="add-user d-flex flex-column" *ngIf="partyBool">
     <h2 class="border-bottom border-dark text-center p-1">Додати день бонусів</h2>
-    <form [formGroup]="bonusDayForm" (submit)="addDay()">
+    <form [formGroup]="bonusDayForm" class="d-flex flex-column align-items-center" (submit)="addDay()">
       <label>
-        Назву дня
+        Назва дня
         <input type="text" formControlName="name">
       </label>
       <label>
-        Дату проведення
+        Дата проведення
         <input type="date" formControlName="date">
       </label>
       <label>
         Кількість бонусів для нарахування
         <input type="number" formControlName="bonusesToAdd">
       </label>
+      <button type="submit">Додати</button>
     </form>
-    <h2 class="text-center">Список активних днів</h2>
+    <h2 class="text-center pb-3">Список активних днів</h2>
     <div class=" kek justify-content-start  d-flex flex-column align-items-end  w-100" *ngFor="let one of bonusDays">
       <div class=" one-day d-flex justify-content-between w-100  pl-3 pr-3">
         <h2>Навза: {{one.name}}</h2>
         <h2>Дата: {{one.date|DatePipe}}</h2>
-        <h2>Бонусів: {{one.bonusesToAdd}}</h2>
+        <h2>Бонуси: {{one.bonusesToAdd}}</h2>
       </div>
       <button class="border-top-0" (click)="deleteDay(one.id)">X</button>
     </div>

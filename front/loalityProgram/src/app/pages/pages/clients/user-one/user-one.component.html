@@ -109,8 +109,12 @@
         <!--<h3 class="col-4">До: 21.05.04</h3>-->
       <!--</div>-->
     </div>
-    <div class="buttons d-flex justify-content-end">
-      <button (click)="delete()">Видалити клієнта</button>
+    <div class="buttons d-flex justify-content-end"  *ngIf="user.active">
+      <button (click)="delete()" *ngIf="user.active">Видалити клієнта</button>
+    </div>
+
+    <div class="buttons d-flex justify-content-end" *ngIf="!user.active">
+      <button (click)="revive()">Відновити клієнта</button>
     </div>
     <div class="rets pt-4" *ngIf="isNoU(rents)">
       <div class="heading d-flex justify-content-between">
