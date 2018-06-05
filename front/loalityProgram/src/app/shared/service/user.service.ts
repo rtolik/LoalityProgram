@@ -8,6 +8,7 @@ import {PageableWrapper} from "../model/pageable-wrapper";
 import {BonusDay} from "../model/bonus-day";
 import {Subject} from "rxjs/Subject";
 import {Auth} from "../model/auth";
+import {Router} from "@angular/router";
 
 
 @Injectable()
@@ -28,7 +29,7 @@ export class UserService {
   _password = new Subject<string>();
   password$ = this._password.asObservable();
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private _router: Router) {
   }
 
   save(userForm: HTMLFormElement, user: User): Observable<User> {
@@ -90,6 +91,7 @@ export class UserService {
       this._login.next(this.login);
       this.password=pass;
       this._password.next(this.password);
+      this._router.navigateByUrl('');
       if(check){
         localStorage.setItem('xored',auth.xored);
         localStorage.setItem('login', this.login);
