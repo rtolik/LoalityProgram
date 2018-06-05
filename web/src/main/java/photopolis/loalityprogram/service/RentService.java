@@ -42,7 +42,7 @@ public interface RentService {
 
     List<Rent> findAllByDate(String date);
 
-    List<Rent> findAllByUserId(Integer id);
+    List<RentUserDTO> findAllByUserId(Integer id);
 
     List<Rent> findAllAwait();
 

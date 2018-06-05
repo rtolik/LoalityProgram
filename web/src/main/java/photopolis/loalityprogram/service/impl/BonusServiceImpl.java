@@ -1,21 +1,24 @@
 package photopolis.loalityprogram.service.impl;
 
-import com.sun.org.apache.xerces.internal.impl.xs.util.StringListImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import photopolis.loalityprogram.config.Constants;
 import photopolis.loalityprogram.model.Bonus;
+import photopolis.loalityprogram.model.CelebrateDate;
+import photopolis.loalityprogram.model.User;
 import photopolis.loalityprogram.model.enums.BonusType;
 import photopolis.loalityprogram.repository.BonusRepository;
 import photopolis.loalityprogram.service.BonusService;
 import photopolis.loalityprogram.service.RentService;
 import photopolis.loalityprogram.service.UserService;
 
+import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
+import static photopolis.loalityprogram.service.utils.Utility.dataEqualiser;
 import static photopolis.loalityprogram.service.utils.Utility.dataParser;
+import static photopolis.loalityprogram.service.utils.Utility.datePluser;
 
 
 /**
@@ -35,7 +38,11 @@ public class BonusServiceImpl implements BonusService{
 
     @Override
     public void save(Double value, Integer bonusType, String dateOfStart, String dateOfEnd, Integer userId) {
-        bonusRepository.save(new Bonus(value, bonusType, dataParser(dateOfStart), dataParser(dateOfEnd), userService.findOne(userId)));
+        bonusRepository.save(
+                new Bonus(
+                        value, BonusType.values()[bonusType], dataParser(dateOfStart), dataParser(dateOfEnd), userService.findOne(userId)
+                )
+        );
     }
 
     @Override
@@ -69,26 +76,12 @@ public class BonusServiceImpl implements BonusService{
     }
 
     @Override
-    public void updateValue(Integer id, Double value) {
-       // Bonus bonus=  findOne(id).setValue(value);
-
+    public Bonus updateValue(Integer id, Double value) {
+        Bonus bonus = findOne(id);
         save(
-                findOne(id).setValue(value)
+                bonus.setValue(value).setDateOfEnd(datePluser(bonus.getDateOfEnd(),bonus.getBonusType()))
         );
-    }
-
-    @Override
-    public void updateDateOfStart(Integer id, String date) {
-        save(
-                findOne(id).setDateOfStart(dataParser(date))
-        );
-    }
-
-    @Override
-    public void updateDateOfEnd(Integer id, String date) {
-        save(
-                findOne(id).setDateOfEnd(dataParser(date))
-        );
+        return bonus;
     }
 
     @Override
@@ -119,5 +112,60 @@ public class BonusServiceImpl implements BonusService{
     @Override
     public List<Bonus> findAllByUserId(Integer userId) {
         return findAll().stream().filter(bonus -> bonus.getUser().getId().equals(userId)).collect(toList());
+    }
+
+    @Override
+    public void update(Bonus bonus) {
+        save(bonus);
+    }
+
+    @Override
+    public List<Bonus> findAllParty() {
+        return findAll().stream().filter(bonus -> bonus.getBonusType()==BonusType.PARTY).collect(toList());
+    }
+
+    @Override
+    public List<Bonus> findAllAnniversary() {
+        return findAll().stream().filter(bonus -> bonus.getBonusType()==BonusType.ANNIVERSARY).collect(toList());
+    }
+
+    @Override
+    public List<Bonus> findAllBirthDay() {
+        return findAll().stream().filter(bonus -> bonus.getBonusType()==BonusType.BIRTHDAY).collect(toList());
+    }
+
+    @Override
+    public void setPartyBonus(List<CelebrateDate> dates) {
+        for (CelebrateDate date:dates)  {
+            findAllParty().forEach(
+                    bonus -> updateValue(
+                            bonus.getId(),bonus.addToValue(Constants.BONUS_PER_PARTY).getValue()
+                    )
+            );
+        }
+    }
+
+    @Override
+    public void setAnniversaryBonus() {
+        List<User> users=userService.findAllActive().stream().filter(
+                user -> dataEqualiser(dataParser(LocalDate.now().toString()),user.getDateOfRegistration())
+        ).collect(toList());
+        List<Bonus> bonuses= new ArrayList<>();
+        users.forEach(user -> bonuses.add(user.getBonuses().get(0)));
+        bonuses.forEach(bonus -> updateValue(
+                bonus.getId(),bonus.addToValue(Constants.BONUS_PER_ANNIVERSARY).getValue()
+        ));
+    }
+
+    @Override
+    public void setBirhDayBonus() {
+        List<User> users=userService.findAllActive().stream().filter(
+                user -> dataEqualiser(dataParser(LocalDate.now().toString()),user.getDateOfBirth())
+        ).collect(toList());
+        List<Bonus> bonuses= new ArrayList<>();
+        users.forEach(user -> bonuses.add(user.getBonuses().get(0)));
+        bonuses.forEach(bonus -> updateValue(
+                bonus.getId(),bonus.addToValue(Constants.BONUS_PER_BIRTHDAY).getValue()
+        ));
     }
 }

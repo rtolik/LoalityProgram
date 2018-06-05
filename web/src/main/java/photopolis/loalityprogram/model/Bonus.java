@@ -19,6 +19,7 @@ public class Bonus {
 
     private Double value;
 
+    @Enumerated
     private BonusType bonusType;
 
     private String dateOfStart;
@@ -32,9 +33,9 @@ public class Bonus {
 
     public Bonus() {}
 
-    public Bonus(Double value, Integer bonusType, String dateOfStart, String dateOfEnd, User user) {
+    public Bonus(Double value, BonusType bonusType, String dateOfStart, String dateOfEnd, User user) {
         this.value = value;
-        this.bonusType = BonusType.values()[bonusType];
+        this.bonusType = bonusType;
         this.dateOfStart = dateOfStart;
         this.dateOfEnd = dateOfEnd;
         this.user = user;

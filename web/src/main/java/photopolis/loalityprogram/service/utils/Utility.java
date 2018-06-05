@@ -35,12 +35,7 @@ public class Utility {
         Integer mounth = Integer.parseInt(date[1]);
         Integer day = Integer.parseInt(date[2]);
         mounth+= Constants.REGULAR_BONUS_DURATION_MOUNTH;
-        if(mounth>12 )
-        {
-            mounth-=12;
-            year++;
-        }
-        return createResultDate(year,mounth,day);
+         return getDateCorrect(year,mounth,day);
     }
 
     private static String addPartyBonus(String dateOfStart){
@@ -49,6 +44,28 @@ public class Utility {
         Integer mounth=Integer.parseInt(date[1]);
         Integer day = Integer.parseInt(date[2]);
         day+= Constants.PARTY_BONUS_DURATION_DAYS;
+        return getDateCorrect(year, mounth, day);
+    }
+
+    private static String addBirthDayBonus(String dateOfStart){
+        String[] date=dateOfStart.split("-");
+        Integer year=Integer.parseInt(date[0]);
+        Integer mounth=Integer.parseInt(date[1]);
+        Integer day = Integer.parseInt(date[2]);
+        day+= Constants.BIRTHDAY_BONUS_DURATION_DAYS;
+        return getDateCorrect(year, mounth, day);
+    }
+
+    private static String addAnniversaryBonus(String dateOfStart){
+        String[] date=dateOfStart.split("-");
+        Integer year=Integer.parseInt(date[0]);
+        Integer mounth=Integer.parseInt(date[1]);
+        Integer day = Integer.parseInt(date[2]);
+        day+= Constants.ANNIVERSARY_BONUS_DURATION_DAYS;
+        return getDateCorrect(year, mounth, day);
+    }
+
+    private static String getDateCorrect(Integer year, Integer mounth, Integer day) {
         if(mounth==2&&year%4==0&&day>29){
             day-=29;
             mounth++;
@@ -115,11 +132,29 @@ public class Utility {
 
     public static String datePluser(String dateOfStart, BonusType bonusType){
         String result;
-        if (bonusType==BonusType.REGULAR){
-            result= addRegularBonus(dateOfStart);
-        }
-        else {
-            result=addPartyBonus(dateOfStart);
+        switch (bonusType){
+            case PARTY:{
+                result=addPartyBonus(dateOfStart);
+                break;
+            }
+
+            case REGULAR: {
+                result = addRegularBonus(dateOfStart);
+                break;
+            }
+
+            case BIRTHDAY:{
+                result = addBirthDayBonus(dateOfStart);
+                break;
+            }
+
+            case ANNIVERSARY:{
+                result = addAnniversaryBonus(dateOfStart);
+                break;
+            }
+            default:{
+                result="IDI NAHUJ";
+            }
         }
         return result;
     }
@@ -129,16 +164,35 @@ public class Utility {
         String [] rightSplit=rightDate.split("-");
         Integer leftYear=Integer.parseInt(leftSplit[0]);
         Integer rightYear=Integer.parseInt(rightSplit[0]);
-        if(leftYear>rightYear)
+        if(leftYear>rightYear) {
             return true;
-        Integer leftMounth=Integer.parseInt(leftSplit[1]);
-        Integer rightMounth=Integer.parseInt(rightSplit[1]);
-        if (leftMounth>rightMounth)
+        }
+        Integer leftMonth=Integer.parseInt(leftSplit[1]);
+        Integer rightMonth=Integer.parseInt(rightSplit[1]);
+        if (leftMonth>rightMonth){
             return true;
-        Integer leftDay=Integer.parseInt(rightSplit[2]);
+        }
+        Integer leftDay=Integer.parseInt(leftSplit[2]);
         Integer rightDay=Integer.parseInt(rightSplit[2]);
-        if (leftDay>rightDay)
+        if (leftDay>=rightDay) {
             return true;
+        }
+        return false;
+    }
+
+    public static Boolean dataEqualiser(String left, String right){
+        String [] leftSplit=left.split("-");
+        String [] rightSplit=right.split("-");
+        Integer leftMonth=Integer.parseInt(leftSplit[1]);
+        Integer rightMonth=Integer.parseInt(rightSplit[1]);
+        if (leftMonth==rightMonth){
+            return true;
+        }
+        Integer leftDay=Integer.parseInt(leftSplit[2]);
+        Integer rightDay=Integer.parseInt(rightSplit[2]);
+        if (leftDay==rightDay) {
+            return true;
+        }
         return false;
     }
 

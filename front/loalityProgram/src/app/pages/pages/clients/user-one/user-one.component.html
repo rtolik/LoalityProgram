@@ -96,10 +96,14 @@
       <h3 class="offset-4"></h3>
     </div>
     <div class="m-0" *ngIf="user.member" >
-      <div class="d-flex row m-0" *ngFor="let bonus of user.bonuses" >
+      <div class="d-flex row m-0">
+      <h3 class="col-4">Кількість бонусів {{bonusType[bonuses.editableBonus.bonusType]}}:</h3>
+      <input #bonEd type="text" class="col-4 border" [disabled]="!editing" value="{{bonuses.editableBonus.value}}" (change)="changeBonus(bonEd.value)">
+      <h3 class="col-4">До: <input type="date" [(ngModel)]="bonuses.editableBonus.dateOfEnd" disabled class="border-0"></h3>
+      </div>
+      <div class="d-flex row m-0" *ngFor="let bonus of bonuses.notEditable" >
       <h3 class="col-4">Кількість бонусів {{bonusType[bonus.bonusType]}}:</h3>
-      <input type="text" class="col-4" [disabled]="editing==false||bonus.bonusType!='REGULAR' "
-             [ngClass]="{'border-0': editing==false||bonus.bonusType!='REGULAR','border':editing==true&&bonus.bonusType=='REGULAR'}" value="{{bonus.value}}">
+      <input type="text" class="col-4 border-0" disabled value="{{bonus.value}}">
       <h3 class="col-4">До: <input type="date" [(ngModel)]="bonus.dateOfEnd" disabled class="border-0"></h3>
       </div>
       <!--<div class="d-flex row m-0"  >-->

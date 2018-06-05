@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static java.util.stream.Collectors.toConcurrentMap;
 import static java.util.stream.Collectors.toList;
 import static photopolis.loalityprogram.service.utils.Utility.*;
 
@@ -69,28 +70,27 @@ public class RentServiceImpl implements RentService{
 
     @Override
     public RentUserDTO submitRent(Integer id,Double price,Double bonusPrice) {
-        System.err.println("--------------------------bonusPrice--------------------");
-        System.err.println(bonusPrice);
-        System.err.println("--------------------------bonusPrice--------------------");
+        Rent rent=findOne(id);
         if(bonusPrice==0.0) {
             save(
-                    findOne(id).setRentStatus(RentStatus.PAID).setPrice(price).setBonusPrice(bonusPrice)
+                    rent.setRentStatus(RentStatus.PAID).setPrice(price).setBonusPrice(bonusPrice)
             );
+            if (rent.getUser().getMember()){
+                bonusService.countBonusByRentId(id);
+            }
         }
         else {
             save(
-                    findOne(id).setRentStatus(RentStatus.BONUSPAID).setPrice(price).setBonusPrice(bonusPrice)
+                    rent.setRentStatus(RentStatus.BONUSPAID).setPrice(price).setBonusPrice(bonusPrice)
             );
             Double bonusPriceLeft = bonusPrice;
-            List<Bonus> bonuses = findOne(id).getUser().getBonuses();
-            for (int i = 3; i <= 0; i--) {
+            List<Bonus> bonuses = rent.getUser().getBonuses();
+            for (int i = 3; i >= 0; i--) {
                 if (bonuses.get(i).getValue() < bonusPriceLeft) {
-                    bonusPriceLeft -= bonuses.get(3).getValue();
+                    bonusPriceLeft -= bonuses.get(i).getValue();
                     bonusService.updateValue(bonuses.get(i).getId(), 0.0);
-                    System.out.println("---------------------------------------------------------------------------");
                 } else {
                     bonusService.updateValue(bonuses.get(i).getId(), bonuses.get(i).getValue() - bonusPriceLeft);
-                    System.out.println("===========================================================================");
                     break;
                 }
             }
@@ -142,8 +142,13 @@ public class RentServiceImpl implements RentService{
     }
 
     @Override
-    public List<Rent> findAllByUserId(Integer id) {
-        return findAll().stream().filter(rent -> rent.getUser().getId()==id).collect(toList());
+    public List<RentUserDTO> findAllByUserId(Integer id) {
+        List<Rent> rents = findAll().stream().filter(rent -> rent.getUser().getId().equals(id)).collect(toList());
+        List<RentUserDTO> result= new ArrayList<>();
+        for (Rent rent : rents) {
+            result.add(new RentUserDTO(rent));
+        }
+        return result;
     }
 
     @Override
@@ -187,11 +192,12 @@ public class RentServiceImpl implements RentService{
 
     @Override
     public RentUserDTO update(Integer id, String date, String timeOfStart, Double duration, String comment) {
+        Rent rent =findOne(id);
         rentRepository.
-        save(findOne(id).setDate(date).setTimeOfStart(timeOfStart).setTimeOfEnd(
+        save(rent.setDate(date).setTimeOfStart(timeOfStart).setTimeOfEnd(
                 doubleTimeToStringParser(timeToDoubleParser(timeOfStart)+ duration)).setComment(comment)
         );
-        return new RentUserDTO(findOne(id));
+        return new RentUserDTO(rent);
     }
 
     @Override
@@ -202,7 +208,7 @@ public class RentServiceImpl implements RentService{
     @Override
     public List<Rent> findAllInDateInterval(String startDate, String endDate) {
         return findAll().stream().filter(
-                rent -> dataComparer(rent.getDate(),startDate)&&!dataComparer(rent.getDate(),endDate)
+                rent -> dataComparer(rent.getDate(),startDate)&&dataComparer(endDate,rent.getDate())
         ).collect(toList());
     }
 }

@@ -29,24 +29,22 @@ public class Statistic {
 
     private Integer numOfRegularClients;
 
+    private Double percentReqularClients;
+
+    private Double percentFriendClients;
+
+    private Double percentPaidRents;
+
+    private Double percentLeavedRents;
+
+    @Override
+    public String toString() {
+        return "profit "+ profit+" numOfClients "+numOfClients +" housrRneted"+ hoursRented;
+    }
+
     public Statistic() {
     }
 
-    public Statistic(Double profit, Integer numOfClients, Double hoursRented, Integer bonusPaidClients,
-                     Integer numOfFriendClients, Double hoursPerClient, Integer newClients, Integer numOfRents,
-                     Integer numOfPaidRents, Integer numOfLeavedRents, Integer numOfRegularClients) {
-        this.profit = profit;
-        this.numOfClients = numOfClients;
-        this.hoursRented = hoursRented;
-        this.bonusPaidClients = bonusPaidClients;
-        this.numOfFriendClients = numOfFriendClients;
-        this.hoursPerClient = hoursPerClient;
-        this.newClients = newClients;
-        this.numOfRents = numOfRents;
-        this.numOfPaidRents = numOfPaidRents;
-        this.numOfLeavedRents = numOfLeavedRents;
-        this.numOfRegularClients = numOfRegularClients;
-    }
 
     public Double getProfit() {
         return profit;
@@ -144,6 +142,42 @@ public class Statistic {
 
     public Statistic setNumOfRegularClients(Integer numOfRegularClients) {
         this.numOfRegularClients = numOfRegularClients;
+        return this;
+    }
+
+    public Double getPercentReqularClients() {
+        return percentReqularClients;
+    }
+
+    public Statistic setPercentReqularClients(Double percentReqularClients) {
+        this.percentReqularClients = percentReqularClients;
+        return this;
+    }
+
+    public Double getPercentFriendClients() {
+        return percentFriendClients;
+    }
+
+    public Statistic setPercentFriendClients(Double percentFriendClients) {
+        this.percentFriendClients = percentFriendClients;
+        return this;
+    }
+
+    public Double getPercentPaidRents() {
+        return percentPaidRents;
+    }
+
+    public Statistic setPercentPaidRents(Double percentPaidRents) {
+        this.percentPaidRents = percentPaidRents;
+        return this;
+    }
+
+    public Double getPercentLeavedRents() {
+        return percentLeavedRents;
+    }
+
+    public Statistic setPercentLeavedRents(Double percentLeavedRents) {
+        this.percentLeavedRents = percentLeavedRents;
         return this;
     }
 }

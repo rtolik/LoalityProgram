@@ -56,13 +56,16 @@ public class UserServiceImpl implements UserService{
                 .setEmail(email).setDateOfRegistration(dataParser(dateOfRegistration));
         save(user);
         if(user.getMember()) {
-            bonusService.save(50.0, 0, dataParser(dateOfRegistration),
-                    datePluser(dataParser(dateOfRegistration), BonusType.REGULAR)
-                    , user.getId());
-            bonusService.save(0.0,1,null,null,user.getId());
-            bonusService.save(0.0,2,null,null,user.getId());
-            bonusService.save(0.0,3,null,null,user.getId());
+            createBonuses(dateOfRegistration, user.getId());
         }
+    }
+
+    private void createBonuses(String dateOfRegistration, Integer userId) {
+        bonusService.save(Constants.BONUS_PER_REGISTARTION, 0, dataParser(dateOfRegistration),
+                datePluser(dataParser(dateOfRegistration), BonusType.REGULAR)
+                , userId);
+        for (int i=1;i<4;i++)
+            bonusService.save(0.0,i,null,null,userId);
     }
 
     @Override
@@ -103,24 +106,31 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User update(User user) {
-        save(user.setDateOfMember(dataParser(user.getDateOfMember())).setMember(!user.getCardId().equals(null)));
+        if (findOne(user.getId()).getMember()!=(user.getCardId()!= null)){
+            createBonuses(user.getDateOfMember(),user.getId());
+        }
+        save(user.setDateOfMember(dataParser(user.getDateOfMember())).setMember(user.getCardId()!= null));
+        user.getBonuses().forEach(bonus -> bonusService.updateValue(bonus.getId(),bonus.getValue())
+        );
         return findOne(user.getId());
     }
 
     @Override
     public User updateWithImg(User user, MultipartFile file) {
         return update(user.setImagePath(saveFile(file)).setDateOfMember(dataParser(user.getDateOfMember()))
-                .setMember(!user.getCardId().equals(null)));
+                .setMember(user.getCardId()!= null));
     }
 
     @Override
-    public void setUnActive(Integer id) {
+    public User setUnActive(Integer id) {
         save(findOne(id).setActive(false));
+        return findOne(id);
     }
 
     @Override
-    public void setActive(Integer id) {
+    public User setActive(Integer id) {
         save(findOne(id).setActive(true));
+        return findOne(id);
     }
 
     @Override
@@ -173,7 +183,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<UserFIndClientDTO> findAllClieants() {
+    public List<UserFIndClientDTO> findAllClients() {
         List<UserFIndClientDTO> dtos = new ArrayList<>();
         List<User> users = findAllActive();
         users.forEach(user -> dtos.add(new UserFIndClientDTO(user)));
@@ -181,23 +191,82 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> filterByName(String name) {
-        return findAll().stream().filter(user -> user.getName().contains(name) && user.getActive()).collect(toList());
+    public LoginDTO login(String login, String password) {
+        if (login.equals(Constants.LOGIN)) {
+            if (password.equals(Constants.PASSWORD))
+                return new LoginDTO(true, xorString(Constants.LOGIN,Constants.PASSWORD));
+        }
+        return new LoginDTO(false,null);
+    }
+
+    private static String xorString(String st1, String st2){
+        int len=Math.min(st1.length(),st2.length());
+        byte [] res=new byte[len];
+        for (int i=0;i<len;i++){
+            res[i]= (byte)(Character.codePointAt(st1,i)^Character.codePointAt(st2,i));
+        }
+        String result="";
+        for (byte b:res) {
+            result+=b;
+        }
+        return  result;
     }
 
     @Override
-    public List<User> filterByMod(List<User> users,String mod) {
+    public List<User> findNewUsersInDateInterval(String startDate, String endDate) {
+        return findAll().stream()
+                .filter(
+                        user -> dataComparer(user.getDateOfRegistration(),startDate)
+                                &&!dataComparer(user.getDateOfRegistration(),endDate)
+                                &&user.getActive()
+                ).collect(toList());
+    }
+
+    @Override
+    public PageFinderDTO pageParserFilter(String name,String phoneNumber, Integer pagenum, Integer elOnPage, String userMod,
+                                                String criterion) {
+        PageFinderDTO dto;
+        List<UserPagesDTO> dtos= new ArrayList<>();
+        List<User> users;
+        if(!name.equals("empty"))
+            users=filterByName(name);
+        else
+            users=findAllActive();
+        if (!phoneNumber.equals("empty")) {
+            users = filterByPhone(users, phoneNumber);
+
+        }
+        users= filterByMod(users,userMod);
+        users= sortByCriterion(users,criterion);
+        Integer pagesCount= findPagesCount(users,elOnPage);
+        users =  findElementsOnPage(users,pagenum,elOnPage);
+        users.forEach(user -> dtos.add(new UserPagesDTO(user)));
+        dto = new PageFinderDTO(dtos.isEmpty()?new ArrayList<>():dtos,pagesCount);
+        return dto;
+    }
+
+    private List<User> filterByPhone(List<User> users,String phoneNumber){
+        return users.stream().filter(user -> user.getPhone().contains(phoneNumber)).collect(toList());
+    }
+
+    private List<User> filterByName(String name) {
+        return findAll().stream().filter(user -> user.getName().contains(name) && user.getActive()).collect(toList());
+    }
+
+    private List<User> filterByMod(List<User> users,String mod) {
         if(mod.equals("all"))
             return users;
         if(mod.equals("regular"))
             return users.stream().filter(user -> !user.getMember() && user.getActive()).collect(toList());
+        if (mod.equals("deleted")) {
+            return findAll().stream().filter(user -> !user.getActive()).collect(toList());
+        }
         else {
-        return users.stream().filter(user -> user.getMember() && user.getActive()).collect(toList());
+            return users.stream().filter(user -> user.getMember() && user.getActive()).collect(toList());
         }
     }
 
-    @Override
-    public List<User> sortByCriterion(List<User> users, String criterion) {
+    private List<User> sortByCriterion(List<User> users, String criterion) {
         Comparator<User> comparator= new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
@@ -226,13 +295,12 @@ public class UserServiceImpl implements UserService{
         return users;
     }
 
-    @Override
-    public Integer findPagesCount(List<User> users, Integer elOnPage) {
-        return (int) Math.ceil(users.size()/elOnPage)+1;
+
+    private Integer findPagesCount(List<User> users, Integer elOnPage) {
+        return (int) Math.ceil(users.size()/elOnPage);
     }
 
-    @Override
-    public List<User> findElementsOnPage(List<User> users, Integer pageNum, Integer elOnPage) {
+    private List<User> findElementsOnPage(List<User> users, Integer pageNum, Integer elOnPage) {
         Integer startIndex=pageNum*elOnPage;
         Integer endIndex=startIndex+elOnPage;
         if(endIndex<users.size())
@@ -240,26 +308,8 @@ public class UserServiceImpl implements UserService{
         return users.subList(startIndex,users.size());
     }
 
-    @Override
-    public PageFinderDTO pageParserFilter(String name, Integer pagenum, Integer elOnPage, String userMod,
-                                                String criterion) {
-        PageFinderDTO dto;
-        List<UserPagesDTO> dtos= new ArrayList<>();
-        List<User> users;
-        if(!name.equals("empty"))
-            users=filterByName(name);
-        else
-            users=findAllActive();
-        users= filterByMod(users,userMod);
-        users= sortByCriterion(users,criterion);
-        Integer pagesCount= findPagesCount(users,elOnPage);
-        users =  findElementsOnPage(users,pagenum,elOnPage);
-        users.forEach(user -> dtos.add(new UserPagesDTO(user)));
-        dto = new PageFinderDTO(dtos.isEmpty()?new ArrayList<>():dtos,pagesCount);
-        return dto;
-    }
 
-    public String getFileTeg(String fileName) {
+    private String getFileTeg(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
@@ -271,8 +321,7 @@ public class UserServiceImpl implements UserService{
 
             folder = String.format("%s/%s.%s", photoPath, uuid, tag);
             File file = new File(System.getProperty("catalina.home") + folder);
-            file.getParentFile().mkdirs();//!correct
-//            LOGGER.info(System.getProperty("catalina.home") + folder);
+            file.getParentFile().mkdirs();
             if (!file.exists()) {
                 multipartFile.transferTo(file);
             } else {
@@ -284,21 +333,4 @@ public class UserServiceImpl implements UserService{
         return folder;
     }
 
-    @Override
-    public Boolean login(String login, String password) {
-        if (login.equals(Constants.LOGIN)) {
-            if (password.equals(Constants.PASSWORD))
-                return true;
-        }
-        return false;
-    }
-
-    @Override
-    public List<User> findNewUsersInDateInterval(String startDate, String endDate) {
-        return findAll().stream()
-                .filter(
-                        user -> dataComparer(user.getDateOfRegistration(),startDate)
-                                &&!dataComparer(user.getDateOfRegistration(),endDate)
-                ).collect(toList());
-    }
 }

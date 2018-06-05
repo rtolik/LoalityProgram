@@ -36,16 +36,16 @@ public class RentController {
 
     @RequestMapping(value = "/find-one/{id}", method = RequestMethod.GET)
     private ResponseEntity<RentUserDTO> findOne(@PathVariable Integer id){
-        if(id.equals(null))
+        if(id== null)
             return new ResponseEntity<RentUserDTO>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<RentUserDTO>(rentService.findOneDTO(id),HttpStatus.OK);
     }
 
     @RequestMapping(value = "find-all-by-user-id/{id}",method = RequestMethod.GET)
-    private ResponseEntity<List<Rent>> findAllByUserId(@PathVariable Integer id){
-        if(id.equals(null))
-            return new ResponseEntity<List<Rent>>(HttpStatus.NO_CONTENT);
-        return new ResponseEntity<List<Rent>>(rentService.findAllByUserId(id),HttpStatus.OK);
+    private ResponseEntity<List<RentUserDTO>> findAllByUserId(@PathVariable Integer id){
+        if(id== null)
+            return new ResponseEntity<List<RentUserDTO>>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<List<RentUserDTO>>(rentService.findAllByUserId(id),HttpStatus.OK);
     }
 
     @RequestMapping(value = "save/{userId}",method = RequestMethod.POST)
@@ -53,8 +53,8 @@ public class RentController {
                                       @RequestParam String timeOfStart,
                                       @RequestParam Double duration,
                                       @RequestParam String comment){
-        if (userId.equals(null)||date.equals(null) || timeOfStart.equals(null) || duration.equals(null)
-                || comment.equals(null)){
+        if (userId== null||date== null || timeOfStart== null || duration== null
+                || comment== null){
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
         rentService.createNewRent(userId, date, timeOfStart, duration, comment);
@@ -65,7 +65,7 @@ public class RentController {
     private ResponseEntity<RentUserDTO> update(@PathVariable  Integer id, @PathVariable String date,
                                                @PathVariable  String timeOfStart, @PathVariable  Double duration,
                                                @RequestParam String comment){
-        if (id.equals(null)||date.equals(null)||timeOfStart.equals(null)||duration.equals(null)||comment.equals(null))
+        if (id== null||date== null||timeOfStart== null||duration== null||comment== null)
             return new ResponseEntity<RentUserDTO>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<RentUserDTO>(rentService.update(id, date, timeOfStart, duration,comment),HttpStatus.OK);
     }
@@ -73,7 +73,7 @@ public class RentController {
     @RequestMapping(value = "/submit/{id}/{price}/{bonusPrice}",method = RequestMethod.POST)
     private ResponseEntity<RentUserDTO> submitRent(@PathVariable Integer id, @PathVariable Double price,
                                                    @PathVariable Double bonusPrice){
-        if(id.equals(null)|| price.equals(null)||bonusPrice.equals(null))
+        if(id== null|| price== null||bonusPrice== null)
             return new ResponseEntity<RentUserDTO>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<RentUserDTO>(rentService.submitRent(id,price,bonusPrice),HttpStatus.OK);
     }
@@ -87,7 +87,7 @@ public class RentController {
         return new ResponseEntity<RentUserDTO>(rentService.findOneDTO(id),HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete{id}",method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     private ResponseEntity delete(@PathVariable Integer id){
         if(id==null){
             return new ResponseEntity<RentUserDTO>(HttpStatus.NO_CONTENT);

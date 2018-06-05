@@ -35,7 +35,7 @@ export class UserService {
     return this.httpClient.post<User>(this.controller + '/create-user', form).catch(err => Observable.throw(err));
   }
 
-  update(form: HTMLFormElement,user :User){
+  update(form: HTMLFormElement,user :User): Observable<User>{
     let obj :FormData= new FormData(form);
     obj.append('userJson',JSON.stringify(user))
     return this.httpClient.post<User>(this.controller + '/update', obj).catch(err => Observable.throw(err));

@@ -6,7 +6,11 @@ import {RentService} from "../../../../shared/service/rent.service";
 import {Rent} from "../../../../shared/model/rent";
 import {isNullOrUndefined} from "util";
 import {ImagePipe} from "../../../../shared/pipe/pipes/image.pipe";
-
+import {Bonus} from "../../../../shared/model/bonus";
+export class wrapper{
+  editableBonus:Bonus;
+  notEditable:Bonus[]=[];
+}
 @Component({
   selector: 'app-user-one',
   templateUrl: './user-one.component.html',
@@ -24,16 +28,17 @@ export class UserOneComponent implements OnInit {
     'BIRTHDAY':' на день народження',
     'ANNIVERSARY':'на річницю отримання карти',
     'PARTY':'на свято',
-  }
+  };
 
-
-
+  bonuses = new wrapper();
 
   constructor(private _route: ActivatedRoute, private _user: UserService, private _rent: RentService, private img: ImagePipe) {
     _route.params.subscribe(next => {
       _user.findOne(next['id']).subscribe(next => {
         console.log(next);
         this.user = next;
+        this.bonuses.editableBonus = next.bonuses.find((value, index, obj) => value.bonusType=='REGULAR');
+        this.bonuses.notEditable = next.bonuses.filter((value, index, obj) => value.bonusType!='REGULAR');
         console.log(this.user);
         this.urlImage=this.img.transform(next.imagePath);
         this._rent.getAllByUserId(this.user.id).subscribe(next => {
@@ -86,6 +91,10 @@ export class UserOneComponent implements OnInit {
     },error => {
         console.log(error);
     })
+  }
+
+  changeBonus(bonus:number){
+    this.user.bonuses.map((value, index, array) => value.value=((value.bonusType=='REGULAR')?bonus:value.value));
   }
 
   calculateHours() {

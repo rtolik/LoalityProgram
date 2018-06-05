@@ -27,6 +27,7 @@ public class Rent {
 
     private String comment;
 
+    @Enumerated
     private RentStatus rentStatus;
 
     @JsonIgnore
@@ -35,15 +36,15 @@ public class Rent {
 
     public Rent() {}
 
-    public Rent(String date, String timeOfStart, String timeOfEnd, Double price,Double bonusPrice, String comment,
-                       RentStatus rentStatus, User user) {
+    public Rent(String date, String timeOfStart, String timeOfEnd, Double price, Double bonusPrice, String comment,
+                RentStatus rentStatus, User user) {
         this.date = date;
         this.timeOfStart = timeOfStart;
         this.timeOfEnd = timeOfEnd;
         this.price = price;
-        this.bonusPrice=bonusPrice;
+        this.bonusPrice = bonusPrice;
         this.comment = comment;
-        this.rentStatus=rentStatus;
+        this.rentStatus = rentStatus;
         this.user = user;
     }
 

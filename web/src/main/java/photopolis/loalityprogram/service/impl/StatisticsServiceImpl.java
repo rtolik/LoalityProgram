@@ -46,17 +46,27 @@ public class StatisticsServiceImpl implements StatisticsService {
                 .setBonusPaidClients(getnumBonusPaidClients(rents))
                 .setNumOfRegularClients(getUserByType(rents, false))
                 .setNumOfFriendClients(getUserByType(rents, true))
-                .setHoursPerClient(statistic.getHoursRented() / statistic.getNumOfClients())
                 .setNewClients(userService.findNewUsersInDateInterval(startDate, endDate).size())
                 .setNumOfRents(rents.size())
                 .setNumOfPaidRents(getNumOfRentsByStatus(rents, RentStatus.PAID, RentStatus.BONUSPAID))
-                .setNumOfLeavedRents(getNumOfRentsByStatus(rents, RentStatus.LEAVED));
+                .setNumOfLeavedRents(getNumOfRentsByStatus(rents, RentStatus.LEAVED))
+                .setPercentReqularClients(Math.round(
+                        (statistic.getNewClients()/100*statistic.getNumOfRegularClients())*100)/100.
+                )
+                .setPercentFriendClients(100-statistic.getPercentReqularClients())
+                .setPercentPaidRents(Math.round((statistic.getNumOfRents()/100*statistic.getNumOfPaidRents())/100)*100.0)
+                .setPercentLeavedRents(100-statistic.getPercentPaidRents());
+        Double hpc = statistic.getHoursRented() / statistic.getNumOfClients();
+        statistic.setHoursPerClient(Math.round(hpc*100)/100.0);
         return statistic;
     }
 
     private Double getProfit(List<Rent> rents) {
         Double profit= 0.0;
-        List<Rent> paidRents= rents.stream().filter(rent -> rent.getRentStatus()== RentStatus.PAID).collect(toList());
+        List<Rent> paidRents= rents.stream()
+                .filter(
+                        rent -> rent.getRentStatus()== RentStatus.PAID ||rent.getRentStatus()== RentStatus.BONUSPAID
+                ).collect(toList());
         for (Rent rent:paidRents){
             profit+=rent.getPrice();
         }
@@ -86,11 +96,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     private Integer getUserByType(List<Rent> rents, Boolean isMember){
-        List<Rent> sorted=rents.stream().filter(rent -> {
-            logger.info(rent.getUser());
-            logger.info("Equality "+(rent.getUser().getMember() == isMember));
-            return rent.getUser().getMember() == isMember;
-        }).collect(toList());
+        List<Rent> sorted=rents.stream().filter(rent -> rent.getUser().getMember() == isMember).collect(toList());
         return getNumOfClients(sorted);
     }
 

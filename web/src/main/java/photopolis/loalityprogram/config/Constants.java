@@ -1,5 +1,7 @@
 package photopolis.loalityprogram.config;
 
+import io.swagger.models.auth.In;
+
 /**
  * Created by Anatoliy on 23.05.2018.
  */
@@ -7,7 +9,13 @@ public class Constants {
 
     public static final Double BONUS_MULTIPLUER = 0.1;
     public static final Integer REGULAR_BONUS_DURATION_MOUNTH=6;
-    public static final Integer PARTY_BONUS_DURATION_DAYS=7;
+    public static final Integer PARTY_BONUS_DURATION_DAYS = 7;
+    public static final Integer BIRTHDAY_BONUS_DURATION_DAYS = 7;
+    public static final Integer ANNIVERSARY_BONUS_DURATION_DAYS = 7;
+    public static final Double BONUS_PER_REGISTARTION =50.0;
+    public static final Double BONUS_PER_ANNIVERSARY = 90.0;
+    public static final Double BONUS_PER_BIRTHDAY = 70.0;
+    public static final Double BONUS_PER_PARTY = 40.0;
 
     public static final String LOGIN = "root";
     public static final String PASSWORD = "12345678";
