@@ -282,7 +282,7 @@ export class HomeComponent implements OnInit {
       ) {
         if (next.rentStatus == 'AWAIT')
           cell.classList.add('reserved');
-        if (next.rentStatus == 'PAID')
+        if (next.rentStatus == 'PAID'||next.rentStatus=='BONUSPAID')
           cell.classList.add('closed');
         if (next.rentStatus == 'LEAVED')
           cell.classList.add('leaved');

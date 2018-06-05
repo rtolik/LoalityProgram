@@ -11,11 +11,11 @@
   <div class="add-user d-flex flex-column" *ngIf="!partyBool">
     <h2 class="border-bottom border-dark text-center p-1">Додати клієнта</h2>
     <form [formGroup]="userForm" #form (submit)="addUser(form)">
-      <label>Ім'я*
-        <input formControlName="name" type="text">
-      </label>
       <label>Прізвище*
         <input formControlName="surname" type="text">
+      </label>
+      <label>Ім'я*
+        <input formControlName="name" type="text">
       </label>
       <label *ngIf="addMember">По батькові*
         <input formControlName="secondName" type="text">
@@ -35,7 +35,7 @@
       <label *ngIf="addMember">Номер карти програми лояльності*
         <input formControlName="cardId" type="text" class="input-date">
       </label>
-      <input type="file" id="file" class="d-none" name="img" accept="image/*" (change)="readUrl($event)">
+      <input type="file" id="file" class="d-none" name="img"  accept="image/*" (change)="readUrl($event)">
       <figure [ngClass]="{'min-heigth':urlImg=='empty'}">
         <img *ngIf="urlImg!='empty'"  [src]="urlImg" alt="">
       </figure>

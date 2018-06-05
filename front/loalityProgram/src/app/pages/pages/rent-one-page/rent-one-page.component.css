@@ -114,6 +114,10 @@ label .checkmark:after {
 .buttons input{
   height: 38px;
 }
+input,textarea{
+  background-color: transparent;
+}
+
 textarea{
   width: 100%;
   resize: none;

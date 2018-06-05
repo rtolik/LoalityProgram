@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {phoneMask} from "../../../shared/config/config";
 import {User} from "../../../shared/model/user";
@@ -24,7 +24,6 @@ export class AddUserComponent implements OnInit {
   bonusDayForm: FormGroup;
   bonusDay: BonusDay = new BonusDay();
   bonusDays: BonusDay[] = [];
-
 
   constructor(private userService: UserService) {
     this.userService.findAllDays().subscribe(next => {
@@ -55,6 +54,7 @@ export class AddUserComponent implements OnInit {
       console.log(error);
     }, () => {
       this.added = true;
+      this.urlImg='empty';
       setTimeout(() => {
         this.added = false;
       }, 2000)

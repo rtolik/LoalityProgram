@@ -70,11 +70,12 @@ export class UserOneComponent implements OnInit {
 
   updateUser(form:HTMLFormElement){
     this.editing=false;
-    if(!isNullOrUndefined(this.user.cardId)&&this.user.cardId!=0) {
+    if(!isNullOrUndefined(this.user.cardId)&&this.user.cardId!=0&&!this.user.member) {
       this.user.dateOfMember=new Date().toISOString();
     }
     this._user.update(form,this.user).subscribe(next=>{
         this.user=next;
+        form.reset();
         this.urlImage=this.img.transform(next.imagePath);
     },error => {
         console.log(error);

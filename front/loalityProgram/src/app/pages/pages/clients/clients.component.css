@@ -24,6 +24,9 @@
   border-bottom: 1px solid black;
   padding: 5px 5px;
 }
+input{
+  background-color: transparent;
+}
 .heading{
   padding: 0 25px;
 
@@ -137,7 +140,7 @@ ul.pagination li.current{
 .current:hover{
   background-color: transparent;
 }
-.current a{
+.current {
   background-color: #ffb014;
 }
 .pagination span{

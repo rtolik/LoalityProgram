@@ -106,21 +106,20 @@
       </form>
     </div>
   </div>
-  <div id="stat" class="statistics">
-    <h2>Статистика</h2>
-    <div class="buttons d-flex justify-content-around align-items-start">
+  <div id="stat" class="statistics row flex-nowrap m-0 flex-column">
+    <h2 class="col-md-8 text-center">Статистика</h2>
+    <div class="buttons d-flex col-md-8 p-0 justify-content-around align-items-start">
       <input class="input-date mb-5" type="date" [(ngModel)]="start">
       <input class="input-date mb-5" type="date" [(ngModel)]="end">
       <button (click)="getStat()">Вивести</button>
     </div>
-    <div class="statistics-table mt-5">
-      <div class="heading row m-0">
-
+    <div class="statistics-table mt-5 col-md-8 p-0  ">
+      <div class="heading row m-0 ">
         <input type="date" disabled class="col-4 " [(ngModel)]="start">
         <input type="date" disabled class="col-4 " [(ngModel)]="end">
         <h3 class="col-4">Результат</h3>
       </div>
-      <div class="table-content  m-0 d-flex flex-column">
+      <div class="table-content  m-0 d-flex col-12  p-0 flex-column">
         <div class="stat-row d-flex m-0"><h3 class="col-8">Загальний прибуток</h3>
           <h3 class="col-4">{{stat.profit}}</h3></div>
         <div class="stat-row d-flex m-0"><h3 class="col-8">Кількість клієнтів</h3>
