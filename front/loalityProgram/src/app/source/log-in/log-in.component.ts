@@ -9,17 +9,13 @@ import {Router} from "@angular/router";
 })
 export class LogInComponent implements OnInit {
 
-  constructor(private _user: UserService, private _router: Router) {
+  constructor(private _user: UserService) {
   }
 
 
   logIn(log: string, pass: string, check: HTMLInputElement) {
     this._user.logIn(log, pass).subscribe(next => {
       this._user.logData(log, pass, next, check.checked);
-      console.log(next);
-      if (next.authorised==true) {
-        this._router.navigateByUrl('');
-      }
     }, error => {
       console.log(error);
     })

@@ -1,14 +1,14 @@
 <div class="content row m-0" *ngIf="bool">
-  <div class="left col-3 flex-column align-items-center d-flex">
+  <div routerLink="/user/{{rent.user.id}}" class="left col-3 flex-column align-items-center d-flex">
     <img style=" width: 100%" [src]='rent.user.imagePath|image'>
   </div>
   <div class="right col-9 ">
-    <div class="d-flex row m-0">
+    <div routerLink="/user/{{rent.user.id}}" class="d-flex row m-0">
       <h3 class="col-4">Імя:</h3>
       <h3>{{rent.user.name}}</h3>
       <h3 class="offset-4"></h3>
     </div>
-    <div class="d-flex row m-0">
+    <div routerLink="/user/{{rent.user.id}}" class="d-flex row m-0">
       <h3 class="col-4">Прізвище:</h3>
       <h3>{{rent.user.surname}}</h3>
       <h3 class="offset-4"></h3>
@@ -46,6 +46,18 @@
       <h3 class="col-4">Cтатус</h3>
       <input  class="col-4 border-0"  disabled
               [(ngModel)]="rentEnum[rent.rentStatus]">
+      <h3 class="offset-4"></h3>
+    </div>
+    <div class="d-flex row m-0" *ngIf="rent.price!=null||rent.price!=undefined">
+      <h3 class="col-4">Ціна</h3>
+      <input  class="col-4 border-0"  disabled
+              [(ngModel)]="rent.price">
+      <h3 class="offset-4"></h3>
+    </div>
+    <div class="d-flex row m-0" *ngIf="rent.bonusPrice!=null||rent.bonusPrice!=undefined">
+      <h3 class="col-4">Ціна в бонуса</h3>
+      <input  class="col-4 border-0"  disabled
+              [(ngModel)]="rent.bonusPrice">
       <h3 class="offset-4"></h3>
     </div>
     <div class="d-flex row m-0">

@@ -1,6 +1,5 @@
 export  const timeMask = [/[0-9]/,/\d/,':',/[0-9]/,/\d/];
 export  const phoneMask = ['3', '8', ' ', '(', /[0-9]/, /\d/, /\d/, ')', '-', /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/];
-export const xorConstVal='3132333435363738';
 export function xor(a, b) {
   let len = Math.min(a.length, b.length);
   let arr = new Array(len);
