@@ -6,22 +6,20 @@ import {RentService} from "../../../../shared/service/rent.service";
 import {Rent} from "../../../../shared/model/rent";
 import {isNullOrUndefined} from "util";
 import {ImagePipe} from "../../../../shared/pipe/pipes/image.pipe";
-import {Bonus} from "../../../../shared/model/bonus";
-export class wrapper{
-  editableBonus:Bonus;
-  notEditable:Bonus[]=[];
-}
+import {IsoDatePipe} from "../../../../shared/pipe/pipes/date.pipe";
+
 @Component({
   selector: 'app-user-one',
   templateUrl: './user-one.component.html',
   styleUrls: ['./user-one.component.css'],
-  providers: [UserService, RentService,ImagePipe]
+  providers: [UserService, RentService, ImagePipe, IsoDatePipe]
 })
 export class UserOneComponent implements OnInit {
   editing:boolean= false;
   user: User = new User();
   rents: Rent[] = [];
   urlImage:string='';
+
 
   bonusType={
     'REGULAR':'',
@@ -30,15 +28,17 @@ export class UserOneComponent implements OnInit {
     'PARTY':'на свято',
   };
 
-  bonuses = new wrapper();
 
-  constructor(private _route: ActivatedRoute, private _user: UserService, private _rent: RentService, private img: ImagePipe) {
+  constructor(private _route: ActivatedRoute, private _user: UserService, private _rent: RentService, private img: ImagePipe, private datePipe: IsoDatePipe) {
     _route.params.subscribe(next => {
       _user.findOne(next['id']).subscribe(next => {
         console.log(next);
         this.user = next;
-        this.bonuses.editableBonus = next.bonuses.find((value, index, obj) => value.bonusType=='REGULAR');
-        this.bonuses.notEditable = next.bonuses.filter((value, index, obj) => value.bonusType!='REGULAR');
+        if (this.user.member) {
+          for (let i in this.user.bonuses) {
+            this.user.bonuses[i].dateOfEnd = datePipe.transform(this.user.bonuses[i].dateOfEnd);
+          }
+        }
         console.log(this.user);
         this.urlImage=this.img.transform(next.imagePath);
         this._rent.getAllByUserId(this.user.id).subscribe(next => {
@@ -50,6 +50,10 @@ export class UserOneComponent implements OnInit {
         console.log(error);
       })
     });
+
+    let date = new Date(2000, 11, 24);
+    date.setDate(date.getMonth() + 1);
+    console.log(date.toISOString().split('T')[0]);
 
   }
   getClosed(){
@@ -87,8 +91,19 @@ export class UserOneComponent implements OnInit {
     if(!isNullOrUndefined(this.user.cardId)&&this.user.cardId!=0&&!this.user.member) {
       this.user.dateOfMember=new Date().toISOString();
     }
+    if (this.user.member) {
+      for (let i in this.user.bonuses) {
+        this.user.bonuses[i].dateOfEnd = this.user.bonuses[i].dateOfEnd.toString().split('.').reverse().join('-');
+      }
+    }
     this._user.update(form,this.user).subscribe(next=>{
         this.user=next;
+      if (this.user.member) {
+        for (let i in this.user.bonuses) {
+          this.user.bonuses[i].dateOfEnd = this.datePipe.transform(this.user.bonuses[i].dateOfEnd);
+        }
+      }
+      console.log(next);
         form.reset();
         this.urlImage=this.img.transform(next.imagePath);
     },error => {
@@ -104,9 +119,6 @@ export class UserOneComponent implements OnInit {
     })
   }
 
-  changeBonus(bonus:number){
-    this.user.bonuses.map((value, index, array) => value.value=((value.bonusType=='REGULAR')?bonus:value.value));
-  }
 
   calculateHours() {
     let hours = 0;
