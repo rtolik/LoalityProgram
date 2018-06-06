@@ -24,12 +24,15 @@ export class RentService {
 
   save(rent: Rent,userId:number): Observable<Rent> {
     let form = new FormData();
-    form.append('date',rent.date);
-    form.append('timeOfStart',rent.timeOfStart);
-    form.append('duration',rent.duration+'');
-    form.append('comment',rent.comment);
-
-    return this.httpClient.post<Rent>(this.controller + '/save/'+userId,form ).catch(err => Observable.throw(err));
+    form.append('date', rent.date);
+    form.append('timeOfStart', rent.timeOfStart);
+    form.append('duration', rent.duration + '');
+    form.append('comment', rent.comment);
+    console.log(form.get('date'));
+    console.log(form.get('timeOfStart'));
+    console.log(form.get('duration'));
+    console.log(form.get('comment'));
+    return this.httpClient.post<Rent>(this.controller + '/save/' + userId, form).catch(err => Observable.throw(err));
   }
 
   submitRent(rentId: number,price: number,bonus:number): Observable<Rent> {
