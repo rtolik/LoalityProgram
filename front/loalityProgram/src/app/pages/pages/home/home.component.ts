@@ -370,6 +370,9 @@ export class HomeComponent implements OnInit {
   }
 
   addRent() {
+    console.log(this.dateStr);
+    console.log(this.selectedTime);
+    console.log(this.selectedHours);
     this.newRent.date = this.dateStr;
     this.newRent.timeOfStart = this.selectedTime;
     this.newRent.duration = this.selectedHours;

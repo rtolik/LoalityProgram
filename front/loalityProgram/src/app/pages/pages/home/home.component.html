@@ -89,16 +89,16 @@
           </label>
           <label>
             Дата
-            <input name="2" class="border" [value]="dateStr" type="date">
+            <input name="2" class="border" [(ngModel)]="dateStr" type="date">
           </label>
           <label>
             Час початку оренди
-            <input name="3" type="text" #inptval [value]="selectedTime" [textMask]='{mask: this.mask}'
+            <input name="3" type="text" #inptval [(ngModel)]="selectedTime" [textMask]='{mask: this.mask}'
                    placeholder="00:00">
           </label>
           <label>
             Тривалість оренди
-            <input name="4" type="number" [value]="selectedHours" placeholder="0">
+            <input name="4" type="number" [(ngModel)]="selectedHours" placeholder="0">
           </label>
           <label>
             Коментар
