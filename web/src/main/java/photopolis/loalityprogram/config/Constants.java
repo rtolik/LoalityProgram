@@ -17,6 +17,8 @@ public class Constants {
     public static final Double BONUS_PER_BIRTHDAY = 70.0;
     public static final Double BONUS_PER_PARTY = 40.0;
 
+    public static final String NULL_DATE="1997-13-67";
+
     public static final String LOGIN = "root";
     public static final String PASSWORD = "12345678";
 

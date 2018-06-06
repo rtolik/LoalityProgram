@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService{
                 , userId
         );
         for (int i=1;i<4;i++)
-            bonusService.save(0.0,i,"1997-13-67","1997-13-67",userId);
+            bonusService.save(0.0,i,Constants.NULL_DATE,Constants.NULL_DATE,userId);
     }
 
     @Override
@@ -137,7 +137,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findOne(Integer id) {
-        return userRepository.findOne(id);
+        User user=userRepository.findOne(id);
+        user.getBonuses().forEach(bonus -> {
+            if(bonus.getDateOfEnd().equals(Constants.NULL_DATE))
+                bonus.setDateOfEnd(null);
+        });
+        return user;
     }
 
     @Override

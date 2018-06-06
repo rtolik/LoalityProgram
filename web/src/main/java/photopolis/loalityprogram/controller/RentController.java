@@ -57,6 +57,7 @@ public class RentController {
                 || comment== null){
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
+        System.out.println("us "+userId+" date "+date+" timeOfStart "+timeOfStart+" duration "+duration);
         rentService.createNewRent(userId, date, timeOfStart, duration, comment);
         return  new ResponseEntity(HttpStatus.OK);
     }

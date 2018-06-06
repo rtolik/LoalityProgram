@@ -1,5 +1,6 @@
 package photopolis.loalityprogram.service.impl;
 
+import io.swagger.models.auth.In;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,16 +50,21 @@ public class StatisticsServiceImpl implements StatisticsService {
                 .setNewClients(userService.findNewUsersInDateInterval(startDate, endDate).size())
                 .setNumOfRents(rents.size())
                 .setNumOfPaidRents(getNumOfRentsByStatus(rents, RentStatus.PAID, RentStatus.BONUSPAID))
-                .setNumOfLeavedRents(getNumOfRentsByStatus(rents, RentStatus.LEAVED))
-                .setPercentRegularClients(Math.round(
-                        (statistic.getNewClients()/100*statistic.getNumOfRegularClients())*100)/100.
-                )
-                .setPercentFriendClients(100-statistic.getPercentRegularClients())
-                .setPercentPaidRents(Math.round((statistic.getNumOfRents()/100*statistic.getNumOfPaidRents())*100)/100.0)
-                .setPercentLeavedRents(100-statistic.getPercentPaidRents());
+                .setNumOfLeavedRents(getNumOfRentsByStatus(rents, RentStatus.LEAVED));
         Double hpc = statistic.getHoursRented() / statistic.getNumOfClients();
-        statistic.setHoursPerClient(Math.round(hpc*100)/100.0);
+        statistic.setHoursPerClient(Math.round(hpc*1000)/100.0);
+//        statistic.setPercentPaidRents(getPercent(statistic.getNumOfRents(),statistic.getNumOfPaidRents()))
+//                .setPercentLeavedRents(100-statistic.getPercentPaidRents())
+//                .setPercentRegularClients(getPercent(statistic.getNumOfClients(),statistic.getNumOfRegularClients()))
+//                .setPercentFriendClients(100-statistic.getPercentRegularClients());
         return statistic;
+    }
+
+    private Double getPercent(Integer left, Integer right){
+        Double dLeft = left+0.0;
+        Double dRight =right+0.0;
+        Double percent = dLeft*100/dRight;
+        return 100 - Math.round(percent*100)/100.0;
     }
 
     private Double getProfit(List<Rent> rents) {
@@ -110,6 +116,5 @@ public class StatisticsServiceImpl implements StatisticsService {
                         rent -> rent.getRentStatus().equals(rentStatus)||rent.getRentStatus().equals(secondStatus)
                 ).collect(toList()).size();
     }
-
 
 }
