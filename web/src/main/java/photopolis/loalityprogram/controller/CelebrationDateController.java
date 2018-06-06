@@ -57,8 +57,9 @@ public class CelebrationDateController {
         return new ResponseEntity<List<CelebrateDate>>(celebrationDateService.findAll(),HttpStatus.OK);
     }
 
-    @Scheduled(fixedDelay = 86400)
+//    @Scheduled(fixedDelay = 60000)
     private void countBonuses(){
+        System.out.println("--------------------------------------------------------------------------------------");
         List<CelebrateDate> dates= celebrationDateService.findAll();
         dates=dates.stream().filter(date -> dataEqualiser(dataParser(LocalDate.now().toString()),date.getDate())).collect(toList());
         bonusService.setPartyBonus(dates);

@@ -50,11 +50,11 @@ public class StatisticsServiceImpl implements StatisticsService {
                 .setNumOfRents(rents.size())
                 .setNumOfPaidRents(getNumOfRentsByStatus(rents, RentStatus.PAID, RentStatus.BONUSPAID))
                 .setNumOfLeavedRents(getNumOfRentsByStatus(rents, RentStatus.LEAVED))
-                .setPercentReqularClients(Math.round(
+                .setPercentRegularClients(Math.round(
                         (statistic.getNewClients()/100*statistic.getNumOfRegularClients())*100)/100.
                 )
-                .setPercentFriendClients(100-statistic.getPercentReqularClients())
-                .setPercentPaidRents(Math.round((statistic.getNumOfRents()/100*statistic.getNumOfPaidRents())/100)*100.0)
+                .setPercentFriendClients(100-statistic.getPercentRegularClients())
+                .setPercentPaidRents(Math.round((statistic.getNumOfRents()/100*statistic.getNumOfPaidRents())*100)/100.0)
                 .setPercentLeavedRents(100-statistic.getPercentPaidRents());
         Double hpc = statistic.getHoursRented() / statistic.getNumOfClients();
         statistic.setHoursPerClient(Math.round(hpc*100)/100.0);

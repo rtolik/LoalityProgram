@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import photopolis.loalityprogram.DTO.*;
 import photopolis.loalityprogram.config.Constants;
+import photopolis.loalityprogram.model.Bonus;
 import photopolis.loalityprogram.model.User;
 import photopolis.loalityprogram.model.enums.BonusType;
 import photopolis.loalityprogram.repository.UserRepository;
@@ -63,9 +64,10 @@ public class UserServiceImpl implements UserService{
     private void createBonuses(String dateOfRegistration, Integer userId) {
         bonusService.save(Constants.BONUS_PER_REGISTARTION, 0, dataParser(dateOfRegistration),
                 datePluser(dataParser(dateOfRegistration), BonusType.REGULAR)
-                , userId);
+                , userId
+        );
         for (int i=1;i<4;i++)
-            bonusService.save(0.0,i,null,null,userId);
+            bonusService.save(0.0,i,"1997-13-67","1997-13-67",userId);
     }
 
     @Override
@@ -106,12 +108,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User update(User user) {
-        if (findOne(user.getId()).getMember()!=(user.getCardId()!= null)){
+        if (!findOne(user.getId()).getMember() && user.getCardId()!= null){
             createBonuses(user.getDateOfMember(),user.getId());
         }
         save(user.setDateOfMember(dataParser(user.getDateOfMember())).setMember(user.getCardId()!= null));
-        user.getBonuses().forEach(bonus -> bonusService.updateValue(bonus.getId(),bonus.getValue())
-        );
+        if (user.getMember() && !user.getBonuses().isEmpty())
+            bonusService.updateValue(user.getBonuses().get(0).getId(),user.getBonuses().get(0).getValue());
         return findOne(user.getId());
     }
 

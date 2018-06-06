@@ -30,42 +30,58 @@ public class Utility {
     }
 
     private static String addRegularBonus(String dateOfStart){
-        String[] date=dateOfStart.split("-");
-        Integer year=Integer.parseInt(date[0]);
-        Integer mounth = Integer.parseInt(date[1]);
-        Integer day = Integer.parseInt(date[2]);
-        mounth+= Constants.REGULAR_BONUS_DURATION_MOUNTH;
-         return getDateCorrect(year,mounth,day);
+        if (dateOfStart!=null) {
+            String[] date = dateOfStart.split("-");
+            Integer year = Integer.parseInt(date[0]);
+            Integer mounth = Integer.parseInt(date[1]);
+            Integer day = Integer.parseInt(date[2]);
+            mounth += Constants.REGULAR_BONUS_DURATION_MOUNTH;
+            return getDateCorrect(year, mounth, day);
+        }
+        return "";
     }
 
     private static String addPartyBonus(String dateOfStart){
-        String[] date=dateOfStart.split("-");
-        Integer year=Integer.parseInt(date[0]);
-        Integer mounth=Integer.parseInt(date[1]);
-        Integer day = Integer.parseInt(date[2]);
-        day+= Constants.PARTY_BONUS_DURATION_DAYS;
-        return getDateCorrect(year, mounth, day);
+        if (dateOfStart!=null) {
+            String[] date = dateOfStart.split("-");
+            Integer year = Integer.parseInt(date[0]);
+            Integer mounth = Integer.parseInt(date[1]);
+            Integer day = Integer.parseInt(date[2]);
+            day += Constants.PARTY_BONUS_DURATION_DAYS;
+            return getDateCorrect(year, mounth, day);
+        }
+        return "";
     }
 
     private static String addBirthDayBonus(String dateOfStart){
-        String[] date=dateOfStart.split("-");
-        Integer year=Integer.parseInt(date[0]);
-        Integer mounth=Integer.parseInt(date[1]);
-        Integer day = Integer.parseInt(date[2]);
-        day+= Constants.BIRTHDAY_BONUS_DURATION_DAYS;
-        return getDateCorrect(year, mounth, day);
+        if (dateOfStart!=null) {
+            String[] date = dateOfStart.split("-");
+            Integer year = Integer.parseInt(date[0]);
+            Integer mounth = Integer.parseInt(date[1]);
+            Integer day = Integer.parseInt(date[2]);
+            day += Constants.BIRTHDAY_BONUS_DURATION_DAYS;
+            return getDateCorrect(year, mounth, day);
+        }
+        return "";
     }
 
     private static String addAnniversaryBonus(String dateOfStart){
-        String[] date=dateOfStart.split("-");
-        Integer year=Integer.parseInt(date[0]);
-        Integer mounth=Integer.parseInt(date[1]);
-        Integer day = Integer.parseInt(date[2]);
-        day+= Constants.ANNIVERSARY_BONUS_DURATION_DAYS;
-        return getDateCorrect(year, mounth, day);
+        if (dateOfStart!=null) {
+            String[] date = dateOfStart.split("-");
+            Integer year = Integer.parseInt(date[0]);
+            Integer mounth = Integer.parseInt(date[1]);
+            Integer day = Integer.parseInt(date[2]);
+            day += Constants.ANNIVERSARY_BONUS_DURATION_DAYS;
+            return getDateCorrect(year, mounth, day);
+        }
+        return "";
     }
 
     private static String getDateCorrect(Integer year, Integer mounth, Integer day) {
+        if (mounth>12){
+            year++;
+            mounth-=12;
+        }
         if(mounth==2&&year%4==0&&day>29){
             day-=29;
             mounth++;
