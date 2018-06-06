@@ -1,5 +1,6 @@
 package photopolis.loalityprogram.config;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@EnableScheduling
 @Component
 public class RestConfig implements Filter {
 

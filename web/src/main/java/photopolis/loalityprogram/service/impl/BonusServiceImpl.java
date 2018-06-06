@@ -79,7 +79,7 @@ public class BonusServiceImpl implements BonusService{
     public Bonus updateValue(Integer id, Double value) {
         Bonus bonus = findOne(id);
         save(
-                bonus.setValue(value).setDateOfEnd(datePluser(bonus.getDateOfEnd(),bonus.getBonusType()))
+                bonus.setValue(value).setDateOfEnd(datePluser(dataParser(LocalDate.now().toString()),bonus.getBonusType()))
         );
         return bonus;
     }
@@ -148,10 +148,11 @@ public class BonusServiceImpl implements BonusService{
     @Override
     public void setAnniversaryBonus() {
         List<User> users=userService.findAllActive().stream().filter(
-                user -> dataEqualiser(dataParser(LocalDate.now().toString()),user.getDateOfRegistration())
+                user -> user.getMember()
+                && dataEqualiser(dataParser(LocalDate.now().toString()),user.getDateOfRegistration())
         ).collect(toList());
         List<Bonus> bonuses= new ArrayList<>();
-        users.forEach(user -> bonuses.add(user.getBonuses().get(0)));
+        users.forEach(user -> bonuses.add(user.getBonuses().get(2)));
         bonuses.forEach(bonus -> updateValue(
                 bonus.getId(),bonus.addToValue(Constants.BONUS_PER_ANNIVERSARY).getValue()
         ));
@@ -160,10 +161,11 @@ public class BonusServiceImpl implements BonusService{
     @Override
     public void setBirhDayBonus() {
         List<User> users=userService.findAllActive().stream().filter(
-                user -> dataEqualiser(dataParser(LocalDate.now().toString()),user.getDateOfBirth())
+                user -> user.getMember()
+                && dataEqualiser(dataParser(LocalDate.now().toString()),user.getDateOfBirth())
         ).collect(toList());
         List<Bonus> bonuses= new ArrayList<>();
-        users.forEach(user -> bonuses.add(user.getBonuses().get(0)));
+        users.forEach(user -> bonuses.add(user.getBonuses().get(1)));
         bonuses.forEach(bonus -> updateValue(
                 bonus.getId(),bonus.addToValue(Constants.BONUS_PER_BIRTHDAY).getValue()
         ));

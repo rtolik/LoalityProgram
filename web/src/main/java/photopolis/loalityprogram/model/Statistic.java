@@ -29,7 +29,7 @@ public class Statistic {
 
     private Integer numOfRegularClients;
 
-    private Double percentReqularClients;
+    private Double percentRegularClients;
 
     private Double percentFriendClients;
 
@@ -145,12 +145,12 @@ public class Statistic {
         return this;
     }
 
-    public Double getPercentReqularClients() {
-        return percentReqularClients;
+    public Double getPercentRegularClients() {
+        return percentRegularClients;
     }
 
-    public Statistic setPercentReqularClients(Double percentReqularClients) {
-        this.percentReqularClients = percentReqularClients;
+    public Statistic setPercentRegularClients(Double percentRegularClients) {
+        this.percentRegularClients = percentRegularClients;
         return this;
     }
 

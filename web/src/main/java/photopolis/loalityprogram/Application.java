@@ -4,11 +4,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Created by Anatoliy on 23.05.2018.
  */
 
+@EnableScheduling
 @SpringBootApplication(scanBasePackages  = "photopolis.loalityprogram")
 public class Application extends SpringBootServletInitializer {
 
