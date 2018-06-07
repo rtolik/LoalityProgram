@@ -299,12 +299,13 @@ public class UserServiceImpl implements UserService{
             return users;
         }
         Collections.sort(users, dateComparator);
+        Collections.reverse(users);
         return users;
     }
 
 
     private Integer findPagesCount(List<User> users, Integer elOnPage) {
-        return (int) Math.ceil(users.size()/elOnPage);
+        return (int) Math.ceil((users.size()+0.0)/elOnPage);
     }
 
     private List<User> findElementsOnPage(List<User> users, Integer pageNum, Integer elOnPage) {
