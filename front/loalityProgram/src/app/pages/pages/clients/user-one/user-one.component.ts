@@ -36,7 +36,8 @@ export class UserOneComponent implements OnInit {
         this.user = next;
         if (this.user.member) {
           for (let i in this.user.bonuses) {
-            this.user.bonuses[i].dateOfEnd = datePipe.transform(this.user.bonuses[i].dateOfEnd);
+            if (!isNullOrUndefined(this.user.bonuses[i].dateOfEnd))
+              this.user.bonuses[i].dateOfEnd = datePipe.transform(this.user.bonuses[i].dateOfEnd);
           }
         }
         console.log(this.user);
@@ -51,9 +52,6 @@ export class UserOneComponent implements OnInit {
       })
     });
 
-    let date = new Date(2000, 11, 24);
-    date.setDate(date.getMonth() + 1);
-    console.log(date.toISOString().split('T')[0]);
 
   }
   getClosed(){
@@ -93,14 +91,16 @@ export class UserOneComponent implements OnInit {
     }
     if (this.user.member) {
       for (let i in this.user.bonuses) {
-        this.user.bonuses[i].dateOfEnd = this.user.bonuses[i].dateOfEnd.toString().split('.').reverse().join('-');
+        if (!isNullOrUndefined(this.user.bonuses[i].dateOfEnd))
+          this.user.bonuses[i].dateOfEnd = this.user.bonuses[i].dateOfEnd.toString().split('.').reverse().join('-');
       }
     }
     this._user.update(form,this.user).subscribe(next=>{
         this.user=next;
       if (this.user.member) {
         for (let i in this.user.bonuses) {
-          this.user.bonuses[i].dateOfEnd = this.datePipe.transform(this.user.bonuses[i].dateOfEnd);
+          if (!isNullOrUndefined(this.user.bonuses[i].dateOfEnd))
+            this.user.bonuses[i].dateOfEnd = this.datePipe.transform(this.user.bonuses[i].dateOfEnd);
         }
       }
       console.log(next);
