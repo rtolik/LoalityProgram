@@ -29,7 +29,7 @@ public class RentController {
     @RequestMapping(value = "/find-all-by-date",method = RequestMethod.GET)
     private ResponseEntity<List<DailyRentDTO>> getAllByDate(@RequestParam(required = true) String date){
         if(date==null)
-            return new ResponseEntity<List<DailyRentDTO>>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<List<DailyRentDTO>>(HttpStatus.NO_CONTENT);
         else
             return new ResponseEntity<List<DailyRentDTO>>(rentService.findAllForDay(date),HttpStatus.OK);
     }
@@ -57,7 +57,6 @@ public class RentController {
                 || comment== null){
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
-        System.out.println("us "+userId+" date "+date+" timeOfStart "+timeOfStart+" duration "+duration);
         rentService.createNewRent(userId, date, timeOfStart, duration, comment);
         return  new ResponseEntity(HttpStatus.OK);
     }

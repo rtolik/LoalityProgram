@@ -1,5 +1,6 @@
 package photopolis.loalityprogram.service.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import photopolis.loalityprogram.config.Constants;
@@ -26,6 +27,8 @@ import static photopolis.loalityprogram.service.utils.Utility.datePluser;
  */
 @Service
 public class BonusServiceImpl implements BonusService{
+
+    private static Logger logger = Logger.getLogger(BonusServiceImpl.class);
 
     @Autowired
     private BonusRepository bonusRepository;
@@ -146,28 +149,52 @@ public class BonusServiceImpl implements BonusService{
     }
 
     @Override
-    public void setAnniversaryBonus() {
-        List<User> users=userService.findAllActive().stream().filter(
+    public String setAnniversaryBonus() {
+        List<User> users = new ArrayList<>();
+        users=userService.findAllActive().stream().filter(
                 user -> user.getMember()
-                && dataEqualiser(dataParser(LocalDate.now().toString()),user.getDateOfRegistration())
+                        && dataEqualiser(dataParser(LocalDate.now().toString()),user.getDateOfRegistration())
         ).collect(toList());
-        List<Bonus> bonuses= new ArrayList<>();
-        users.forEach(user -> bonuses.add(user.getBonuses().get(2)));
-        bonuses.forEach(bonus -> updateValue(
-                bonus.getId(),bonus.addToValue(Constants.BONUS_PER_ANNIVERSARY).getValue()
-        ));
+        logger.info(LocalDate.now());
+        String usersNames="";
+        if(!users.isEmpty()) {
+            usersNames = getUsersTelegramInfo(users);
+            List<Bonus> bonuses = new ArrayList<>();
+            users.forEach(user -> bonuses.add(findAllByUserId(user.getId()).get(2)));
+            bonuses.forEach(bonus -> updateValue(
+                    bonus.getId(), bonus.addToValue(Constants.BONUS_PER_ANNIVERSARY).getValue()
+            ));
+        }
+        return usersNames;
+    }
+
+    private String getUsersTelegramInfo(List<User> users) {
+        String usersNames="";
+        for (User user :users) {
+            usersNames+=(getUserShortInfoString(user));
+        }
+        return usersNames;
+    }
+
+    private String getUserShortInfoString(User user) {
+        return user.getName()+" "+user.getSurname()+" "+user.getPhone()+" "+user.getEmail()+", ";
     }
 
     @Override
-    public void setBirhDayBonus() {
+    public String setBirhDayBonus() {
         List<User> users=userService.findAllActive().stream().filter(
                 user -> user.getMember()
                 && dataEqualiser(dataParser(LocalDate.now().toString()),user.getDateOfBirth())
         ).collect(toList());
-        List<Bonus> bonuses= new ArrayList<>();
-        users.forEach(user -> bonuses.add(user.getBonuses().get(1)));
-        bonuses.forEach(bonus -> updateValue(
-                bonus.getId(),bonus.addToValue(Constants.BONUS_PER_BIRTHDAY).getValue()
-        ));
+        String usersInfo="";
+        if(!users.isEmpty()) {
+            usersInfo = getUsersTelegramInfo(users);
+            List<Bonus> bonuses = new ArrayList<>();
+            users.forEach(user -> bonuses.add(findAllByUserId(user.getId()).get(1)));
+            bonuses.forEach(bonus -> updateValue(
+                    bonus.getId(), bonus.addToValue(Constants.BONUS_PER_BIRTHDAY).getValue()
+            ));
+        }
+        return usersInfo;
     }
 }

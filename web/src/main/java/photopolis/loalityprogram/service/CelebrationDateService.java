@@ -15,4 +15,7 @@ public interface CelebrationDateService {
 
     List<CelebrateDate> findAll();
 
+    String setAndGetUsersWithCelebrationDate();
+
+    void sendCelebrationDateInfoToTelegram();
 }

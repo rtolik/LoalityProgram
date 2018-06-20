@@ -211,4 +211,5 @@ public class RentServiceImpl implements RentService{
                 rent -> dataComparer(rent.getDate(),startDate)&&dataComparer(endDate,rent.getDate())
         ).collect(toList());
     }
+
 }

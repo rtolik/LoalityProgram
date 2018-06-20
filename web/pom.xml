@@ -108,6 +108,14 @@
         </dependency>
 
 
+        <!--TELEGRAM BOT API-->
+
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
+            <version>3.5</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>LoalityProgram</finalName>

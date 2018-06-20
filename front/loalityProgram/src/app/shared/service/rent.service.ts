@@ -28,10 +28,10 @@ export class RentService {
     form.append('timeOfStart', rent.timeOfStart);
     form.append('duration', rent.duration + '');
     form.append('comment', rent.comment);
-    console.log(form.get('date'));
-    console.log(form.get('timeOfStart'));
-    console.log(form.get('duration'));
-    console.log(form.get('comment'));
+    // console.log(form.get('date'));
+    // console.log(form.get('timeOfStart'));
+    // console.log(form.get('duration'));
+    // console.log(form.get('comment'));
     return this.httpClient.post<Rent>(this.controller + '/save/' + userId, form).catch(err => Observable.throw(err));
   }
 

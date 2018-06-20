@@ -22,6 +22,12 @@ public class Constants {
     public static final String LOGIN = "root";
     public static final String PASSWORD = "12345678";
 
+    public static final String BOT_USERNAME="loality_program_bot";
+    public static final String BOT_TOKEN="611013171:AAGH5QWmxkaJi23AamxyWmlSNQSS1t2dVTg";
+    public static final String BOT_SENDMESSAGE_URL="https://api.telegram.org/bot611013171:AAGH5QWmxkaJi23AamxyWmlSNQSS1t2dVTg/sendMessage?";
+    public static String BOT_CHAT_ID="324492499";
+
+
 
     public static final String YYYY_MM_DD = "yyyy-MM-dd";
     public static final String YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";

@@ -201,13 +201,10 @@ public class Utility {
         String [] rightSplit=right.split("-");
         Integer leftMonth=Integer.parseInt(leftSplit[1]);
         Integer rightMonth=Integer.parseInt(rightSplit[1]);
-        if (leftMonth==rightMonth){
-            return true;
-        }
-        Integer leftDay=Integer.parseInt(leftSplit[2]);
-        Integer rightDay=Integer.parseInt(rightSplit[2]);
-        if (leftDay==rightDay) {
-            return true;
+        if (leftMonth.equals(rightMonth)) {
+            Integer leftDay = Integer.parseInt(leftSplit[2]);
+            Integer rightDay = Integer.parseInt(rightSplit[2]);
+            return leftDay.equals(rightDay);
         }
         return false;
     }

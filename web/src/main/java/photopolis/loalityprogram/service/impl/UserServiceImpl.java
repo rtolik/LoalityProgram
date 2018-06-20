@@ -29,8 +29,6 @@ import static photopolis.loalityprogram.service.utils.Utility.datePluser;
 @Service
 public class UserServiceImpl implements UserService{
 
-    private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
-
     @Autowired
     private UserRepository userRepository;
 
@@ -137,6 +135,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findOne(Integer id) {
+       return userRepository.findOne(id);
+    }
+
+    @Override
+    public User findOneWithBonus(Integer id) {
         User user=userRepository.findOne(id);
         user.getBonuses().forEach(bonus -> {
             if(bonus.getDateOfEnd().equals(Constants.NULL_DATE))

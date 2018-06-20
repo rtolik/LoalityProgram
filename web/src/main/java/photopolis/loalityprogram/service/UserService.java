@@ -41,6 +41,8 @@ public interface UserService {
 
     User findOne(Integer id);
 
+    User findOneWithBonus(Integer id);
+
     List<User> findAll();
 
     List<User> findAllActive();

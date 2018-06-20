@@ -1,22 +1,22 @@
 package photopolis.loalityprogram.controller;
 
-import io.swagger.models.auth.In;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
-import photopolis.loalityprogram.config.Constants;
 import photopolis.loalityprogram.model.CelebrateDate;
 import photopolis.loalityprogram.service.BonusService;
 import photopolis.loalityprogram.service.CelebrationDateService;
+import photopolis.loalityprogram.service.TelegramBotService;
+import photopolis.loalityprogram.service.TelegramDispatchService;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
-import static photopolis.loalityprogram.service.utils.Utility.dataComparer;
 import static photopolis.loalityprogram.service.utils.Utility.dataEqualiser;
 import static photopolis.loalityprogram.service.utils.Utility.dataParser;
 
@@ -26,6 +26,8 @@ import static photopolis.loalityprogram.service.utils.Utility.dataParser;
 @RestController
 @RequestMapping("/celebration-date")
 public class CelebrationDateController {
+
+    Logger logger=Logger.getLogger(CelebrationDateController.class);
 
     @Autowired
     private CelebrationDateService celebrationDateService;
@@ -57,13 +59,10 @@ public class CelebrationDateController {
         return new ResponseEntity<List<CelebrateDate>>(celebrationDateService.findAll(),HttpStatus.OK);
     }
 
-//    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 86400000)
     private void countBonuses(){
-        System.out.println("--------------------------------------------------------------------------------------");
-        List<CelebrateDate> dates= celebrationDateService.findAll();
-        dates=dates.stream().filter(date -> dataEqualiser(dataParser(LocalDate.now().toString()),date.getDate())).collect(toList());
-        bonusService.setPartyBonus(dates);
-        bonusService.setAnniversaryBonus();
-        bonusService.setBirhDayBonus();
+        celebrationDateService.sendCelebrationDateInfoToTelegram();
+        logger.info("Checked");
     }
+
 }

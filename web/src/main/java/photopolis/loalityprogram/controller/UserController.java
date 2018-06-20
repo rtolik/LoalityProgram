@@ -51,10 +51,11 @@ public class UserController {
         }
         catch (Exception err)
         {
+            err.printStackTrace();
             return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
         }
         if(img.isEmpty()) {
-            return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
         userService.createUser(
                 img, user.getName(), user.getSecondName(), user.getSurname(), user.getPhone(), user.getDateOfBirth(),
@@ -67,7 +68,7 @@ public class UserController {
     private ResponseEntity<User> findOne(@PathVariable Integer id){
         if(id==null)
             return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
-        return new ResponseEntity<User>(userService.findOne(id),HttpStatus.OK);
+        return new ResponseEntity<User>(userService.findOneWithBonus(id),HttpStatus.OK);
     }
 
     @RequestMapping(
@@ -115,23 +116,23 @@ public class UserController {
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.POST)
     private ResponseEntity<User> setUnactive(@PathVariable Integer id){
         if (id== null)
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
-        return new ResponseEntity(userService.setUnActive(id),HttpStatus.OK);
+            return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<User>(userService.setUnActive(id),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/recover/{id}",method = RequestMethod.POST)
     private ResponseEntity<User> setActive(@PathVariable Integer id){
         if (id== null)
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<User>(userService.setActive(id),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/log-in",method = RequestMethod.POST)
     private ResponseEntity<LoginDTO> login(@RequestParam String login, @RequestParam String password){
         if(login==null || password==null){
-            return  new ResponseEntity(HttpStatus.NO_CONTENT);
+            return  new ResponseEntity<LoginDTO>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity(userService.login(login,password),HttpStatus.OK);
+        return new ResponseEntity<LoginDTO>(userService.login(login,password),HttpStatus.OK);
     }
 
 

@@ -42,7 +42,7 @@ public interface BonusService {
 
     void setPartyBonus(List<CelebrateDate> dates);
 
-    void setAnniversaryBonus();
+    String setAnniversaryBonus();
 
-    void setBirhDayBonus();
+    String setBirhDayBonus();
 }

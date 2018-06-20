@@ -24,38 +24,20 @@ export class HomeComponent implements OnInit {
   @ViewChild('cell') cell: HTMLDivElement;
   dateStr: string = new Date().toISOString().substring(0, 10);
   arr: Array<string> = new Array<string>(24);
-  mask = timeMask;
   selectedHours: number = 0;
   selectedTime: string = '';
   rent: Rent[] = [];
   user: User[] = [];
-  // rent = [{
-  //   id: 1,
-  //   duration: 2,
-  //   timeOfStart: '18:00',
-  //   timeOfEnd: '20:00',
-  //   rentStatus: 'AWAIT',
-  //   user: {
-  //     id: 1,
-  //     surname: 'Petryk',
-  //     name: 'Oleh',
-  //     secondName: 'Jaroslab',
-  //     phone: '0123213',
-  //     isMember: true,
-  //   }
-  // }
   stat: Statistic = new Statistic();
   end: string = '';
   start: string = '';
   newRent: Rent = new Rent();
   userId: number = 0;
   added: boolean = false;
+  mask = timeMask;
 
-  // ];
   constructor(private _rent: RentService, private _user: UserService) {
-    for (let i = 0; i < this.arr.length; i++) {
-      this.arr[i] = new Date(0, 0, 0, i + 2, 0, 0, 0).toISOString().substring(11, 16) + '-' + new Date(0, 0, 0, i + 3, 0, 0, 0).toISOString().substring(11, 16);
-    }
+    this.generateCalendar();
     _rent.getAllByDate(this.dateStr).subscribe(next => {
       this.rent = next;
       console.log(this.rent);
@@ -316,7 +298,8 @@ export class HomeComponent implements OnInit {
     console.log(this.end);
     if(isNullOrUndefined(this.start)&&isNullOrUndefined(this.end)||this.start==''&&this.end=='') {
       this.start=new Date().toISOString().split('T')[0];
-      this.end=new Date().toISOString().split('T')[0];
+      let date = new Date();
+      this.end= new Date(date.setDate(date.getDate()+1)).toISOString().split('T')[0];
     }
     this._rent.getStatistic(this.start, this.end).subscribe(next => {
       this.stat = next;
@@ -349,9 +332,7 @@ export class HomeComponent implements OnInit {
       document.getElementsByClassName('one-plus-cell')[i].classList.remove('background-orange');
     }
     this.arr = new Array<string>(24);
-    for (let i = 0; i < this.arr.length; i++) {
-      this.arr[i] = new Date(0, 0, 0, i + 2, 0, 0, 0).toISOString().substring(11, 16) + '-' + new Date(0, 0, 0, i + 3, 0, 0, 0).toISOString().substring(11, 16);
-    }
+    this.generateCalendar();
 
     this.selectedHours = 0;
     console.log(this.dateStr);
@@ -393,6 +374,16 @@ export class HomeComponent implements OnInit {
 
   }
 
+  generateCalendar(){
+    for (let i = 0; i < this.arr.length; i++) {
+      let tmp = new Date(null);
+      tmp.setHours(tmp.getHours()+(i));;
+      let left = new Date(tmp).toISOString().substring(11, 16);
+      tmp.setHours(tmp.getHours()+1);
+      let right = new Date(tmp).toISOString().substring(11, 16);
+      this.arr[i]= left+'-'+right;
+    }
+  }
 
   ngOnInit() {
   }
