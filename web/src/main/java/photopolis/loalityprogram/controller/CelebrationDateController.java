@@ -59,7 +59,8 @@ public class CelebrationDateController {
         return new ResponseEntity<List<CelebrateDate>>(celebrationDateService.findAll(),HttpStatus.OK);
     }
 
-    @Scheduled(fixedDelay = 86400000)
+    @Scheduled(fixedDelay = 86400000)//1 day
+//    @Scheduled(fixedDelay = 60000)//1 minute
     private void countBonuses(){
         celebrationDateService.sendCelebrationDateInfoToTelegram();
         logger.info("Checked");

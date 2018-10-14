@@ -44,5 +44,5 @@ public interface BonusService {
 
     String setAnniversaryBonus();
 
-    String setBirhDayBonus();
+    String setBirthDayBonus();
 }

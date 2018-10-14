@@ -9,4 +9,6 @@ import photopolis.loalityprogram.model.User;
  */
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
+
+    User findByCardId(Integer cardId);
 }

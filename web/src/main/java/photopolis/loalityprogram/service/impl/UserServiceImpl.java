@@ -181,7 +181,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findByCardId(Integer cardId) {
-        return findAll().stream().filter(user -> user.getCardId().equals(cardId)).findFirst().get();
+//        return findAll().stream().filter(user -> user.getCardId().equals(cardId)).findFirst().get();
+        return userRepository.findByCardId(cardId);
     }
 
     @Override

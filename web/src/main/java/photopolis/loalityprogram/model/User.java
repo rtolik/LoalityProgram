@@ -13,7 +13,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String imagePath;
@@ -43,7 +43,7 @@ public class User {
     private Boolean isActive;
 
     private Boolean isMember;
-    
+
     @OneToMany(mappedBy = "user")
     private List<Bonus> bonuses;
 
@@ -51,7 +51,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Rent> rents;
 
-    public User() {}
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<TelegramDispatch> telegramDispatches;
+
+    public User() {
+    }
 
     public User(String imagePath, String name, String secondName, String surname, String phone, String dateOfBirth,
                 String socialMedia, Integer cardId, String dateOfMember, String lastVisit,
@@ -226,12 +231,20 @@ public class User {
     }
 
 
-    @Override
-    public String toString(){
-        return "id= "+id+" name= "+name+" secondname= "+secondName+" surname= "+surname+" phone= "+phone+
-                " dateOfBirth= "+dateOfBirth+ " socialMedia= "+socialMedia+" cardId= "+cardId+
-                " dateOfMember= "+ dateOfMember+" lastvisit= "+ lastVisit+" email= "+email+
-                " dateOfRegistration= "+dateOfRegistration+" isActive= "+isActive+" isMember= "+isMember;
+    public List<TelegramDispatch> getTelegramDispatches() {
+        return telegramDispatches;
     }
 
+    public User setTelegramDispatches(List<TelegramDispatch> telegramDispatches) {
+        this.telegramDispatches = telegramDispatches;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "id= " + id + " name= " + name + " secondname= " + secondName + " surname= " + surname + " phone= " + phone +
+                " dateOfBirth= " + dateOfBirth + " socialMedia= " + socialMedia + " cardId= " + cardId +
+                " dateOfMember= " + dateOfMember + " lastvisit= " + lastVisit + " email= " + email +
+                " dateOfRegistration= " + dateOfRegistration + " isActive= " + isActive + " isMember= " + isMember;
+    }
 }

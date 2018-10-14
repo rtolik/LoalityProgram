@@ -26,4 +26,8 @@ public interface TelegramDispatchService {
 
     List<TelegramDispatch> findAllActive();
 
+    TelegramDispatch findByUserCardId(Integer cardId);
+
+    void changeRole(Integer cardId);
+
 }

@@ -4,10 +4,13 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import photopolis.loalityprogram.model.TelegramDispatch;
+import photopolis.loalityprogram.model.enums.Role;
 import photopolis.loalityprogram.repository.TelegramDispatchRepository;
 import photopolis.loalityprogram.service.TelegramDispatchService;
+import photopolis.loalityprogram.service.UserService;
 import photopolis.loalityprogram.service.utils.Bot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -17,6 +20,9 @@ import static java.util.stream.Collectors.toList;
  */
 @Service
 public class TelegramDispatchServiceImpl implements TelegramDispatchService {
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private TelegramDispatchRepository telegramDispatchRepository;
@@ -45,8 +51,7 @@ public class TelegramDispatchServiceImpl implements TelegramDispatchService {
         return findAll()
                 .stream()
                 .filter(telegramDispatch -> telegramDispatch.getChatId().equals(chatId))
-                .findFirst()
-                .get();
+                .findFirst().get();
     }
 
     @Override
@@ -57,6 +62,11 @@ public class TelegramDispatchServiceImpl implements TelegramDispatchService {
     @Override
     public List<TelegramDispatch> findAllActive() {
         return findAll().stream().filter(TelegramDispatch::getActive).collect(toList());
+    }
+
+    @Override
+    public TelegramDispatch findByUserCardId(Integer cardId) {
+        return findAll().stream().filter(telegramDispatch -> telegramDispatch.getUser().getCardId()==cardId).findFirst().get();
     }
 
     @Override
@@ -72,5 +82,18 @@ public class TelegramDispatchServiceImpl implements TelegramDispatchService {
     @Override
     public void setActive(String chatId) {
         save(findOneByChatId(chatId).setActive(true));
+    }
+
+    @Override
+    public void changeRole(Integer cardId) {
+        List<TelegramDispatch> dispatches =
+                findAll()
+                        .stream()
+                        .filter(telegramDispatch -> telegramDispatch.getUser().getCardId()==cardId).collect(toList());
+        for (TelegramDispatch d :
+                dispatches) {
+            save(d.setRole(Role.ADMIN));
+        }
+
     }
 }

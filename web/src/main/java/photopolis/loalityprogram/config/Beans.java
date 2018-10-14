@@ -29,6 +29,6 @@ public class Beans {
             e.printStackTrace();
         }
         logger.error("Error creating bot");
-        return bot();
+        return bot;
     }
 }

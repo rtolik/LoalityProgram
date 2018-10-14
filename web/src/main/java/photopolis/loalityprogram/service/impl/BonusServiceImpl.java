@@ -142,7 +142,7 @@ public class BonusServiceImpl implements BonusService{
         for (CelebrateDate date:dates)  {
             findAllParty().forEach(
                     bonus -> updateValue(
-                            bonus.getId(),bonus.addToValue(Constants.BONUS_PER_PARTY).getValue()
+                            bonus.getId(),bonus.addToValue(date.getBonusesToAdd()).getValue()
                     )
             );
         }
@@ -181,7 +181,7 @@ public class BonusServiceImpl implements BonusService{
     }
 
     @Override
-    public String setBirhDayBonus() {
+    public String setBirthDayBonus() {
         List<User> users=userService.findAllActive().stream().filter(
                 user -> user.getMember()
                 && dataEqualiser(dataParser(LocalDate.now().toString()),user.getDateOfBirth())

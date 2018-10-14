@@ -7,7 +7,7 @@ package photopolis.loalityprogram.model;
  */
 public class Statistic {
 
-     private Double profit;
+    private Double profit;
 
     private Integer numOfClients;
 

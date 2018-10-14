@@ -7,7 +7,6 @@ import photopolis.loalityprogram.repository.CelebrateDateRepository;
 import photopolis.loalityprogram.service.BonusService;
 import photopolis.loalityprogram.service.CelebrationDateService;
 import photopolis.loalityprogram.service.TelegramBotService;
-import photopolis.loalityprogram.service.TelegramDispatchService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -54,7 +53,6 @@ public class CelebrationDateServiceImpl implements CelebrationDateService{
         dates=findAll().stream().filter(date ->
             dataEqualiser(dataParser(LocalDate.now().toString()),date.getDate()))
                 .collect(toList());
-        System.out.println(dates.get(0).getId()+" "+dates.get(0).getName());
         if (!dates.isEmpty()) {
             bonusService.setPartyBonus(dates);
             message="Всім користувачам були нараховані бонуси за ";
@@ -66,7 +64,7 @@ public class CelebrationDateServiceImpl implements CelebrationDateService{
         String tmp=bonusService.setAnniversaryBonus();
         if (tmp.length()>0)
             message+="За річницю отримання карти, бонуси отримали: "+tmp;
-        tmp=bonusService.setBirhDayBonus();
+        tmp=bonusService.setBirthDayBonus();
         if (tmp.length()>0)
             message+="На честь дня народження, бонуси нараховано: "+tmp;
         return message;

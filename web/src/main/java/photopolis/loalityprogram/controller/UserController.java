@@ -6,6 +6,7 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import photopolis.loalityprogram.DTO.LoginDTO;
@@ -133,6 +134,11 @@ public class UserController {
             return  new ResponseEntity<LoginDTO>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<LoginDTO>(userService.login(login,password),HttpStatus.OK);
+    }
+
+    @Scheduled(fixedDelay = 86400000)
+    private void dropInvalidBonuses(){
+
     }
 
 
