@@ -27,7 +27,7 @@ public class Constants {
     public static final String BOT_PHOTOPOLIS_ADMIN = "@Photopolis";
 
     public static final String BOT_USERNAME="loality_program_bot";
-    public static final String BOT_TOKEN="611013171:AAGH5QWmxkaJi23AamxyWmlSNQSS1t2dVTg";
+    public static final String BOT_TOKEN="";//TODO ADD TOKEN KEY
     public static final String BOT_SENDMESSAGE_URL="https://api.telegram.org/bot611013171:AAGH5QWmxkaJi23AamxyWmlSNQSS1t2dVTg/sendMessage?";
 
 }
