@@ -26,6 +26,9 @@ public class Bonus {
 
     private String dateOfEnd;
 
+
+    private Integer test;
+
     @JsonIgnore
     @ManyToOne
     private User user;
